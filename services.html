@@ -1,0 +1,870 @@
+﻿<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Services — ORRENT</title>
+  <meta name="description" content="Nos services d'accompagnement marketing digital : diagnostic gratuit, plan stratégique, gestion de présence digitale et formations pour entrepreneurs comoriens.">
+  <link rel="stylesheet" href="css/main.css">
+  <style>
+    /* Styles spécifiques services */
+    .service-anchor { scroll-margin-top: 110px; }
+
+    .service-block {
+      padding: 80px 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .service-block:last-child { border-bottom: none; }
+
+    .service-layout {
+      display: grid;
+      grid-template-columns: 1fr 380px;
+      gap: 64px;
+      align-items: start;
+    }
+    .service-layout.reverse { direction: rtl; }
+    .service-layout.reverse > * { direction: ltr; }
+
+    .service-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 14px;
+      border-radius: var(--r-pill);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      margin-bottom: 20px;
+    }
+    .service-tag.green  { background: var(--green-light); color: var(--green-dark); }
+    .service-tag.dark   { background: var(--dark-2); color: var(--white); }
+    .service-tag.amber  { background: #FFF8E7; color: #B45309; }
+    .service-tag.blue   { background: #EFF6FF; color: #1D4ED8; }
+
+    .service-title {
+      font-family: var(--font-title);
+      font-size: clamp(26px, 3.2vw, 40px);
+      font-weight: 800;
+      color: var(--body);
+      line-height: 1.15;
+      margin-bottom: 16px;
+    }
+    .service-lead {
+      font-size: 16px;
+      color: var(--muted);
+      line-height: 1.7;
+      max-width: 540px;
+      margin-bottom: 32px;
+    }
+
+    .feature-list {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin-bottom: 32px;
+    }
+    .feature-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      font-size: 14px;
+      color: var(--body);
+      line-height: 1.55;
+    }
+    .feature-check {
+      width: 22px; height: 22px;
+      border-radius: 50%;
+      background: var(--green-light);
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+    .feature-check svg { width: 11px; height: 11px; stroke: var(--green-dark); fill: none; stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round; }
+
+    /* Service card latérale */
+    .service-card {
+      background: var(--white);
+      border-radius: var(--r-xl);
+      border: 1.5px solid var(--border);
+      box-shadow: var(--shadow-lg);
+      overflow: hidden;
+      position: sticky;
+      top: 100px;
+    }
+    .service-card-top {
+      padding: 28px;
+      background: var(--dark-2);
+    }
+    .service-card-label { font-size: 11px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: rgba(255,255,255,0.5); margin-bottom: 8px; }
+    .service-card-price {
+      font-family: var(--font-title);
+      font-size: 36px;
+      font-weight: 800;
+      color: var(--green);
+      line-height: 1;
+    }
+    .service-card-price-note { font-size: 13px; color: rgba(255,255,255,0.5); margin-top: 6px; }
+    .service-card-body { padding: 24px 28px; }
+
+    .sc-meta {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+    .sc-meta-row {
+      display: flex;
+      justify-content: space-between;
+      font-size: 13px;
+      color: var(--muted);
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 10px;
+    }
+    .sc-meta-row:last-child { border-bottom: none; padding-bottom: 0; }
+    .sc-meta-row strong { color: var(--body); font-weight: 600; }
+
+    .sc-includes {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      padding: 16px 0;
+      border-top: 1px solid var(--border);
+      margin-top: 4px;
+    }
+    .sc-include-item {
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      font-size: 13px;
+      color: var(--body);
+    }
+    .sc-include-icon {
+      width: 18px; height: 18px;
+      border-radius: 50%;
+      background: var(--green-light);
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+    }
+    .sc-include-icon svg { width: 9px; height: 9px; stroke: var(--green-dark); fill: none; stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round; }
+
+    /* Nav services rapide */
+    .services-nav {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      padding: 20px 0;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 0;
+    }
+    .svc-nav-btn {
+      padding: 9px 20px;
+      border-radius: var(--r-pill);
+      border: 1.5px solid var(--border);
+      background: transparent;
+      font-family: var(--font-body);
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--muted);
+      cursor: pointer;
+      text-decoration: none;
+      transition: all .25s var(--ease-out);
+    }
+    .svc-nav-btn:hover { border-color: var(--green); color: var(--green-dark); background: var(--green-light); }
+
+    /* Process steps */
+    .process-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 24px;
+      position: relative;
+    }
+    .process-grid::before {
+      content: '';
+      position: absolute;
+      top: 28px;
+      left: 10%;
+      right: 10%;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--border) 20%, var(--border) 80%, transparent);
+    }
+    .process-step { text-align: center; position: relative; }
+    .process-num {
+      width: 56px; height: 56px;
+      border-radius: 50%;
+      background: var(--dark-2);
+      color: var(--white);
+      font-family: var(--font-title);
+      font-size: 18px;
+      font-weight: 800;
+      display: flex; align-items: center; justify-content: center;
+      margin: 0 auto 16px;
+      position: relative;
+      z-index: 1;
+    }
+    .process-step-title { font-size: 14px; font-weight: 700; color: var(--body); margin-bottom: 6px; }
+    .process-step-desc { font-size: 13px; color: var(--muted); line-height: 1.55; }
+
+    /* FAQ */
+    .faq-list { display: flex; flex-direction: column; }
+    .faq-item { border-bottom: 1px solid var(--border); }
+    .faq-question {
+      width: 100%;
+      background: none;
+      border: none;
+      padding: 20px 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+      font-family: var(--font-body);
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--body);
+      cursor: pointer;
+      text-align: left;
+      transition: color .2s;
+    }
+    .faq-question:hover { color: var(--green-dark); }
+    .faq-icon {
+      width: 28px; height: 28px;
+      border-radius: 50%;
+      background: var(--surface);
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+      transition: transform .3s var(--ease-out), background .2s;
+    }
+    .faq-icon svg { width: 12px; height: 12px; stroke: var(--body); fill: none; stroke-width: 2; stroke-linecap: round; transition: stroke .2s; }
+    .faq-answer {
+      max-height: 0;
+      overflow: hidden;
+      font-size: 14px;
+      color: var(--muted);
+      line-height: 1.7;
+      transition: max-height .35s var(--ease-out), padding .35s;
+      padding-bottom: 0;
+    }
+    .faq-item.open .faq-answer { max-height: 300px; padding-bottom: 20px; }
+    .faq-item.open .faq-icon { background: var(--dark-2); transform: rotate(45deg); }
+    .faq-item.open .faq-icon svg { stroke: var(--white); }
+
+    /* Testimonials compact */
+    .testimonial-strip {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+    }
+    .tstrip-card {
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: var(--r-lg);
+      padding: 24px;
+    }
+    .tstrip-stars { color: var(--green-dark); font-size: 13px; letter-spacing: 2px; margin-bottom: 10px; }
+    .tstrip-text { font-size: 13px; color: var(--muted); line-height: 1.65; margin-bottom: 14px; font-style: italic; }
+    .tstrip-author { display: flex; align-items: center; gap: 9px; }
+    .tstrip-avatar {
+      width: 34px; height: 34px;
+      border-radius: 50%;
+      background: var(--surface);
+      display: flex; align-items: center; justify-content: center;
+    }
+    .tstrip-avatar svg { width: 18px; height: 18px; fill: var(--muted); }
+    .tstrip-name { font-size: 13px; font-weight: 700; color: var(--body); }
+    .tstrip-role { font-size: 11px; color: var(--muted); }
+
+    /* Responsive */
+    @media (max-width: 900px) {
+      .service-layout { grid-template-columns: 1fr; gap: 40px; }
+      .service-layout.reverse { direction: ltr; }
+      .service-card { position: static; }
+      .process-grid { grid-template-columns: repeat(2, 1fr); }
+      .process-grid::before { display: none; }
+      .testimonial-strip { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 600px) {
+      .service-title { font-size: 26px; }
+      .process-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<header id="header">
+  <div class="container">
+    <div class="header-inner">
+      <a href="index.html" class="logo">
+        <div class="logo-mark"><svg viewBox="0 0 16 16"><polyline points="2,14 8,4 14,10"/><polyline points="10,4 14,4 14,8"/></svg></div>
+        <span class="logo-text">ORRENT</span>
+      </a>
+      <nav class="nav-desktop">
+        <a href="index.html#about"    class="nav-link">À propos</a>
+        <a href="services.html"       class="nav-link" style="color:var(--green-dark);font-weight:600">Services</a>
+        <a href="ebooks.html"         class="nav-link">eBooks</a>
+        <a href="formations.html"     class="nav-link">Formations</a>
+        <a href="blog.html"           class="nav-link">Articles</a>
+        <a href="index.html#contact"  class="btn btn-primary btn-sm">Nous contacter<span class="btn-icon"><svg viewBox="0 0 16 16" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 13L13 3M13 3H7M13 3v6"/></svg></span></a>
+      </nav>
+      <button class="hamburger" id="hamburger" aria-label="Menu">
+        <span class="ham-line"></span><span class="ham-line"></span><span class="ham-line"></span>
+      </button>
+    </div>
+  </div>
+</header>
+<div class="mobile-overlay" id="mobileOverlay"></div>
+<nav class="mobile-nav" id="mobileNav">
+  <a href="index.html"          class="mobile-link">Accueil</a>
+  <a href="services.html"       class="mobile-link">Services</a>
+  <a href="ebooks.html"         class="mobile-link">eBooks</a>
+  <a href="formations.html"     class="mobile-link">Formations</a>
+  <a href="blog.html"           class="mobile-link">Articles</a>
+  <a href="index.html#contact"  class="btn btn-primary btn-full" style="margin-top:20px">Nous contacter</a>
+</nav>
+
+<!-- PAGE HERO -->
+<div class="page-hero">
+  <div class="container">
+    <div class="breadcrumb">
+      <a href="index.html">Accueil</a><span class="breadcrumb-sep">/</span><span>Services</span>
+    </div>
+    <div class="tag tag-white tag-dot" style="margin-bottom:20px">Accompagnement sur mesure</div>
+    <h1 class="text-white" style="font-size:clamp(28px,4vw,52px)">Nos Services</h1>
+    <p style="color:rgba(255,255,255,0.6);font-size:17px;max-width:520px;margin-top:14px;line-height:1.7">De la stratégie à l'exécution — des services conçus pour les entrepreneurs comoriens qui veulent une présence digitale qui vend.</p>
+  </div>
+</div>
+
+<!-- NAVIGATION RAPIDE -->
+<div style="background:var(--white);border-bottom:1px solid var(--border)">
+  <div class="container">
+    <div class="services-nav">
+      <a href="#diagnostic"  class="svc-nav-btn">Diagnostic Gratuit</a>
+      <a href="#strategie"   class="svc-nav-btn">Plan Stratégique</a>
+      <a href="#presence"    class="svc-nav-btn">Présence Digitale</a>
+      <a href="#formation"   class="svc-nav-btn">Samedi Digital</a>
+    </div>
+  </div>
+</div>
+
+<!-- ===================== SERVICE 1 : DIAGNOSTIC ===================== -->
+<section class="service-block service-anchor" id="diagnostic">
+  <div class="container">
+    <div class="service-layout reveal">
+
+      <!-- Contenu -->
+      <div>
+        <span class="service-tag green">
+          <svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="8" r="6"/><path d="M8 5v3l2 2"/></svg>
+          Gratuit — Sans engagement
+        </span>
+        <h2 class="service-title">Diagnostic Marketing<br>Gratuit</h2>
+        <p class="service-lead">Une session de 45 minutes pour analyser votre situation actuelle, identifier vos freins à la croissance et repartir avec un plan d'action clair. Zéro jargon, 100 % concret.</p>
+
+        <div class="feature-list">
+          <div class="feature-item">
+            <div class="feature-check"><svg viewBox="0 0 12 12"><path d="M2 6l3 3 5-5"/></svg></div>
+            <span><strong>Audit de votre présence en ligne</strong> — pages sociales, contenu, messages clés, positionnement actuel</span>
+          </div>
+          <div class="feature-item">
+            <div class="feature-check"><svg viewBox="0 0 12 12"><path d="M2 6l3 3 5-5"/></svg></div>
+            <span><strong>Analyse de votre offre</strong> — clarté du message, prix, différenciation face à la concurrence locale</span>
+          </div>
+          <div class="feature-item">
+            <div class="feature-check"><svg viewBox="0 0 12 12"><path d="M2 6l3 3 5-5"/></svg></div>
+            <span><strong>Identification des opportunités</strong> — canaux sous-exploités, contenu à fort potentiel, audience cible précise</span>
+          </div>
+          <div class="feature-item">
+            <div class="feature-check"><svg viewBox="0 0 12 12"><path d="M2 6l3 3 5-5"/></svg></div>
+            <span><strong>Plan d'action sur 30 jours</strong> — 3 à 5 actions prioritaires classées par impact et facilité d'exécution</span>
+          </div>
+          <div class="feature-item">
+            <div class="feature-check"><svg viewBox="0 0 12 12"><path d="M2 6l3 3 5-5"/></svg></div>
+            <span><strong>Session 100 % personnalisée</strong> — adaptée à votre secteur, votre budget et votre niveau digital</span>
+          </div>
+        </div>
+
+        <div style="background:var(--surface);border-radius:var(--r-lg);padding:20px;display:flex;gap:14px;align-items:flex-start">
+          <div style="width:40px;height:40px;border-radius:var(--r-md);background:var(--green-light);display:flex;align-items:center;justify-content:center;flex-shrink:0">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--green-dark)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg>
+          </div>
+          <div>
+            <div style="font-size:14px;font-weight:700;color:var(--body);margin-bottom:4px">Pour qui ?</div>
+            <div style="font-size:13px;color:var(--muted);line-height:1.6">Idéal pour les entrepreneurs qui débutent en ligne, ceux qui investissent du temps sans résultats, ou ceux qui veulent valider leur stratégie avant de passer à l'étape suivante.</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card latérale -->
+      <div>
+        <div class="service-card reveal">
+          <div class="service-card-top">
+            <div class="service-card-label">Tarif</div>
+            <div class="service-card-price">Gratuit</div>
+            <div class="service-card-price-note">Session unique de 45 minutes</div>
+          </div>
+          <div class="service-card-body">
+            <div class="sc-meta">
+              <div class="sc-meta-row"><span>Durée</span><strong>45 min</strong></div>
+              <div class="sc-meta-row"><span>Format</span><strong>Zoom / WhatsApp</strong></div>
+              <div class="sc-meta-row"><span>Délai</span><strong>Sous 48h</strong></div>
+              <div class="sc-meta-row"><span>Langue</span><strong>Français / Shikomori</strong></div>
+            </div>
+            <div class="sc-includes">
+              <div class="sc-include-item"><div class="sc-include-icon"><svg viewBox="0 0 12 12"><path d="M2 6l3 3 5-5"/></svg></div>Audit personnalisé</div>
+              <div class="sc-include-item"><div class="sc-include-icon"><svg viewBox="0 0 12 12"><path d="M2 6l3 3 5-5"/></svg></div>Rapport récapitulatif PDF</div>
+              <div class="sc-include-item"><div class="sc-include-icon"><svg viewBox="0 0 12 12"><path d="M2 6l3 3 5-5"/></svg></div>Plan d'action 30 jours</div>
+              <div class="sc-include-item"><div class="sc-include-icon"><svg viewBox="0 0 12 12"><path d="M2 6l3 3 5-5"/></svg></div>Sans engagement</div>
+            </div>
+            <a href="https://wa.me/21654200528?text=Je%20veux%20un%20diagnostic%20gratuit%20avec%20ORRENT" target="_blank" rel="noopener" class="btn btn-primary btn-full" style="margin-top:20px">
+              Réserver ma session
+              <span class="btn-icon"><svg viewBox="0 0 16 16" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 13L13 3M13 3H7M13 3v6"/></svg></span>
+            </a>
+            <p style="font-size:12px;color:var(--muted);text-align:center;margin-top:10px">Places limitées chaque semaine</p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ===================== SERVICE 2 : PLAN STRATÉGIQUE ===================== -->
+<section class="service-block service-anchor" id="strategie" style="background:var(--surface)">
+  <div class="container">
+    <div class="service-layout reverse reveal">
+
+      <!-- Contenu -->
+      <div>
+        <span class="service-tag dark">
+          <svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12h12M2 8h8M2 4h5"/></svg>
+          Livrable sur mesure
+        </span>
+        <h2 class="service-title">Plan Stratégique<br>Personnalisé</h2>
+        <p class="service-lead">Un document de stratégie marketing complet, construit autour de votre activité, votre marché et vos objectifs de croissance. Votre feuille de route pour les 90 prochains jours.</p>
+
+        <div class="feature-list">
+          <div class="feature-item">
+            <div class="feature-check"><svg viewBox="0 0 12 12"><path d="M2 6l3 3 5-5"/></svg></div>
+            <span><strong>Analyse de marché local</strong> — étude de la concurrence comorienne, tendances sectorielles, opportunités non exploitées</span>
+          </div>
+          <div class="feature-item">
+            <div class="feature-check"><svg viewBox="0 0 12 12"><path d="M2 6l3 3 5-5"/></svg></div>
+            <span><strong>Définition du positionnement</strong> — message de marque, proposition de valeur unique, persona client détaillé</span>
+          </div>
+          <div class="feature-item">
+            <div class="feature-check"><svg viewBox="0 0 12 12"><path d="M2 6l3 3 5-5"/></svg></div>
+            <span><strong>Stratégie de contenu</strong> — calendrier éditorial 3 mois, formats recommandés, canaux prioritaires (TikTok, Insta, WhatsApp)</span>
+          </div>
+          <div class="feature-item">
+            <div class="feature-check"><svg viewBox="0 0 12 12"><path d="M2 6l3 3 5-5"/></svg></div>
+            <span><strong>Tunnel d'attraction</strong> — de la découverte à la vente, scripts WhatsApp, offres d'entrée, mécanisme de fidélisation</span>
+          </div>
+          <div class="feature-item">
+            <div class="feature-check"><svg viewBox="0 0 12 12"><path d="M2 6l3 3 5-5"/></svg></div>
+            <span><strong>Suivi et KPIs</strong> — indicateurs de performance à tracker, tableau de bord simple, points de révision mensuels</span>
+          </div>
+          <div class="feature-item">
+            <div class="feature-check"><svg viewBox="0 0 12 12"><path d="M2 6l3 3 5-5"/></svg></div>
+            <span><strong>Session de restitution</strong> — présentation du plan, Q&amp;A, ajustements selon vos retours</span>
+          </div>
+        </div>
+
+        <div style="display:flex;gap:24px;flex-wrap:wrap">
+          <div style="background:var(--white);border:1px solid var(--border);border-radius:var(--r-lg);padding:20px 24px;flex:1;min-width:180px">
+            <div style="font-family:var(--font-title);font-size:32px;font-weight:800;color:var(--dark-2)">7</div>
+            <div style="font-size:13px;color:var(--muted)">jours de livraison</div>
+          </div>
+          <div style="background:var(--white);border:1px solid var(--border);border-radius:var(--r-lg);padding:20px 24px;flex:1;min-width:180px">
+            <div style="font-family:var(--font-title);font-size:32px;font-weight:800;color:var(--dark-2)">90</div>
+            <div style="font-size:13px;color:var(--muted)">jours de feuille de route</div>
+          </div>
+          <div style="background:var(--white);border:1px solid var(--border);border-radius:var(--r-lg);padding:20px 24px;flex:1;min-width:180px">
+            <div style="font-family:var(--font-title);font-size:32px;font-weight:800;color:var(--dark-2)">1</div>
+            <div style="font-size:13px;color:var(--muted)">session de suivi offerte</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card latérale -->
+      <div>
+        <div class="service-card reveal">
+          <div class="service-card-top" style="background:linear-gradient(135deg,#0A1628,#1a2e50)">
+            <div class="service-card-label">À partir de</div>
+            <div class="service-card-price">Sur devis</div>
+            <div class="service-card-price-note">Selon la taille et le secteur de votre activité</div>
+          </div>
+          <div class="service-card-body">
+            <div class="sc-meta">
+              <div class="sc-meta-row"><span>Livraison</span><strong>5 à 7 jours ouvrés</strong></div>
+              <div class="sc-meta-row"><span>Format</span><strong>PDF + présentation</strong></div>
+              <div class="sc-meta-row"><span>Révisions</span><strong>2 incluses</strong></div>
+              <div class="sc-meta-row"><span>Suivi</span><strong>1 session de bilan</strong></div>
+            </div>
+            <div class="sc-includes">
+              <div class="sc-include-item"><div class="sc-include-icon"><svg viewBox="0 0 12 12"><path d="M2 6l3 3 5-5"/></svg></div>Analyse marché locale</div>
+              <div class="sc-include-item"><div class="sc-include-icon"><svg viewBox="0 0 12 12"><path d="M2 6l3 3 5-5"/></svg></div>Calendrier éditorial 3 mois</div>
+              <div class="sc-include-item"><div class="sc-include-icon"><svg viewBox="0 0 12 12"><path d="M2 6l3 3 5-5"/></svg></div>Scripts WhatsApp inclus</div>
+              <div class="sc-include-item"><div class="sc-include-icon"><svg viewBox="0 0 12 12"><path d="M2 6l3 3 5-5"/></svg></div>Tableau de bord KPIs</div>
+              <div class="sc-include-item"><div class="sc-include-icon"><svg viewBox="0 0 12 12"><path d="M2 6l3 3 5-5"/></svg></div>Session de restitution Zoom</div>
+            </div>
+            <a href="https://wa.me/21654200528?text=Je%20veux%20un%20plan%20stratégique%20avec%20ORRENT" target="_blank" rel="noopener" class="btn btn-primary btn-full" style="margin-top:20px">
+              Demander un devis
+              <span class="btn-icon"><svg viewBox="0 0 16 16" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 13L13 3M13 3H7M13 3v6"/></svg></span>
+            </a>
+            <p style="font-size:12px;color:var(--muted);text-align:center;margin-top:10px">Commence par un diagnostic gratuit</p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ===================== SERVICE 3 : GESTION PRÉSENCE ===================== -->
+<section class="service-block service-anchor" id="presence">
+  <div class="container">
+    <div class="service-layout reveal">
+
+      <!-- Contenu -->
+      <div>
+        <span class="service-tag amber">
+          <svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="12" height="12" rx="3"/><path d="M8 6v4M6 8h4"/></svg>
+          Délégation complète
+        </span>
+        <h2 class="service-title">Gestion de Présence<br>Digitale</h2>
+        <p class="service-lead">Nous prenons en main votre communication en ligne de A à Z — création de contenu, publication, interaction avec la communauté — pour que vous puissiez vous concentrer sur votre cœur de métier.</p>
+
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:32px">
+          <div style="background:var(--surface);border-radius:var(--r-lg);padding:20px">
+            <div style="width:36px;height:36px;border-radius:var(--r-md);background:#FFF8E7;display:flex;align-items:center;justify-content:center;margin-bottom:12px">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#B45309" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 10l4.553-2.069A1 1 0 0121 8.87V15.13a1 1 0 01-1.447.9L15 14M3 8h12v8H3z"/></svg>
+            </div>
+            <div style="font-size:14px;font-weight:700;margin-bottom:6px">Création de contenu</div>
+            <div style="font-size:13px;color:var(--muted);line-height:1.55">Visuels, captions, Reels, Stories — alignés avec votre identité de marque</div>
+          </div>
+          <div style="background:var(--surface);border-radius:var(--r-lg);padding:20px">
+            <div style="width:36px;height:36px;border-radius:var(--r-md);background:#FFF8E7;display:flex;align-items:center;justify-content:center;margin-bottom:12px">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#B45309" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01"/></svg>
+            </div>
+            <div style="font-size:14px;font-weight:700;margin-bottom:6px">Publication planifiée</div>
+            <div style="font-size:13px;color:var(--muted);line-height:1.55">Calendrier hebdomadaire optimisé selon les pics d'engagement de votre audience</div>
+          </div>
+          <div style="background:var(--surface);border-radius:var(--r-lg);padding:20px">
+            <div style="width:36px;height:36px;border-radius:var(--r-md);background:#FFF8E7;display:flex;align-items:center;justify-content:center;margin-bottom:12px">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#B45309" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
+            </div>
+            <div style="font-size:14px;font-weight:700;margin-bottom:6px">Community management</div>
+            <div style="font-size:13px;color:var(--muted);line-height:1.55">Réponse aux commentaires et messages, gestion de la relation client en ligne</div>
+          </div>
+          <div style="background:var(--surface);border-radius:var(--r-lg);padding:20px">
+            <div style="width:36px;height:36px;border-radius:var(--r-md);background:#FFF8E7;display:flex;align-items:center;justify-content:center;margin-bottom:12px">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#B45309" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="M7 16l4-4 4 4 4-8"/></svg>
+            </div>
+            <div style="font-size:14px;font-weight:700;margin-bottom:6px">Rapport mensuel</div>
+            <div style="font-size:13px;color:var(--muted);line-height:1.55">Statistiques de performance, analyse des résultats et recommandations pour le mois suivant</div>
+          </div>
+        </div>
+
+        <div style="background:linear-gradient(135deg,#0A1628,#1a2e50);border-radius:var(--r-lg);padding:24px;display:flex;gap:14px;align-items:flex-start">
+          <div style="width:40px;height:40px;border-radius:var(--r-md);background:rgba(22,199,132,0.15);display:flex;align-items:center;justify-content:center;flex-shrink:0">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--green)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+          </div>
+          <div>
+            <div style="font-size:14px;font-weight:700;color:var(--white);margin-bottom:4px">Ce que vous gagnez</div>
+            <div style="font-size:13px;color:rgba(255,255,255,0.6);line-height:1.6">En moyenne, nos clients constatent une augmentation de 40 à 80 % de leur visibilité organique en 3 mois. Vous recevrez un rapport mensuel pour suivre chaque progrès.</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card latérale -->
+      <div>
+        <div class="service-card reveal">
+          <div class="service-card-top" style="background:linear-gradient(135deg,#78350F,#B45309)">
+            <div class="service-card-label">Abonnement mensuel</div>
+            <div class="service-card-price">Sur devis</div>
+            <div class="service-card-price-note">Selon le nombre de plateformes et posts/semaine</div>
+          </div>
+          <div class="service-card-body">
+            <div class="sc-meta">
+              <div class="sc-meta-row"><span>Engagement</span><strong>Minimum 3 mois</strong></div>
+              <div class="sc-meta-row"><span>Plateformes</span><strong>Instagram, TikTok, FB</strong></div>
+              <div class="sc-meta-row"><span>Posts</span><strong>3 à 5 / semaine</strong></div>
+              <div class="sc-meta-row"><span>Reporting</span><strong>Mensuel</strong></div>
+            </div>
+            <div class="sc-includes">
+              <div class="sc-include-item"><div class="sc-include-icon"><svg viewBox="0 0 12 12"><path d="M2 6l3 3 5-5"/></svg></div>Stratégie de contenu incluse</div>
+              <div class="sc-include-item"><div class="sc-include-icon"><svg viewBox="0 0 12 12"><path d="M2 6l3 3 5-5"/></svg></div>Création de visuels</div>
+              <div class="sc-include-item"><div class="sc-include-icon"><svg viewBox="0 0 12 12"><path d="M2 6l3 3 5-5"/></svg></div>Scripts vidéo + tournage conseils</div>
+              <div class="sc-include-item"><div class="sc-include-icon"><svg viewBox="0 0 12 12"><path d="M2 6l3 3 5-5"/></svg></div>Rapport mensuel PDF</div>
+              <div class="sc-include-item"><div class="sc-include-icon"><svg viewBox="0 0 12 12"><path d="M2 6l3 3 5-5"/></svg></div>Accès WhatsApp direct</div>
+            </div>
+            <a href="https://wa.me/21654200528?text=Je%20veux%20en%20savoir%20plus%20sur%20la%20gestion%20de%20présence%20digitale" target="_blank" rel="noopener" class="btn btn-primary btn-full" style="margin-top:20px">
+              Demander un devis
+              <span class="btn-icon"><svg viewBox="0 0 16 16" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 13L13 3M13 3H7M13 3v6"/></svg></span>
+            </a>
+            <p style="font-size:12px;color:var(--muted);text-align:center;margin-top:10px">Premier mois avec diagnostic offert</p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ===================== SERVICE 4 : FORMATION ===================== -->
+<section class="service-block service-anchor" id="formation" style="background:var(--surface)">
+  <div class="container">
+    <div class="service-layout reverse reveal">
+
+      <!-- Contenu -->
+      <div>
+        <span class="service-tag blue">
+          <svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12l6-8 6 8"/><path d="M5 9h6"/></svg>
+          Formation collective
+        </span>
+        <h2 class="service-title">Samedi Digital —<br>Formation Live</h2>
+        <p class="service-lead">Chaque samedi matin, une session de 90 minutes en direct pour apprendre le marketing digital adapté au contexte comorien. 17 sessions, 100 % gratuit, zéro prérequis.</p>
+
+        <div class="feature-list">
+          <div class="feature-item">
+            <div class="feature-check"><svg viewBox="0 0 12 12"><path d="M2 6l3 3 5-5"/></svg></div>
+            <span><strong>17 sessions progressives</strong> — des fondamentaux à la mise en place de systèmes de vente automatisés</span>
+          </div>
+          <div class="feature-item">
+            <div class="feature-check"><svg viewBox="0 0 12 12"><path d="M2 6l3 3 5-5"/></svg></div>
+            <span><strong>Cas pratiques comoriens</strong> — exemples réels tirés du marché local, pas du contenu générique importé</span>
+          </div>
+          <div class="feature-item">
+            <div class="feature-check"><svg viewBox="0 0 12 12"><path d="M2 6l3 3 5-5"/></svg></div>
+            <span><strong>Groupe WhatsApp actif</strong> — échanges entre participants, partage de ressources, entraide entre entrepreneurs</span>
+          </div>
+          <div class="feature-item">
+            <div class="feature-check"><svg viewBox="0 0 12 12"><path d="M2 6l3 3 5-5"/></svg></div>
+            <span><strong>Sessions Q&amp;A</strong> — posez vos questions en direct à la fin de chaque session, réponses personnalisées</span>
+          </div>
+          <div class="feature-item">
+            <div class="feature-check"><svg viewBox="0 0 12 12"><path d="M2 6l3 3 5-5"/></svg></div>
+            <span><strong>Certificat ORRENT</strong> — délivré aux membres qui complètent les 17 sessions et soumettent leur projet final</span>
+          </div>
+        </div>
+
+        <div style="display:flex;gap:12px;flex-wrap:wrap">
+          <div style="background:var(--white);border:1px solid var(--border);border-radius:var(--r-lg);padding:16px 20px">
+            <div style="font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-bottom:4px">Prochain samedi</div>
+            <div style="font-size:15px;font-weight:700;color:var(--body)">10h00 — 11h30</div>
+          </div>
+          <div style="background:var(--white);border:1px solid var(--border);border-radius:var(--r-lg);padding:16px 20px">
+            <div style="font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-bottom:4px">Plateforme</div>
+            <div style="font-size:15px;font-weight:700;color:var(--body)">WhatsApp + Zoom</div>
+          </div>
+          <div style="background:var(--white);border:1px solid var(--border);border-radius:var(--r-lg);padding:16px 20px">
+            <div style="font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-bottom:4px">Participants</div>
+            <div style="font-size:15px;font-weight:700;color:var(--body)">+100 inscrits</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card latérale -->
+      <div>
+        <div class="service-card reveal">
+          <div class="service-card-top" style="background:linear-gradient(135deg,#064E3B,#059669)">
+            <div class="service-card-label">Tarif unique</div>
+            <div class="service-card-price">Gratuit</div>
+            <div class="service-card-price-note">Jusqu'en juillet 2026 — puis sur inscription payante</div>
+          </div>
+          <div class="service-card-body">
+            <div class="sc-meta">
+              <div class="sc-meta-row"><span>Sessions</span><strong>17 en direct</strong></div>
+              <div class="sc-meta-row"><span>Durée</span><strong>90 min / session</strong></div>
+              <div class="sc-meta-row"><span>Niveau</span><strong>Tous niveaux</strong></div>
+              <div class="sc-meta-row"><span>Accès replays</span><strong>Inclus</strong></div>
+            </div>
+            <div class="sc-includes">
+              <div class="sc-include-item"><div class="sc-include-icon"><svg viewBox="0 0 12 12"><path d="M2 6l3 3 5-5"/></svg></div>17 sessions en direct</div>
+              <div class="sc-include-item"><div class="sc-include-icon"><svg viewBox="0 0 12 12"><path d="M2 6l3 3 5-5"/></svg></div>Accès groupe WhatsApp</div>
+              <div class="sc-include-item"><div class="sc-include-icon"><svg viewBox="0 0 12 12"><path d="M2 6l3 3 5-5"/></svg></div>Replays + ressources PDF</div>
+              <div class="sc-include-item"><div class="sc-include-icon"><svg viewBox="0 0 12 12"><path d="M2 6l3 3 5-5"/></svg></div>Certificat de participation</div>
+            </div>
+            <a href="https://wa.me/21654200528?text=Je%20veux%20rejoindre%20le%20Samedi%20Digital" target="_blank" rel="noopener" class="btn btn-primary btn-full" style="margin-top:20px">
+              S'inscrire gratuitement
+              <span class="btn-icon"><svg viewBox="0 0 16 16" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 13L13 3M13 3H7M13 3v6"/></svg></span>
+            </a>
+            <a href="formations.html" class="btn btn-outline btn-full" style="margin-top:10px">Voir le programme complet</a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- COMMENT ÇA MARCHE -->
+<section style="padding:80px 0 100px;background:var(--white)">
+  <div class="container">
+    <div class="section-head" style="margin-bottom:60px">
+      <div class="tag tag-dark tag-dot reveal">Processus</div>
+      <h2 class="reveal reveal-delay-1">Comment on travaille ensemble</h2>
+      <p style="color:var(--muted);font-size:16px;max-width:520px" class="reveal reveal-delay-2">Un processus simple et transparent, du premier contact jusqu'aux résultats.</p>
+    </div>
+
+    <div class="process-grid">
+      <div class="process-step reveal">
+        <div class="process-num">1</div>
+        <div class="process-step-title">Contact WhatsApp</div>
+        <div class="process-step-desc">Envoyez-nous un message — décrivez votre activité en quelques lignes. Réponse sous 24h.</div>
+      </div>
+      <div class="process-step reveal reveal-delay-1">
+        <div class="process-num">2</div>
+        <div class="process-step-title">Diagnostic gratuit</div>
+        <div class="process-step-desc">Session de 45 min pour comprendre votre situation et définir vos objectifs ensemble.</div>
+      </div>
+      <div class="process-step reveal reveal-delay-2">
+        <div class="process-num">3</div>
+        <div class="process-step-title">Proposition sur mesure</div>
+        <div class="process-step-desc">Nous construisons une offre adaptée à votre budget, votre marché et vos objectifs de croissance.</div>
+      </div>
+      <div class="process-step reveal reveal-delay-3">
+        <div class="process-num">4</div>
+        <div class="process-step-title">Exécution & résultats</div>
+        <div class="process-step-desc">On exécute, on mesure, on ajuste — avec un reporting clair à chaque étape.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TÉMOIGNAGES -->
+<section style="padding:80px 0;background:var(--surface)">
+  <div class="container">
+    <div class="section-head" style="margin-bottom:48px">
+      <div class="tag tag-dark tag-dot reveal">Témoignages</div>
+      <h2 class="reveal reveal-delay-1">Ce qu'ils disent</h2>
+    </div>
+    <div class="testimonial-strip">
+      <div class="tstrip-card reveal">
+        <div class="tstrip-stars">★★★★★</div>
+        <p class="tstrip-text">"Le diagnostic m'a ouvert les yeux. En 45 minutes, j'ai compris pourquoi mes posts n'attiraient pas de clients. Le plan d'action était concret et immédiatement applicable."</p>
+        <div class="tstrip-author">
+          <div class="tstrip-avatar"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg></div>
+          <div><div class="tstrip-name">Zakia M.</div><div class="tstrip-role">Traiteur, Moroni</div></div>
+        </div>
+      </div>
+      <div class="tstrip-card reveal reveal-delay-1">
+        <div class="tstrip-stars">★★★★★</div>
+        <p class="tstrip-text">"ORRENT gère ma page Instagram depuis 3 mois. J'ai triplé mes abonnés et surtout j'ai de vraies demandes de clients. Je peux me concentrer sur mon atelier."</p>
+        <div class="tstrip-author">
+          <div class="tstrip-avatar"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg></div>
+          <div><div class="tstrip-name">Omar B.</div><div class="tstrip-role">Artisan, Anjouan</div></div>
+        </div>
+      </div>
+      <div class="tstrip-card reveal reveal-delay-2">
+        <div class="tstrip-stars">★★★★★</div>
+        <p class="tstrip-text">"Le plan stratégique m'a donné une vraie feuille de route. J'ai suivi le calendrier éditorial pendant 2 mois et mes ventes en ligne ont augmenté de 60 %."</p>
+        <div class="tstrip-author">
+          <div class="tstrip-avatar"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg></div>
+          <div><div class="tstrip-name">Naïma C.</div><div class="tstrip-role">Boutique mode, diaspora</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section style="padding:80px 0 100px;background:var(--white)">
+  <div class="container" style="max-width:760px">
+    <div class="section-head" style="margin-bottom:48px">
+      <div class="tag tag-dark tag-dot reveal">FAQ</div>
+      <h2 class="reveal reveal-delay-1">Questions fréquentes</h2>
+    </div>
+
+    <div class="faq-list reveal">
+      <div class="faq-item">
+        <button class="faq-question" onclick="toggleFaq(this)">
+          Je débute complètement — les services sont-ils adaptés pour moi ?
+          <div class="faq-icon"><svg viewBox="0 0 12 12"><path d="M6 2v8M2 6h8"/></svg></div>
+        </button>
+        <div class="faq-answer">Absolument. Nos services ont été conçus pour accompagner les entrepreneurs à tous les niveaux — des débutants complets aux business déjà établis qui veulent accélérer. Le diagnostic gratuit est précisément là pour identifier votre point de départ et vous orienter vers le service le plus adapté à votre situation.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-question" onclick="toggleFaq(this)">
+          Je suis dans la diaspora — pouvez-vous travailler avec moi à distance ?
+          <div class="faq-icon"><svg viewBox="0 0 12 12"><path d="M6 2v8M2 6h8"/></svg></div>
+        </button>
+        <div class="faq-answer">Oui, tous nos services sont 100 % disponibles à distance. Nous travaillons avec des entrepreneurs comoriens aux Comores, en France, en Suisse, en Belgique et partout dans le monde. Toutes les sessions se font via Zoom ou WhatsApp, et les livrables sont envoyés en PDF.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-question" onclick="toggleFaq(this)">
+          Quel est le délai pour commencer ?
+          <div class="faq-icon"><svg viewBox="0 0 12 12"><path d="M6 2v8M2 6h8"/></svg></div>
+        </button>
+        <div class="faq-answer">Après votre premier message WhatsApp, nous répondons sous 24 heures et planifions le diagnostic dans les 48 à 72 heures suivantes. Pour la gestion de présence digitale, le démarrage effectif se fait dans les 7 jours après validation de la proposition.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-question" onclick="toggleFaq(this)">
+          Comment se passe le paiement ?
+          <div class="faq-icon"><svg viewBox="0 0 12 12"><path d="M6 2v8M2 6h8"/></svg></div>
+        </button>
+        <div class="faq-answer">Les modalités de paiement sont discutées lors du diagnostic et adaptées selon votre localisation (Comores, France, diaspora). Nous acceptons les virements bancaires, les transferts Mobile Money et d'autres moyens selon votre pays. Aucun paiement n'est demandé avant que vous ayez validé la proposition et signé un accord.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-question" onclick="toggleFaq(this)">
+          Puis-je combiner plusieurs services ?
+          <div class="faq-icon"><svg viewBox="0 0 12 12"><path d="M6 2v8M2 6h8"/></svg></div>
+        </button>
+        <div class="faq-answer">Oui, et c'est souvent la combinaison la plus efficace. Par exemple : commencer par le diagnostic, construire un plan stratégique, puis nous confier la gestion de la présence digitale pour l'exécution. Nous proposons des forfaits combinés avec des tarifs préférentiels — mentionnez-le lors du diagnostic.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-question" onclick="toggleFaq(this)">
+          Quels résultats puis-je espérer et en combien de temps ?
+          <div class="faq-icon"><svg viewBox="0 0 12 12"><path d="M6 2v8M2 6h8"/></svg></div>
+        </button>
+        <div class="faq-answer">Les premiers résultats visibles (augmentation de la portée, premiers contacts entrants) apparaissent généralement en 4 à 6 semaines. Des résultats significatifs en termes de ventes se constatent en moyenne après 2 à 3 mois d'exécution régulière. Nous ne promettons pas de miracles — nous promettons un travail sérieux et une stratégie adaptée à votre marché.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA FINAL -->
+<section style="padding:80px 0;background:var(--green)">
+  <div class="container" style="text-align:center">
+    <h2 style="color:var(--dark-2);font-size:clamp(24px,3vw,38px);margin-bottom:14px" class="reveal">Commencez par le diagnostic gratuit</h2>
+    <p style="color:rgba(10,22,40,0.7);font-size:16px;max-width:480px;margin:0 auto 32px" class="reveal reveal-delay-1">45 minutes offertes. Pas de jargon, pas de pitch. Juste un diagnostic honnête de votre situation et un plan d'action clair.</p>
+    <div style="display:flex;gap:14px;justify-content:center;flex-wrap:wrap" class="reveal reveal-delay-2">
+      <a href="https://wa.me/21654200528?text=Je%20veux%20un%20diagnostic%20gratuit%20avec%20ORRENT" target="_blank" rel="noopener" class="btn btn-dark btn-lg">
+        Réserver mon diagnostic gratuit
+        <span class="btn-icon"><svg viewBox="0 0 16 16" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 13L13 3M13 3H7M13 3v6"/></svg></span>
+      </a>
+      <a href="index.html#contact" class="btn btn-outline" style="border-color:var(--dark-2);color:var(--dark-2)">Poser une question</a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer id="footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-col">
+        <a href="index.html" class="logo"><div class="logo-mark"><svg viewBox="0 0 16 16"><polyline points="2,14 8,4 14,10"/><polyline points="10,4 14,4 14,8"/></svg></div><span class="logo-text" style="color:white">ORRENT</span></a>
+        <p class="footer-tagline">"Propulsez votre business"<br>Comores / Tunisie</p>
+      </div>
+      <div class="footer-col"><h4>Navigation</h4><a href="index.html" class="footer-link">Accueil</a><a href="services.html" class="footer-link">Services</a><a href="index.html#contact" class="footer-link">Contact</a></div>
+      <div class="footer-col"><h4>Ressources</h4><a href="blog.html" class="footer-link">Articles</a><a href="formations.html" class="footer-link">Formations</a><a href="ebooks.html" class="footer-link">eBooks</a></div>
+      <div class="footer-col"><h4>Contact</h4><a href="mailto:orrentcomores@gmail.com" class="footer-link">orrentcomores@gmail.com</a><a href="https://wa.me/21654200528" target="_blank" class="footer-link">+216 54 200 528</a></div>
+    </div>
+    <div class="footer-bottom"><span>© 2026 ORRENT — Tous droits réservés</span></div>
+  </div>
+</footer>
+
+<a href="https://wa.me/21654200528" target="_blank" rel="noopener" class="wa-float" aria-label="WhatsApp"><svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg></a>
+
+<script src="js/main.js"></script>
+<script src="js/animations.js"></script>
+<script>
+function toggleFaq(btn) {
+  const item = btn.parentElement;
+  const isOpen = item.classList.contains('open');
+  document.querySelectorAll('.faq-item.open').forEach(i => i.classList.remove('open'));
+  if (!isOpen) item.classList.add('open');
+}
+</script>
+</body>
+</html>
+
