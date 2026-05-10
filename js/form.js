@@ -3,7 +3,7 @@ if (form) {
   form.addEventListener('submit', function(e) {
     e.preventDefault();
     const nom     = document.getElementById('nom').value.trim();
-    const contact = document.getElementById('contact').value.trim();
+    const contact = document.getElementById('contactField').value.trim();
     const activite = document.getElementById('activite').value.trim();
     const message = document.getElementById('message').value.trim();
 
