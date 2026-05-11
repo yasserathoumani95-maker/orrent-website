@@ -84,7 +84,7 @@ h3 { font-size: 19px; font-weight: 700; }
   font-family: var(--font-title);
   font-size: 20px;
   font-weight: 800;
-  color: var(--dark-2);
+  color: var(--green);
   letter-spacing: -0.02em;
 }
 
@@ -539,7 +539,7 @@ h3 { font-size: 19px; font-weight: 700; }
 [data-theme="dark"] .page-hero   { background: #070D14; }
 
 /* Logo + hamburger sur fond sombre */
-[data-theme="dark"] .logo-text   { color: var(--white-text); }
+[data-theme="dark"] .logo-text   { color: var(--green); }
 [data-theme="dark"] .hamburger   { color: rgba(255,255,255,0.85); }
 [data-theme="dark"] .ham-line    { background: rgba(255,255,255,0.85); }
 
