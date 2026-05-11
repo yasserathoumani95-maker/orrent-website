@@ -14,6 +14,9 @@
   --font-title: 'Syne', sans-serif;
   --font-body:  'DM Sans', sans-serif;
 
+  /* Blanc fixe — ne change JAMAIS en dark mode (pour texte sur fond sombre/coloré) */
+  --white-text: #FFFFFF;
+
   --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
   --ease-spring: cubic-bezier(0.32, 0.72, 0, 1);
 
