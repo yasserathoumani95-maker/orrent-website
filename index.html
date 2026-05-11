@@ -55,7 +55,7 @@
 <div class="mobile-overlay" id="mobileOverlay"></div>
 <nav class="mobile-nav" id="mobileNav">
   <a href="#about"          class="mobile-link">À propos</a>
-  <a href="#services"       class="mobile-link">Services</a>
+  <a href="services.html"   class="mobile-link">Services</a>
   <a href="ebooks.html"     class="mobile-link">eBooks</a>
   <a href="formations.html" class="mobile-link">Formations</a>
   <a href="#evenements"     class="mobile-link">Événements</a>
@@ -250,7 +250,10 @@
         <div class="badge badge-green">Gratuit</div>
         <h3>Diagnostic Gratuit</h3>
         <p>Audit de votre présence digitale + recommandations prioritaires. Idéal pour savoir où vous en êtes.</p>
-        <a href="#contact" class="btn btn-ghost-green btn-sm">Demander mon diagnostic</a>
+        <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:auto">
+          <a href="services.html#diagnostic" class="btn btn-outline btn-sm">En savoir plus</a>
+          <a href="#contact" class="btn btn-ghost-green btn-sm">Demander</a>
+        </div>
       </div>
 
       <div class="service-card featured card-hover reveal reveal-delay-1">
@@ -260,7 +263,10 @@
         <div class="badge badge-green">Populaire</div>
         <h3>Plan Stratégique Complet</h3>
         <p>5 séances personnalisées : SWOT, ciblage, ligne éditoriale, tunnel d'attraction, calendrier de contenu.</p>
-        <a href="#contact" class="btn btn-primary btn-sm">Je veux ce plan</a>
+        <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:auto">
+          <a href="services.html#strategie" class="btn btn-outline btn-sm" style="border-color:rgba(255,255,255,0.3);color:inherit">En savoir plus</a>
+          <a href="#contact" class="btn btn-primary btn-sm">Je veux ce plan</a>
+        </div>
       </div>
 
       <div class="service-card card-hover reveal reveal-delay-2">
@@ -269,7 +275,10 @@
         </div>
         <h3>Gestion de Présence Digitale</h3>
         <p>Nous créons et gérons votre stratégie de contenu sur TikTok, Instagram et Facebook.</p>
-        <a href="#contact" class="btn btn-outline btn-sm">Demander un devis</a>
+        <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:auto">
+          <a href="services.html#presence" class="btn btn-outline btn-sm">En savoir plus</a>
+          <a href="#contact" class="btn btn-outline btn-sm">Devis</a>
+        </div>
       </div>
 
       <div class="service-card card-hover reveal reveal-delay-3">
@@ -279,8 +288,19 @@
         <div class="badge badge-amber">En cours</div>
         <h3>Formation Samedi Digital</h3>
         <p>Formation hebdomadaire en ligne pour maîtriser le marketing digital étape par étape.</p>
-        <a href="formations.html" class="btn btn-outline btn-sm">Rejoindre la formation</a>
+        <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:auto">
+          <a href="formations.html" class="btn btn-outline btn-sm">En savoir plus</a>
+          <a href="formations.html#formation-1" class="btn btn-outline btn-sm">S'inscrire</a>
+        </div>
       </div>
+    </div>
+
+    <!-- CTA bas de section -->
+    <div style="text-align:center;margin-top:48px" class="reveal">
+      <a href="services.html" class="btn btn-dark btn-lg">
+        Voir tous nos services
+        <span class="btn-icon"><svg viewBox="0 0 16 16" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 13L13 3M13 3H7M13 3v6"/></svg></span>
+      </a>
     </div>
   </div>
 </section>
@@ -659,7 +679,7 @@
         <h4>Navigation</h4>
         <a href="#hero"       class="footer-link">Accueil</a>
         <a href="#about"      class="footer-link">À propos</a>
-        <a href="#services"   class="footer-link">Services</a>
+        <a href="services.html" class="footer-link">Services</a>
         <a href="#contact"    class="footer-link">Contact</a>
       </div>
 
