@@ -32,51 +32,44 @@ document.querySelectorAll('.mobile-nav .nav-link').forEach(link => {
   link.addEventListener('click', closeMenu);
 });
 
-// ── Scroll nav button (haut / bas) ──────────────
+// ── Scroll nav buttons (haut + bas) ─────────────
 (function () {
-  var btn = document.createElement('button');
-  btn.className = 'scroll-nav-btn going-down';
-  btn.setAttribute('aria-label', 'Aller en bas');
-  btn.innerHTML = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"/></svg>';
-  document.body.appendChild(btn);
+  var wrap = document.createElement('div');
+  wrap.className = 'scroll-nav-wrap';
+
+  var btnUp = document.createElement('button');
+  btnUp.className = 'scroll-nav-btn';
+  btnUp.setAttribute('aria-label', 'Remonter en haut');
+  btnUp.innerHTML = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"/></svg>';
+
+  var btnDown = document.createElement('button');
+  btnDown.className = 'scroll-nav-btn';
+  btnDown.setAttribute('aria-label', 'Aller en bas');
+  btnDown.innerHTML = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>';
+
+  wrap.appendChild(btnUp);
+  wrap.appendChild(btnDown);
+  document.body.appendChild(wrap);
 
   var hideTimer = null;
 
   function show() {
-    btn.classList.add('visible');
+    wrap.classList.add('visible');
     clearTimeout(hideTimer);
     hideTimer = setTimeout(function () {
-      btn.classList.remove('visible');
+      wrap.classList.remove('visible');
     }, 3000);
   }
 
-  function updateDirection() {
-    if (window.scrollY < 200) {
-      btn.classList.add('going-down');
-      btn.classList.remove('going-up');
-      btn.setAttribute('aria-label', 'Aller en bas');
-    } else {
-      btn.classList.add('going-up');
-      btn.classList.remove('going-down');
-      btn.setAttribute('aria-label', 'Remonter en haut');
-    }
-  }
-
-  btn.addEventListener('click', function () {
-    clearTimeout(hideTimer);
-    if (btn.classList.contains('going-down')) {
-      window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
-    } else {
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    }
+  btnUp.addEventListener('click', function () {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   });
 
-  window.addEventListener('scroll', function () {
-    updateDirection();
-    show();
-  }, { passive: true });
+  btnDown.addEventListener('click', function () {
+    window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+  });
 
-  updateDirection();
+  window.addEventListener('scroll', show, { passive: true });
 }());
 
 // Smooth scroll
