@@ -32,6 +32,43 @@ document.querySelectorAll('.mobile-nav .nav-link').forEach(link => {
   link.addEventListener('click', closeMenu);
 });
 
+// ── Scroll nav button (haut / bas) ──────────────
+(function () {
+  var btn = document.createElement('button');
+  btn.className = 'scroll-nav-btn going-down';
+  btn.setAttribute('aria-label', 'Aller en bas');
+  btn.innerHTML = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"/></svg>';
+  document.body.appendChild(btn);
+
+  function update() {
+    var scrolled  = window.scrollY;
+    var maxScroll = document.body.scrollHeight - window.innerHeight;
+    var nearTop   = scrolled < 200;
+
+    if (nearTop) {
+      btn.classList.add('going-down');
+      btn.classList.remove('going-up');
+      btn.setAttribute('aria-label', 'Aller en bas');
+    } else {
+      btn.classList.add('going-up');
+      btn.classList.remove('going-down');
+      btn.setAttribute('aria-label', 'Remonter en haut');
+    }
+    btn.classList.add('visible');
+  }
+
+  btn.addEventListener('click', function () {
+    if (btn.classList.contains('going-down')) {
+      window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+    } else {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  });
+
+  window.addEventListener('scroll', update, { passive: true });
+  setTimeout(update, 150);
+}());
+
 // Smooth scroll
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
   anchor.addEventListener('click', function(e) {

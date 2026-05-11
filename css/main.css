@@ -404,6 +404,30 @@ h3 { font-size: 19px; font-weight: 700; }
 .wa-float:hover { transform: scale(1.08); }
 .wa-float svg { width: 26px; height: 26px; fill: currentColor; }
 
+/* ── SCROLL NAV BUTTON ──────────────────────── */
+.scroll-nav-btn {
+  position: fixed;
+  bottom: 88px; right: 24px;
+  width: 44px; height: 44px;
+  background: var(--dark-2);
+  border: 1px solid rgba(255,255,255,0.12);
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  color: #ffffff;
+  cursor: pointer;
+  z-index: 89;
+  padding: 0;
+  opacity: 0;
+  transform: translateY(10px);
+  transition: opacity 0.35s var(--ease-out), transform 0.35s var(--ease-out), background 0.25s, border-color 0.25s;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.28);
+}
+.scroll-nav-btn.visible { opacity: 1; transform: translateY(0); }
+.scroll-nav-btn:hover { background: var(--green); border-color: var(--green); }
+.scroll-nav-btn svg { transition: transform 0.4s var(--ease-out); display: block; }
+.scroll-nav-btn.going-down svg { transform: rotate(180deg); }
+.scroll-nav-btn.going-up svg { transform: rotate(0deg); }
+
 /* ── BACK TO HOME LINK ─────────────────── */
 .breadcrumb { display: flex; align-items: center; gap: 8px; font-size: 13px; color: var(--muted); margin-bottom: 32px; }
 .breadcrumb a { color: var(--green-dark); font-weight: 500; }
