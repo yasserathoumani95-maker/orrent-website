@@ -23,7 +23,25 @@
   --r-xl:  36px;
   --r-pill: 999px;
 
-  --shadow-card: 0 2px 16px rgba(0,0,0,0.06), 0 0 0 1px rgba(0,0,0,0.04);
+  --surface:      #F8FAFC;
+  --shadow-sm:    0 1px 8px rgba(0,0,0,0.06);
+  --shadow-lg:    0 8px 48px rgba(0,0,0,0.10);
+  --shadow-card:  0 2px 16px rgba(0,0,0,0.06), 0 0 0 1px rgba(0,0,0,0.04);
   --shadow-hover: 0 12px 40px rgba(0,0,0,0.12), 0 0 0 1px rgba(0,0,0,0.04);
   --shadow-green: 0 8px 32px rgba(22,199,132,0.28);
+}
+
+/* ── DARK MODE ───────────────────────────── */
+[data-theme="dark"] {
+  --white:        #0D1117;
+  --surface:      #161B22;
+  --body:         #CDD9E5;
+  --muted:        #8B949E;
+  --border:       rgba(255,255,255,0.08);
+  --border-dark:  rgba(255,255,255,0.12);
+  --green-light:  rgba(22,199,132,0.1);
+  --green-mid:    rgba(22,199,132,0.15);
+  --shadow-card:  0 2px 16px rgba(0,0,0,0.5);
+  --shadow-hover: 0 12px 40px rgba(0,0,0,0.6);
+  --shadow-lg:    0 8px 48px rgba(0,0,0,0.4);
 }
