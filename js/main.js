@@ -40,12 +40,18 @@ document.querySelectorAll('.mobile-nav .nav-link').forEach(link => {
   btn.innerHTML = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"/></svg>';
   document.body.appendChild(btn);
 
-  function update() {
-    var scrolled  = window.scrollY;
-    var maxScroll = document.body.scrollHeight - window.innerHeight;
-    var nearTop   = scrolled < 200;
+  var hideTimer = null;
 
-    if (nearTop) {
+  function show() {
+    btn.classList.add('visible');
+    clearTimeout(hideTimer);
+    hideTimer = setTimeout(function () {
+      btn.classList.remove('visible');
+    }, 3000);
+  }
+
+  function updateDirection() {
+    if (window.scrollY < 200) {
       btn.classList.add('going-down');
       btn.classList.remove('going-up');
       btn.setAttribute('aria-label', 'Aller en bas');
@@ -54,10 +60,10 @@ document.querySelectorAll('.mobile-nav .nav-link').forEach(link => {
       btn.classList.remove('going-down');
       btn.setAttribute('aria-label', 'Remonter en haut');
     }
-    btn.classList.add('visible');
   }
 
   btn.addEventListener('click', function () {
+    clearTimeout(hideTimer);
     if (btn.classList.contains('going-down')) {
       window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
     } else {
@@ -65,8 +71,12 @@ document.querySelectorAll('.mobile-nav .nav-link').forEach(link => {
     }
   });
 
-  window.addEventListener('scroll', update, { passive: true });
-  setTimeout(update, 150);
+  window.addEventListener('scroll', function () {
+    updateDirection();
+    show();
+  }, { passive: true });
+
+  updateDirection();
 }());
 
 // Smooth scroll
