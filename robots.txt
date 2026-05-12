@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://yasserathoumani95-maker.github.io/orrent-website/sitemap.xml
