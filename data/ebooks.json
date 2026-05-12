@@ -1,22 +1,74 @@
 [
   {
     "id": "1",
-    "titre": "Guide TikTok pour entrepreneurs comoriens",
-    "description": "Les 5 étapes pour bâtir une audience sur TikTok sans budget publicitaire. Stratégie, formats, fréquence et hooks gagnants.",
+    "titre": "Guide du Marketing Digital aux Comores",
+    "description": "Les bases pour lancer votre présence en ligne dans le contexte comorien. Réseaux sociaux, contenu, positionnement.",
     "couverture": "",
     "pdf": "",
-    "badge": "Gratuit",
-    "pages": "24 pages",
+    "badge": "Débutant",
+    "prix": "3 000 FC",
+    "pages": "",
+    "lien_achat": "https://wa.me/21654200528?text=Je%20souhaite%20acheter%20le%20guide%20marketing%20digital",
     "visible": true
   },
   {
     "id": "2",
-    "titre": "Tunnel d'attraction : de 0 à vos premiers clients",
-    "description": "Comment créer un système qui attire des clients en automatique. Contenu, landing page, suivi WhatsApp — tout le processus expliqué.",
+    "titre": "Psychologie Client & Persuasion",
+    "description": "Comprendre vos clients pour mieux vendre vos produits et services. Biais cognitifs, déclencheurs d'achat, communication.",
     "couverture": "",
     "pdf": "",
-    "badge": "Gratuit",
-    "pages": "32 pages",
+    "badge": "Intermédiaire",
+    "prix": "4 000 FC",
+    "pages": "",
+    "lien_achat": "https://wa.me/21654200528?text=Je%20souhaite%20acheter%20l%27ebook%20psychologie%20client",
+    "visible": true
+  },
+  {
+    "id": "3",
+    "titre": "Tunnel de Vente simplifié",
+    "description": "Construire votre funnel de A à Z sans budget marketing excessif. Étapes pratiques et outils gratuits.",
+    "couverture": "",
+    "pdf": "",
+    "badge": "Avancé",
+    "prix": "5 000 FC",
+    "pages": "",
+    "lien_achat": "https://wa.me/21654200528?text=Je%20souhaite%20acheter%20l%27ebook%20tunnel%20de%20vente",
+    "visible": true
+  },
+  {
+    "id": "4",
+    "titre": "TikTok pour Entrepreneurs",
+    "description": "Stratégie organique TikTok pour vendre sans publicité payante. Format, calendrier, croissance.",
+    "couverture": "",
+    "pdf": "",
+    "badge": "Débutant",
+    "prix": "3 500 FC",
+    "pages": "",
+    "lien_achat": "https://wa.me/21654200528?text=Je%20souhaite%20acheter%20l%27ebook%20TikTok",
+    "visible": true
+  },
+  {
+    "id": "5",
+    "titre": "Ligne Éditoriale en 7 jours",
+    "description": "Créer une identité de contenu forte et cohérente sur les réseaux sociaux. Templates et exemples inclus.",
+    "couverture": "",
+    "pdf": "",
+    "badge": "Intermédiaire",
+    "prix": "2 500 FC",
+    "pages": "",
+    "lien_achat": "https://wa.me/21654200528?text=Je%20souhaite%20acheter%20l%27ebook%20ligne%20éditoriale",
+    "visible": true
+  },
+  {
+    "id": "6",
+    "titre": "Inbound Marketing Pratique",
+    "description": "Attirer des clients qualifiés grâce au contenu de valeur. La méthode ORRENT complète, étape par étape.",
+    "couverture": "",
+    "pdf": "",
+    "badge": "Avancé",
+    "prix": "5 000 FC",
+    "pages": "",
+    "lien_achat": "https://wa.me/21654200528?text=Je%20souhaite%20acheter%20l%27ebook%20inbound%20marketing",
     "visible": true
   }
 ]
