@@ -275,11 +275,11 @@
       <label class="lbl" for="iPwd">Mot de passe</label>
       <input type="password" id="iPwd" class="inp" placeholder="••••••••" autocomplete="current-password">
     </div>
-    <div id="patWrap">
+    <div id="patWrap" style="display:none">
       <div class="inp-wrap">
-        <label class="lbl" for="iPat">Token GitHub <span style="font-weight:400;text-transform:none;letter-spacing:0;color:var(--muted-2)">(première connexion)</span></label>
+        <label class="lbl" for="iPat">Code d'accès technique <span style="font-weight:400;text-transform:none;letter-spacing:0;color:var(--muted-2)">(une seule fois)</span></label>
         <input type="password" id="iPat" class="inp" placeholder="ghp_xxxxxxxxxxxx">
-        <p class="inp-hint">github.com → Settings → Developer settings → Personal access tokens → permission <strong>repo</strong>.</p>
+        <p class="inp-hint">Ce code n'est demandé qu'une seule fois. Il sera mémorisé automatiquement.</p>
       </div>
     </div>
     <button class="btn-signin" onclick="doLogin()">Se connecter</button>
@@ -488,9 +488,12 @@ document.getElementById('iPwd').addEventListener('keydown', e => { if (e.key==='
 function boot() {
   document.getElementById('loginScreen').style.display = 'none';
   document.getElementById('app').style.display = 'block';
-  if (localStorage.getItem('o_pat')) document.getElementById('patWrap').style.display = 'none';
   initNav();
   loadAll();
+}
+// Afficher le champ token uniquement si pas encore enregistré
+if (!localStorage.getItem('o_pat')) {
+  document.getElementById('patWrap').style.display = 'block';
 }
 if (localStorage.getItem('o_auth')==='1' && localStorage.getItem('o_pat')) {
   document.addEventListener('DOMContentLoaded', boot);
@@ -713,6 +716,30 @@ async function saveParams() {
   } catch(e) { showAlert(e.message, 'err'); }
 }
 
+// ─── SELECT + AUTRE ───────────────────────────────────
+function selOther(id, opts, current) {
+  const isOther = current && !opts.includes(current);
+  return `<select class="fcontrol" id="${id}" onchange="toggleOther(this,'${id}_o')">
+    <option value="">— Choisir —</option>
+    ${opts.map(o=>`<option value="${o}"${current===o?' selected':''}>${o}</option>`).join('')}
+    <option value="__autre__"${isOther?' selected':''}>Autre…</option>
+  </select>
+  <input type="text" id="${id}_o" class="fcontrol" style="display:${isOther?'block':'none'};margin-top:8px" placeholder="Précisez…" value="${isOther?current:''}">`;
+}
+function toggleOther(sel, othId) {
+  const el = document.getElementById(othId);
+  if (el) el.style.display = sel.value==='__autre__' ? 'block' : 'none';
+}
+function getSelOther(id) {
+  const sel = document.getElementById(id);
+  if (!sel) return '';
+  if (sel.value === '__autre__') { const o=document.getElementById(id+'_o'); return o?o.value.trim():''; }
+  return sel.value;
+}
+function slugify(s) {
+  return s.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'').replace(/[^a-z0-9]+/g,'-').replace(/^-+|-+$/g,'');
+}
+
 // ─── MODAL / FORM ─────────────────────────────────────
 let mType = null, mId = null;
 
@@ -785,11 +812,17 @@ function buildForm(type, id) {
         <strong>Livraison manuelle :</strong> une fois le client payé, vous lui envoyez l'eBook directement par WhatsApp ou par email.
       </div>
       <div class="grid2">
-        <div class="fgroup"><label class="flabel">Prix <span>*</span></label><input class="fcontrol" id="f_prix" value="${d.prix||''}" placeholder="3 000 FC"></div>
-        <div class="fgroup"><label class="flabel">Niveau</label><input class="fcontrol" id="f_badge" value="${d.badge||''}" placeholder="Débutant / Intermédiaire / Avancé"></div>
+        <div class="fgroup"><label class="flabel">Prix <span>*</span></label>
+          ${selOther('f_prix',['2 500 FC','3 000 FC','3 500 FC','4 000 FC','5 000 FC'],d.prix||'')}
+        </div>
+        <div class="fgroup"><label class="flabel">Niveau</label>
+          ${selOther('f_badge',['Débutant','Intermédiaire','Avancé'],d.badge||'')}
+        </div>
       </div>
       <div class="grid2">
-        <div class="fgroup"><label class="flabel">Nombre de pages</label><input class="fcontrol" id="f_pages" value="${d.pages||''}" placeholder="24 pages"></div>
+        <div class="fgroup"><label class="flabel">Nombre de pages</label>
+          ${selOther('f_pages',['12 pages','16 pages','20 pages','24 pages','28 pages','32 pages','40 pages'],d.pages||'')}
+        </div>
         <div class="fgroup"><label class="flabel">Lien commande WhatsApp</label><input class="fcontrol" id="f_lien_achat" value="${d.lien_achat||''}" placeholder="https://wa.me/21654200528?text=…"></div>
       </div>
       <div class="fgroup"><label class="flabel">Visibilité</label>
@@ -806,8 +839,12 @@ function buildForm(type, id) {
         <div class="fgroup"><label class="flabel">Heure</label><input class="fcontrol" id="f_heure" value="${d.heure||''}" placeholder="10h00 (Comores)"></div>
       </div>
       <div class="grid2">
-        <div class="fgroup"><label class="flabel">Plateforme</label><input class="fcontrol" id="f_plateforme" value="${d.plateforme||''}" placeholder="WhatsApp / Zoom"></div>
-        <div class="fgroup"><label class="flabel">Badge</label><input class="fcontrol" id="f_badge" value="${d.badge||''}" placeholder="Hebdomadaire"></div>
+        <div class="fgroup"><label class="flabel">Plateforme</label>
+          ${selOther('f_plateforme',['WhatsApp','Zoom','WhatsApp / Zoom','TikTok Live','Facebook Live','TikTok Live / Facebook Live'],d.plateforme||'')}
+        </div>
+        <div class="fgroup"><label class="flabel">Fréquence</label>
+          ${selOther('f_badge',['Hebdomadaire','Mensuel','Ponctuel','Annuel'],d.badge||'')}
+        </div>
       </div>
       <div class="fgroup"><label class="flabel">Lien d'inscription</label><input class="fcontrol" id="f_lien" value="${d.lien||''}" placeholder="https://chat.whatsapp.com/..."></div>
       <div class="fgroup"><label class="flabel">Visibilité</label>
@@ -820,15 +857,25 @@ function buildForm(type, id) {
       <div class="fgroup"><label class="flabel">Titre <span>*</span></label><input class="fcontrol" id="f_titre" value="${d.titre||''}" placeholder="Samedi Digital"></div>
       <div class="fgroup"><label class="flabel">Description</label><textarea class="fcontrol" id="f_desc" rows="3">${d.description||''}</textarea></div>
       <div class="grid2">
-        <div class="fgroup"><label class="flabel">Fréquence</label><input class="fcontrol" id="f_frequence" value="${d.frequence||''}" placeholder="Hebdomadaire — chaque samedi"></div>
-        <div class="fgroup"><label class="flabel">Sessions</label><input class="fcontrol" id="f_sessions" value="${d.sessions||''}" placeholder="17 sessions"></div>
+        <div class="fgroup"><label class="flabel">Fréquence</label>
+          ${selOther('f_frequence',['Hebdomadaire — chaque samedi','Hebdomadaire — chaque dimanche','Bimensuelle','Mensuelle','Intensive (plusieurs jours)'],d.frequence||'')}
+        </div>
+        <div class="fgroup"><label class="flabel">Sessions</label>
+          ${selOther('f_sessions',['5 sessions','8 sessions','10 sessions','12 sessions','15 sessions','17 sessions','20 sessions'],d.sessions||'')}
+        </div>
       </div>
       <div class="grid2">
-        <div class="fgroup"><label class="flabel">Durée / session</label><input class="fcontrol" id="f_duree" value="${d.duree||''}" placeholder="2h par session"></div>
-        <div class="fgroup"><label class="flabel">Prix</label><input class="fcontrol" id="f_prix" value="${d.prix||''}" placeholder="Gratuit jusqu'en juillet 2026"></div>
+        <div class="fgroup"><label class="flabel">Durée / session</label>
+          ${selOther('f_duree',['1h par session','1h30 par session','2h par session','3h par session','Journée complète'],d.duree||'')}
+        </div>
+        <div class="fgroup"><label class="flabel">Prix</label>
+          ${selOther('f_prix',['Gratuit','Gratuit jusqu\'en juillet 2026','5 000 FC','10 000 FC','15 000 FC','20 000 FC'],d.prix||'')}
+        </div>
       </div>
       <div class="grid2">
-        <div class="fgroup"><label class="flabel">Badge / Statut</label><input class="fcontrol" id="f_badge" value="${d.badge||''}" placeholder="En cours"></div>
+        <div class="fgroup"><label class="flabel">Statut</label>
+          ${selOther('f_badge',['En cours','À venir','Complet','Terminé'],d.badge||'')}
+        </div>
         <div class="fgroup"><label class="flabel">Lien d'inscription</label><input class="fcontrol" id="f_lien" value="${d.lien_inscription||''}" placeholder="https://chat.whatsapp.com/..."></div>
       </div>
       <div class="fgroup"><label class="flabel">Visibilité</label>
@@ -845,9 +892,14 @@ function buildForm(type, id) {
         <div class="fgroup"><label class="flabel">Temps de lecture</label><input class="fcontrol" id="f_lecture" value="${d.lecture||''}" placeholder="5 min"></div>
       </div>
       <div class="grid2">
-        <div class="fgroup"><label class="flabel">Catégorie</label><input class="fcontrol" id="f_badge" value="${d.badge||''}" placeholder="Marketing"></div>
-        <div class="fgroup"><label class="flabel">Fichier HTML</label><input class="fcontrol" id="f_fichier" value="${d.fichier||''}" placeholder="article-mon-sujet.html"></div>
+        <div class="fgroup"><label class="flabel">Catégorie</label>
+          ${selOther('f_badge',['Marketing','Psychologie','Tunnel de vente','Stratégie','Business','TikTok','Instagram','Facebook'],d.badge||'')}
+        </div>
+        <div class="fgroup"><label class="flabel">Temps de lecture</label>
+          ${selOther('f_lecture',['3 min','5 min','7 min','8 min','10 min','12 min','15 min'],d.lecture||'')}
+        </div>
       </div>
+      <input type="hidden" id="f_fichier" value="${d.fichier||''}">
       <div class="fgroup"><label class="flabel">Statut</label>
         <div class="toggle-row"><label class="toggle"><input type="checkbox" id="f_publie" ${d.publie!==false?'checked':''}><div class="toggle-track"></div></label><span class="toggle-lbl">Publié sur le blog</span></div>
       </div>`;
@@ -892,28 +944,38 @@ async function saveTem() {
   renderList('temoignages');
 }
 async function saveEbk() {
-  const it = { id:mId||nid(), titre:v('f_titre'), description:v('f_desc'), couverture:v('f_couv'), pdf:v('f_pdf'), prix:v('f_prix'), badge:v('f_badge'), pages:v('f_pages'), lien_achat:v('f_lien_achat'), visible:chk('f_visible') };
+  const it = { id:mId||nid(), titre:v('f_titre'), description:v('f_desc'), couverture:v('f_couv'),
+    prix:getSelOther('f_prix'), badge:getSelOther('f_badge'), pages:getSelOther('f_pages'),
+    lien_achat:v('f_lien_achat'), visible:chk('f_visible') };
   if (!it.titre||!it.prix) throw new Error('Titre et prix obligatoires.');
   upsert(S.ebooks.d, it);
   S.ebooks.s = await ghWrite('data/ebooks.json', S.ebooks.d, S.ebooks.s, 'Admin: ebook '+it.titre);
   renderList('ebooks');
 }
 async function saveEv() {
-  const it = { id:mId||nid(), titre:v('f_titre'), description:v('f_desc'), date:v('f_date'), heure:v('f_heure'), plateforme:v('f_plateforme'), badge:v('f_badge'), lien:v('f_lien'), visible:chk('f_visible') };
+  const it = { id:mId||nid(), titre:v('f_titre'), description:v('f_desc'), date:v('f_date'), heure:v('f_heure'),
+    plateforme:getSelOther('f_plateforme'), badge:getSelOther('f_badge'), lien:v('f_lien'), visible:chk('f_visible') };
   if (!it.titre) throw new Error('Titre obligatoire.');
   upsert(S.evenements.d, it);
   S.evenements.s = await ghWrite('data/evenements.json', S.evenements.d, S.evenements.s, 'Admin: événement '+it.titre);
   renderList('evenements');
 }
 async function saveFm() {
-  const it = { id:mId||nid(), titre:v('f_titre'), description:v('f_desc'), frequence:v('f_frequence'), sessions:v('f_sessions'), duree:v('f_duree'), prix:v('f_prix'), badge:v('f_badge'), lien_inscription:v('f_lien'), visible:chk('f_visible') };
+  const it = { id:mId||nid(), titre:v('f_titre'), description:v('f_desc'),
+    frequence:getSelOther('f_frequence'), sessions:getSelOther('f_sessions'),
+    duree:getSelOther('f_duree'), prix:getSelOther('f_prix'),
+    badge:getSelOther('f_badge'), lien_inscription:v('f_lien'), visible:chk('f_visible') };
   if (!it.titre) throw new Error('Titre obligatoire.');
   upsert(S.formations.d, it);
   S.formations.s = await ghWrite('data/formations.json', S.formations.d, S.formations.s, 'Admin: formation '+it.titre);
   renderList('formations');
 }
 async function saveArt() {
-  const it = { id:mId||nid(), titre:v('f_titre'), description:v('f_desc'), date:v('f_date'), lecture:v('f_lecture'), badge:v('f_badge'), fichier:v('f_fichier'), publie:chk('f_publie') };
+  const existingFichier = v('f_fichier');
+  const it = { id:mId||nid(), titre:v('f_titre'), description:v('f_desc'), date:v('f_date'),
+    lecture:getSelOther('f_lecture'), badge:getSelOther('f_badge'),
+    fichier: existingFichier || ('article-' + slugify(v('f_titre')) + '.html'),
+    publie:chk('f_publie') };
   if (!it.titre) throw new Error('Titre obligatoire.');
   upsert(S.articles.d, it);
   S.articles.s = await ghWrite('data/articles.json', S.articles.d, S.articles.s, 'Admin: article '+it.titre);
