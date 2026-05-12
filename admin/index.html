@@ -211,6 +211,23 @@
     .photo-prev { width: 72px; height: 72px; border-radius: 50%; object-fit: cover; border: 2px solid var(--border); }
     .cover-prev { width: 60px; height: 78px; border-radius: 6px; object-fit: cover; border: 2px solid var(--border); }
 
+    /* ─── UPLOAD ─── */
+    .upload-zone {
+      border: 1.5px dashed var(--border); border-radius: var(--r); padding: 20px 16px;
+      text-align: center; cursor: pointer; transition: all .15s; background: var(--bg);
+    }
+    .upload-zone:hover { border-color: var(--green); background: var(--green-bg); }
+    .upload-zone.uploading { opacity: .6; pointer-events: none; }
+    .upload-icon { width: 36px; height: 36px; background: var(--border-2); border-radius: 8px; display: flex; align-items: center; justify-content: center; margin: 0 auto 8px; }
+    .upload-title { font-size: 13px; font-weight: 600; margin-bottom: 2px; }
+    .upload-sub { font-size: 11.5px; color: var(--muted-2); }
+    .upload-progress { font-size: 12px; color: var(--green); margin-top: 6px; font-weight: 600; }
+    .upload-result { display: flex; align-items: center; gap: 10px; margin-top: 10px; padding: 10px 12px; background: var(--green-bg); border-radius: 8px; border: 1px solid rgba(22,199,132,.2); }
+    .upload-result img { border-radius: 6px; object-fit: cover; }
+    .upload-result-name { font-size: 12px; font-weight: 600; color: var(--green-dark); flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .upload-result-remove { background: none; border: none; cursor: pointer; color: var(--muted); padding: 2px; flex-shrink: 0; }
+    .upload-result-remove:hover { color: var(--red); }
+
     /* ─── SPINNER ─── */
     .spin { display: inline-block; width: 16px; height: 16px; border: 2px solid rgba(255,255,255,.3); border-top-color: white; border-radius: 50%; animation: rot .6s linear infinite; }
     @keyframes rot { to { transform: rotate(360deg); } }
@@ -720,10 +737,20 @@ function buildForm(type, id) {
         <div class="fgroup"><label class="flabel">Activité <span>*</span></label><input class="fcontrol" id="f_activite" value="${d.activite||''}" placeholder="Vente de vêtements"></div>
       </div>
       <div class="fgroup"><label class="flabel">Témoignage <span>*</span></label><textarea class="fcontrol" id="f_texte" rows="4" placeholder="Ce que dit le client sur votre accompagnement…">${d.texte||''}</textarea></div>
-      <div class="fgroup"><label class="flabel">Photo (URL directe)</label>
-        <input class="fcontrol" id="f_photo" value="${d.photo||''}" placeholder="https://lien-vers-photo.jpg" oninput="prevImg(this,'pv_photo','circle')">
-        <p class="fhint">Hébergez la photo sur Google Drive (lien public) ou Imgur et collez l'URL directe.</p>
-        <div class="photo-wrap ${d.photo?'show':''}" id="pv_photo_wrap"><img class="photo-prev" id="pv_photo" src="${d.photo||''}"></div>
+      <div class="fgroup">
+        <label class="flabel">Photo du client</label>
+        <input type="hidden" id="f_photo" value="${d.photo||''}">
+        ${d.photo ? `<div class="upload-result" id="uploadPhotoResult">
+          <img src="${d.photo}" class="photo-prev" style="width:44px;height:44px">
+          <span class="upload-result-name">Photo enregistrée</span>
+          <button type="button" class="upload-result-remove" onclick="clearUpload('photo')">✕</button>
+        </div>` : `<div class="upload-zone" id="uploadPhotoZone" onclick="document.getElementById('filePhoto').click()">
+          <div class="upload-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--muted)" stroke-width="2" stroke-linecap="round"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg></div>
+          <div class="upload-title">Importer une photo</div>
+          <div class="upload-sub">JPG, PNG — max 2 Mo</div>
+          <div class="upload-progress" id="photoProgress"></div>
+        </div>`}
+        <input type="file" id="filePhoto" accept="image/*" style="display:none" onchange="uploadFile(this,'photo','photos')">
       </div>
       <div class="grid2">
         <div class="fgroup"><label class="flabel">Note</label>
@@ -739,22 +766,31 @@ function buildForm(type, id) {
     return `
       <div class="fgroup"><label class="flabel">Titre <span>*</span></label><input class="fcontrol" id="f_titre" value="${d.titre||''}" placeholder="Titre du guide"></div>
       <div class="fgroup"><label class="flabel">Description <span>*</span></label><textarea class="fcontrol" id="f_desc" rows="3">${d.description||''}</textarea></div>
-      <div class="fgroup"><label class="flabel">Image de couverture (URL)</label>
-        <input class="fcontrol" id="f_couv" value="${d.couverture||''}" placeholder="https://lien-image.jpg" oninput="prevImg(this,'pv_couv','cover')">
-        <p class="fhint">Proportions 3:4 recommandées. Hébergez sur Google Drive ou Imgur.</p>
-        <div class="photo-wrap ${d.couverture?'show':''}" id="pv_couv_wrap"><img class="cover-prev" id="pv_couv" src="${d.couverture||''}"></div>
+      <div class="fgroup">
+        <label class="flabel">Couverture <span style="font-weight:400;text-transform:none;letter-spacing:0;color:var(--muted-2)">(image depuis votre PC)</span></label>
+        <input type="hidden" id="f_couv" value="${d.couverture||''}">
+        ${d.couverture ? `<div class="upload-result" id="uploadCouvrResult">
+          <img src="${d.couverture}" class="cover-prev" style="width:38px;height:50px">
+          <span class="upload-result-name">Couverture enregistrée</span>
+          <button type="button" class="upload-result-remove" onclick="clearUpload('couv')">✕</button>
+        </div>` : `<div class="upload-zone" id="uploadCouvrZone" onclick="document.getElementById('fileCouv').click()">
+          <div class="upload-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--muted)" stroke-width="2" stroke-linecap="round"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg></div>
+          <div class="upload-title">Importer la couverture</div>
+          <div class="upload-sub">JPG, PNG — proportions 3:4 recommandées</div>
+          <div class="upload-progress" id="couvProgress"></div>
+        </div>`}
+        <input type="file" id="fileCouv" accept="image/*" style="display:none" onchange="uploadFile(this,'couv','covers')">
       </div>
-      <div class="fgroup"><label class="flabel">Lien PDF</label>
-        <input class="fcontrol" id="f_pdf" value="${d.pdf||''}" placeholder="https://drive.google.com/file/d/...">
-        <p class="fhint">Lien de téléchargement direct. Vérifiez que le fichier est accessible au public.</p>
+      <div style="background:rgba(245,158,11,0.08);border:1px solid rgba(245,158,11,0.2);border-radius:8px;padding:12px 14px;margin-bottom:14px;font-size:13px;color:#92400E">
+        <strong>Livraison manuelle :</strong> une fois le client payé, vous lui envoyez l'eBook directement par WhatsApp ou par email.
       </div>
       <div class="grid2">
         <div class="fgroup"><label class="flabel">Prix <span>*</span></label><input class="fcontrol" id="f_prix" value="${d.prix||''}" placeholder="3 000 FC"></div>
-        <div class="fgroup"><label class="flabel">Niveau / Badge</label><input class="fcontrol" id="f_badge" value="${d.badge||''}" placeholder="Débutant"></div>
+        <div class="fgroup"><label class="flabel">Niveau</label><input class="fcontrol" id="f_badge" value="${d.badge||''}" placeholder="Débutant / Intermédiaire / Avancé"></div>
       </div>
       <div class="grid2">
         <div class="fgroup"><label class="flabel">Nombre de pages</label><input class="fcontrol" id="f_pages" value="${d.pages||''}" placeholder="24 pages"></div>
-        <div class="fgroup"><label class="flabel">Lien d'achat WhatsApp</label><input class="fcontrol" id="f_lien_achat" value="${d.lien_achat||''}" placeholder="https://wa.me/..."></div>
+        <div class="fgroup"><label class="flabel">Lien commande WhatsApp</label><input class="fcontrol" id="f_lien_achat" value="${d.lien_achat||''}" placeholder="https://wa.me/21654200528?text=…"></div>
       </div>
       <div class="fgroup"><label class="flabel">Visibilité</label>
         <div class="toggle-row"><label class="toggle"><input type="checkbox" id="f_visible" ${d.visible!==false?'checked':''}><div class="toggle-track"></div></label><span class="toggle-lbl">Publié sur le site</span></div>
@@ -895,6 +931,81 @@ async function delItem(type, id) {
     renderDash();
     showAlert('Élément supprimé.', 'ok');
   } catch(e) { showAlert(e.message, 'err'); }
+}
+
+// ─── FILE UPLOAD ──────────────────────────────────────
+async function uploadFile(input, fieldId, folder) {
+  const file = input.files[0];
+  if (!file) return;
+  if (file.size > 2 * 1024 * 1024) { showAlert('Image trop lourde (max 2 Mo).', 'err'); return; }
+
+  const zoneId    = fieldId === 'couv' ? 'uploadCouvrZone' : 'uploadPhotoZone';
+  const progressId = fieldId === 'couv' ? 'couvProgress' : 'photoProgress';
+  const zone      = document.getElementById(zoneId);
+  const prog      = document.getElementById(progressId);
+  if (zone) zone.classList.add('uploading');
+  if (prog) prog.textContent = 'Envoi en cours…';
+
+  const ext      = file.name.split('.').pop().toLowerCase();
+  const filename = 'uploads/' + folder + '/' + Date.now() + '.' + ext;
+  const reader   = new FileReader();
+
+  reader.onload = async function(e) {
+    const b64 = e.target.result.split(',')[1];
+    try {
+      // Check if file exists (get sha)
+      let sha = null;
+      try {
+        const check = await fetch(API + filename, { headers: { Authorization:'token '+gh() } });
+        if (check.ok) { const j = await check.json(); sha = j.sha; }
+      } catch(_) {}
+
+      const body = { message: 'Upload: ' + filename, content: b64, branch: BRANCH };
+      if (sha) body.sha = sha;
+      const r = await fetch(API + filename, {
+        method: 'PUT',
+        headers: { Authorization:'token '+gh(), 'Content-Type':'application/json' },
+        body: JSON.stringify(body)
+      });
+      if (!r.ok) throw new Error('Erreur upload');
+      const url = 'https://raw.githubusercontent.com/' + REPO + '/refs/heads/' + BRANCH + '/' + filename;
+      document.getElementById('f_' + fieldId).value = url;
+
+      // Show result
+      const resultId = fieldId === 'couv' ? 'uploadCouvrResult' : 'uploadPhotoResult';
+      const isCircle = fieldId === 'photo';
+      const imgStyle = isCircle ? 'width:44px;height:44px;border-radius:50%;' : 'width:38px;height:50px;border-radius:6px;';
+      if (zone) {
+        zone.outerHTML = `<div class="upload-result" id="${resultId}">
+          <img src="${url}?t=${Date.now()}" style="${imgStyle}object-fit:cover;border:2px solid var(--border)">
+          <span class="upload-result-name">${file.name}</span>
+          <button type="button" class="upload-result-remove" onclick="clearUpload('${fieldId}')">✕</button>
+        </div>`;
+      }
+    } catch(err) {
+      showAlert('Erreur upload : ' + err.message, 'err');
+      if (zone) zone.classList.remove('uploading');
+      if (prog) prog.textContent = '';
+    }
+  };
+  reader.readAsDataURL(file);
+}
+
+function clearUpload(fieldId) {
+  document.getElementById('f_' + fieldId).value = '';
+  const resultId = fieldId === 'couv' ? 'uploadCouvrResult' : 'uploadPhotoResult';
+  const folder   = fieldId === 'couv' ? 'covers' : 'photos';
+  const isCircle = fieldId === 'photo';
+  const result   = document.getElementById(resultId);
+  if (result) {
+    result.outerHTML = `<div class="upload-zone" id="upload${fieldId==='couv'?'Couv':'Photo'}Zone" onclick="document.getElementById('file${fieldId==='couv'?'Couv':'Photo'}').click()">
+      <div class="upload-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--muted)" stroke-width="2" stroke-linecap="round"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg></div>
+      <div class="upload-title">Importer ${fieldId==='couv'?'la couverture':'une photo'}</div>
+      <div class="upload-sub">${fieldId==='couv'?'JPG, PNG — proportions 3:4 recommandées':'JPG, PNG — max 2 Mo'}</div>
+      <div class="upload-progress" id="${fieldId==='couv'?'couv':'photo'}Progress"></div>
+    </div>
+    <input type="file" id="file${fieldId==='couv'?'Couv':'Photo'}" accept="image/*" style="display:none" onchange="uploadFile(this,'${fieldId}','${folder}')">`;
+  }
 }
 
 // ─── ALERTS ───────────────────────────────────────────
