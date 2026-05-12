@@ -1,0 +1,24 @@
+[
+  {
+    "id": "1",
+    "titre": "Samedi Digital",
+    "description": "Formation hebdomadaire marketing digital — stratégie, contenu, réseaux sociaux.",
+    "date": "Chaque samedi",
+    "heure": "10h00 (Comores)",
+    "plateforme": "WhatsApp / Zoom",
+    "lien": "https://chat.whatsapp.com/FhNm9t68yUzE7WHAMKfsgk?mode=gi_t",
+    "badge": "Hebdomadaire",
+    "visible": true
+  },
+  {
+    "id": "2",
+    "titre": "Live des Entrepreneurs",
+    "description": "Discussions business, stratégie, Q&A en direct avec l'équipe ORRENT.",
+    "date": "Chaque dimanche",
+    "heure": "20h00 (Comores)",
+    "plateforme": "TikTok Live / Facebook Live",
+    "lien": "https://www.tiktok.com/@orrentcomores",
+    "badge": "Hebdomadaire",
+    "visible": true
+  }
+]

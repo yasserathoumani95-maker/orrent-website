@@ -1,0 +1,29 @@
+[
+  {
+    "id": "1",
+    "nom": "Fatima Boina",
+    "activite": "Vente de vêtements",
+    "texte": "Avant ORRENT, je postais sur Facebook sans résultat. En 3 semaines, ma page TikTok a atteint 800 abonnés et mes ventes ont doublé.",
+    "photo": "",
+    "note": 5,
+    "visible": true
+  },
+  {
+    "id": "2",
+    "nom": "Said Ali",
+    "activite": "Restauration",
+    "texte": "La stratégie de contenu qu'ils m'ont donnée a tout changé. Maintenant les clients viennent à moi sans que je dépense en pub.",
+    "photo": "",
+    "note": 5,
+    "visible": true
+  },
+  {
+    "id": "3",
+    "nom": "Naïma Combo",
+    "activite": "Coaching beauté",
+    "texte": "Le diagnostic gratuit m'a ouvert les yeux sur ce que je faisais mal. J'ai tout restructuré et les résultats sont là.",
+    "photo": "",
+    "note": 5,
+    "visible": true
+  }
+]

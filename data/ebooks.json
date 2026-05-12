@@ -1,0 +1,22 @@
+[
+  {
+    "id": "1",
+    "titre": "Guide TikTok pour entrepreneurs comoriens",
+    "description": "Les 5 étapes pour bâtir une audience sur TikTok sans budget publicitaire. Stratégie, formats, fréquence et hooks gagnants.",
+    "couverture": "",
+    "pdf": "",
+    "badge": "Gratuit",
+    "pages": "24 pages",
+    "visible": true
+  },
+  {
+    "id": "2",
+    "titre": "Tunnel d'attraction : de 0 à vos premiers clients",
+    "description": "Comment créer un système qui attire des clients en automatique. Contenu, landing page, suivi WhatsApp — tout le processus expliqué.",
+    "couverture": "",
+    "pdf": "",
+    "badge": "Gratuit",
+    "pages": "32 pages",
+    "visible": true
+  }
+]

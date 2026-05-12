@@ -1,0 +1,35 @@
+[
+  {
+    "id": "1",
+    "titre": "Comment construire votre audience sur TikTok sans budget pub",
+    "description": "Les 5 étapes clés pour construire votre audience sur TikTok sans budget publicitaire.",
+    "date": "Mai 2026",
+    "lecture": "5 min",
+    "badge": "Marketing",
+    "badge_color": "green",
+    "fichier": "article-tiktok.html",
+    "publie": true
+  },
+  {
+    "id": "2",
+    "titre": "Les biais cognitifs qui influencent vos clients comoriens",
+    "description": "Comprendre la psychologie de l'acheteur comorien pour mieux vendre.",
+    "date": "Avr. 2026",
+    "lecture": "7 min",
+    "badge": "Psychologie",
+    "badge_color": "outline",
+    "fichier": "article-psychologie.html",
+    "publie": true
+  },
+  {
+    "id": "3",
+    "titre": "Créer votre premier tunnel d'attraction en 7 jours",
+    "description": "Guide pratique pour mettre en place un tunnel qui génère des clients en automatique.",
+    "date": "Mars 2026",
+    "lecture": "8 min",
+    "badge": "Tunnel de vente",
+    "badge_color": "dark",
+    "fichier": "article-tunnel.html",
+    "publie": true
+  }
+]

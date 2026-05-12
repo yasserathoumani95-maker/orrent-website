@@ -1,0 +1,14 @@
+[
+  {
+    "id": "1",
+    "titre": "Samedi Digital",
+    "description": "Formation marketing digital chaque samedi. Stratégie, création de contenu, réseaux sociaux — tout pour maîtriser le digital à votre rythme.",
+    "frequence": "Hebdomadaire",
+    "sessions": "17 sessions",
+    "duree": "2h par session",
+    "prix": "Gratuit",
+    "lien_inscription": "https://chat.whatsapp.com/FhNm9t68yUzE7WHAMKfsgk?mode=gi_t",
+    "badge": "En cours",
+    "visible": true
+  }
+]
