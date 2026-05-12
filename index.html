@@ -592,26 +592,27 @@
         <form id="contactForm" class="stack" style="gap:16px">
           <div class="form-group">
             <label class="form-label" for="nom">Nom complet</label>
-            <input type="text" id="nom" class="form-control" placeholder="Votre nom" required>
+            <input type="text" id="nom" name="nom" class="form-control" placeholder="Votre nom" required>
           </div>
           <div class="form-group">
             <label class="form-label" for="contactField">Email ou WhatsApp</label>
-            <input type="text" id="contactField" class="form-control" placeholder="email@exemple.com ou +269..." required>
+            <input type="text" id="contactField" name="contact" class="form-control" placeholder="email@exemple.com ou +269..." required>
           </div>
           <div class="form-group">
             <label class="form-label" for="activite">Votre activité</label>
-            <input type="text" id="activite" class="form-control" placeholder="Vente, restauration, services...">
+            <input type="text" id="activite" name="activite" class="form-control" placeholder="Vente, restauration, services...">
           </div>
           <div class="form-group">
             <label class="form-label" for="message">Message</label>
-            <textarea id="message" class="form-control" placeholder="Décrivez votre projet ou votre question..." required></textarea>
+            <textarea id="message" name="message" class="form-control" placeholder="Décrivez votre projet ou votre question..." required></textarea>
           </div>
-          <button type="submit" class="btn btn-primary btn-full">
+          <button type="submit" id="contactSubmit" class="btn btn-primary btn-full">
             Envoyer ma demande
-            <span class="btn-icon">
+            <span class="btn-icon" id="contactBtnIcon">
               <svg viewBox="0 0 16 16" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 13L13 3M13 3H7M13 3v6"/></svg>
             </span>
           </button>
+          <div id="formFeedback" style="display:none;padding:14px 18px;border-radius:10px;font-size:14px;font-weight:500;text-align:center"></div>
         </form>
       </div>
 
