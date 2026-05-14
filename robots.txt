@@ -1,4 +1,5 @@
 User-agent: *
+Disallow: /gestion-4k9x2m/
 Allow: /
 
 Sitemap: https://yasserathoumani95-maker.github.io/orrent-website/sitemap.xml

@@ -4,10 +4,11 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="robots" content="noindex, nofollow">
+  <!-- CSP : seuls les scripts internes et l'API GitHub sont autorisés -->
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; connect-src https://api.github.com https://raw.githubusercontent.com; img-src 'self' https://raw.githubusercontent.com data: blob:; frame-ancestors 'none'; base-uri 'self'; form-action 'self';">
   <title>Administration — ORRENT</title>
   <link rel="icon" type="image/png" href="../logo.png">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700;800&family=DM+Sans:wght@300;400;500;600&display=swap">
+  <!-- Polices système uniquement — pas de dépendance externe pour le panel admin -->
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     :root {
@@ -20,7 +21,7 @@
       --border: #e2e8f0; --border-2: #f1f5f9;
       --bg: #f8fafc; --card: #ffffff; --r: 10px; --r-lg: 14px;
     }
-    body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--body); min-height: 100vh; font-size: 14px; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif; background: var(--bg); color: var(--body); min-height: 100vh; font-size: 14px; }
     a { text-decoration: none; color: inherit; }
 
     /* ─── LOGIN ─── */
@@ -34,9 +35,9 @@
     }
     .login-brand { display: flex; align-items: center; gap: 10px; margin-bottom: 36px; }
     .login-brand img { width: 34px; height: 34px; border-radius: 50%; object-fit: contain; clip-path: circle(44% at 50% 50%); }
-    .login-brand-name { font-family: 'Montserrat', sans-serif; font-weight: 800; font-size: 19px; color: var(--green); }
+    .login-brand-name { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif; font-weight: 800; font-size: 19px; color: var(--green); }
     .login-brand-badge { font-size: 10px; background: var(--green-bg); color: var(--green-dark); padding: 3px 8px; border-radius: 20px; font-weight: 700; letter-spacing: .04em; text-transform: uppercase; }
-    .login-heading { font-family: 'Montserrat', sans-serif; font-weight: 700; font-size: 20px; margin-bottom: 4px; }
+    .login-heading { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif; font-weight: 700; font-size: 20px; margin-bottom: 4px; }
     .login-sub { font-size: 13px; color: var(--muted); margin-bottom: 28px; }
     .lbl { display: block; font-size: 12px; font-weight: 600; color: var(--muted); text-transform: uppercase; letter-spacing: .06em; margin-bottom: 7px; }
     .inp {
@@ -49,7 +50,7 @@
     .inp-hint { font-size: 11.5px; color: var(--muted-2); margin-top: 6px; line-height: 1.55; }
     .btn-signin {
       width: 100%; padding: 13px; background: var(--green); color: white; border: none;
-      border-radius: var(--r); font-family: 'Montserrat', sans-serif; font-weight: 700; font-size: 14px;
+      border-radius: var(--r); font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif; font-weight: 700; font-size: 14px;
       cursor: pointer; margin-top: 8px; transition: background .18s;
     }
     .btn-signin:hover { background: var(--green-dark); }
@@ -70,7 +71,7 @@
       display: flex; align-items: center; gap: 9px;
     }
     .sb-head img { width: 30px; height: 30px; border-radius: 50%; object-fit: contain; clip-path: circle(44% at 50% 50%); }
-    .sb-head-name { font-family: 'Montserrat', sans-serif; font-weight: 800; font-size: 16px; color: var(--green); }
+    .sb-head-name { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif; font-weight: 800; font-size: 16px; color: var(--green); }
     .sb-head-tag { font-size: 9.5px; background: rgba(22,199,132,.12); color: var(--green); padding: 2px 7px; border-radius: 20px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; margin-left: auto; }
     .sb-section { padding: 16px 14px 4px; font-size: 10px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: rgba(255,255,255,.25); }
     .sb-item {
@@ -102,7 +103,7 @@
 
     /* ─── TOP BAR ─── */
     .topbar { display: flex; align-items: center; justify-content: space-between; margin-bottom: 26px; gap: 12px; flex-wrap: wrap; }
-    .topbar-left h1 { font-family: 'Montserrat', sans-serif; font-size: 20px; font-weight: 800; }
+    .topbar-left h1 { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif; font-size: 20px; font-weight: 800; }
     .topbar-left p { font-size: 13px; color: var(--muted); margin-top: 2px; }
 
     /* ─── ALERT ─── */
@@ -114,7 +115,7 @@
     /* ─── STATS ─── */
     .stats { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 14px; margin-bottom: 28px; }
     .stat { background: var(--card); border: 1px solid var(--border); border-radius: var(--r-lg); padding: 18px 20px; }
-    .stat-n { font-family: 'Montserrat', sans-serif; font-size: 30px; font-weight: 800; color: var(--green); line-height: 1; margin-bottom: 6px; }
+    .stat-n { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif; font-size: 30px; font-weight: 800; color: var(--green); line-height: 1; margin-bottom: 6px; }
     .stat-l { font-size: 12.5px; color: var(--muted); font-weight: 500; }
     .stat-icon { width: 32px; height: 32px; background: var(--green-bg); border-radius: 8px; display: flex; align-items: center; justify-content: center; margin-bottom: 12px; }
 
@@ -161,7 +162,7 @@
       border: 1.5px dashed var(--border); border-radius: var(--r-lg);
     }
     .empty-ico { width: 48px; height: 48px; background: var(--bg); border-radius: 12px; display: flex; align-items: center; justify-content: center; margin: 0 auto 14px; }
-    .empty h3 { font-family: 'Montserrat', sans-serif; font-size: 15px; font-weight: 700; margin-bottom: 5px; }
+    .empty h3 { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif; font-size: 15px; font-weight: 700; margin-bottom: 5px; }
     .empty p { font-size: 13px; color: var(--muted); margin-bottom: 18px; }
 
     /* ─── MODAL ─── */
@@ -178,7 +179,7 @@
     }
     .overlay.open .modal { transform: translateY(0); }
     .modal-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 22px; padding-bottom: 16px; border-bottom: 1px solid var(--border); }
-    .modal-title { font-family: 'Montserrat', sans-serif; font-weight: 700; font-size: 17px; }
+    .modal-title { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif; font-weight: 700; font-size: 17px; }
     .modal-close { background: none; border: none; cursor: pointer; color: var(--muted); padding: 4px; border-radius: 6px; display: flex; }
     .modal-close:hover { background: var(--bg); color: var(--body); }
     .modal-foot { display: flex; justify-content: flex-end; gap: 9px; margin-top: 20px; padding-top: 18px; border-top: 1px solid var(--border); }
@@ -236,7 +237,7 @@
 
     /* ─── PARAMS ─── */
     .params-card { background: var(--card); border: 1px solid var(--border); border-radius: var(--r-lg); padding: 26px; max-width: 580px; }
-    .params-section-title { font-family: 'Montserrat', sans-serif; font-weight: 700; font-size: 13px; color: var(--muted); text-transform: uppercase; letter-spacing: .08em; margin: 22px 0 14px; padding-top: 18px; border-top: 1px solid var(--border); }
+    .params-section-title { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif; font-weight: 700; font-size: 13px; color: var(--muted); text-transform: uppercase; letter-spacing: .08em; margin: 22px 0 14px; padding-top: 18px; border-top: 1px solid var(--border); }
     .params-section-title:first-child { margin-top: 0; padding-top: 0; border-top: none; }
 
     /* ─── QUICK ACTIONS ─── */
@@ -454,35 +455,66 @@
 // ─── CONFIG ───────────────────────────────────────────
 const REPO     = 'yasserathoumani95-maker/orrent-website';
 const BRANCH   = 'master';
-const PWD_HASH = 'fc2bd17fff97aff5010a94b32940ee80734c8ed09c9e07b354676b659c588b9b';
+// Hash SHA-256 du mot de passe admin (ne pas modifier manuellement)
+const PWD_HASH = '617b82924b9727425f95afc368b072caafa3b311ac5e543ec8613e41c62ffdfd';
 const API      = 'https://api.github.com/repos/' + REPO + '/contents/';
+
+// ─── SÉCURITÉ : échappement HTML (protection XSS) ─────
+function esc(s) {
+  return String(s == null ? '' : s)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;');
+}
 
 // ─── AUTH ─────────────────────────────────────────────
 async function sha256(s) {
   const b = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(s));
   return Array.from(new Uint8Array(b)).map(x=>x.toString(16).padStart(2,'0')).join('');
 }
+
+// Limite de tentatives : 5 max puis blocage 30 secondes
+let _loginAttempts = 0;
+let _loginLocked   = false;
+
 async function doLogin() {
-  const pwd = document.getElementById('iPwd').value;
-  const pat = document.getElementById('iPat').value.trim();
-  if (await sha256(pwd) !== PWD_HASH) {
+  if (_loginLocked) {
     const e = document.getElementById('loginErr');
-    e.textContent = 'Mot de passe incorrect.';
+    e.textContent = 'Trop de tentatives. Attendez 30 secondes.';
     e.style.display = 'block';
     return;
   }
-  const stored = localStorage.getItem('o_pat');
-  if (pat) localStorage.setItem('o_pat', pat);
+  const pwd = document.getElementById('iPwd').value;
+  const pat = document.getElementById('iPat').value.trim();
+  if (await sha256(pwd) !== PWD_HASH) {
+    _loginAttempts++;
+    const e = document.getElementById('loginErr');
+    if (_loginAttempts >= 5) {
+      _loginLocked = true;
+      setTimeout(() => { _loginLocked = false; _loginAttempts = 0; }, 30000);
+      e.textContent = 'Trop de tentatives. Accès bloqué 30 secondes.';
+    } else {
+      e.textContent = 'Mot de passe incorrect. (' + _loginAttempts + '/5 essais)';
+    }
+    e.style.display = 'block';
+    return;
+  }
+  _loginAttempts = 0;
+  // PAT stocké en sessionStorage (effacé à la fermeture du navigateur)
+  const stored = sessionStorage.getItem('o_pat');
+  if (pat) sessionStorage.setItem('o_pat', pat);
   else if (!stored) {
     const e = document.getElementById('loginErr');
-    e.textContent = 'Entrez votre token GitHub pour la première connexion.';
+    e.textContent = 'Entrez votre token GitHub pour cette session.';
     e.style.display = 'block';
     return;
   }
   localStorage.setItem('o_auth', '1');
   boot();
 }
-function doLogout() { localStorage.removeItem('o_auth'); location.reload(); }
+function doLogout() { localStorage.removeItem('o_auth'); sessionStorage.removeItem('o_pat'); location.reload(); }
 document.getElementById('iPwd').addEventListener('keydown', e => { if (e.key==='Enter') doLogin(); });
 
 function boot() {
@@ -491,11 +523,11 @@ function boot() {
   initNav();
   loadAll();
 }
-// Afficher le champ token uniquement si pas encore enregistré
-if (!localStorage.getItem('o_pat')) {
+// Afficher le champ token uniquement si pas encore enregistré dans cette session
+if (!sessionStorage.getItem('o_pat')) {
   document.getElementById('patWrap').style.display = 'block';
 }
-if (localStorage.getItem('o_auth')==='1' && localStorage.getItem('o_pat')) {
+if (localStorage.getItem('o_auth')==='1' && sessionStorage.getItem('o_pat')) {
   document.addEventListener('DOMContentLoaded', boot);
 }
 
@@ -523,7 +555,7 @@ function closeSb() {
 }
 
 // ─── GITHUB API ───────────────────────────────────────
-const gh = () => localStorage.getItem('o_pat');
+const gh = () => sessionStorage.getItem('o_pat');
 async function ghRead(path) {
   const r = await fetch(API+path, { headers: { Authorization:'token '+gh(), Accept:'application/vnd.github.v3+json' } });
   if (!r.ok) throw new Error('Impossible de lire '+path);
@@ -629,34 +661,37 @@ function emptyState(type) {
 
 function itemCard(type, d) {
   let ico = '', name = '', meta = '', tags = '';
+  const safeId = esc(d.id);
+  const singType = type.replace(/s$/,'');
   if (type==='temoignages') {
-    ico = d.photo ? `<img src="${d.photo}" onerror="this.style.display='none'">` : `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>`;
-    name = d.nom;
-    meta = d.activite;
+    const safePhoto = esc(d.photo||'');
+    ico = d.photo ? `<img src="${safePhoto}" onerror="this.style.display='none'">` : `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>`;
+    name = esc(d.nom);
+    meta = esc(d.activite);
     const stars = '★'.repeat(d.note||5) + '☆'.repeat(5-(d.note||5));
     tags = `<span class="tag ${d.visible?'tag-green':'tag-red'}">${d.visible?'Visible':'Masqué'}</span><span style="font-size:12px;color:var(--amber)">${stars}</span>`;
   } else if (type==='ebooks') {
-    ico = d.couverture ? `<img src="${d.couverture}" style="width:42px;height:54px;object-fit:cover;border-radius:5px" onerror="this.style.display='none'">` : `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round"><path d="M4 19.5A2.5 2.5 0 016.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/></svg>`;
-    name = d.titre;
-    meta = d.prix || '—';
-    tags = `<span class="tag ${d.visible?'tag-green':'tag-red'}">${d.visible?'Publié':'Masqué'}</span><span class="tag tag-gray">${d.badge||'—'}</span>${d.pdf?'<span class="tag tag-blue">PDF lié</span>':''}`;
+    const safeCouv = esc(d.couverture||'');
+    ico = d.couverture ? `<img src="${safeCouv}" style="width:42px;height:54px;object-fit:cover;border-radius:5px" onerror="this.style.display='none'">` : `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round"><path d="M4 19.5A2.5 2.5 0 016.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/></svg>`;
+    name = esc(d.titre);
+    meta = esc(d.prix || '—');
+    tags = `<span class="tag ${d.visible?'tag-green':'tag-red'}">${d.visible?'Publié':'Masqué'}</span><span class="tag tag-gray">${esc(d.badge||'—')}</span>${d.pdf?'<span class="tag tag-blue">PDF lié</span>':''}`;
   } else if (type==='evenements') {
     ico = `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="3" y1="10" x2="21" y2="10"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/></svg>`;
-    name = d.titre;
-    meta = d.date + (d.heure ? ' · ' + d.heure : '');
-    tags = `<span class="tag ${d.visible?'tag-green':'tag-red'}">${d.visible?'Actif':'Masqué'}</span><span class="tag tag-gray">${d.plateforme||''}</span>`;
+    name = esc(d.titre);
+    meta = esc(d.date) + (d.heure ? ' · ' + esc(d.heure) : '');
+    tags = `<span class="tag ${d.visible?'tag-green':'tag-red'}">${d.visible?'Actif':'Masqué'}</span><span class="tag tag-gray">${esc(d.plateforme||'')}</span>`;
   } else if (type==='formations') {
     ico = `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>`;
-    name = d.titre;
-    meta = d.prix + ' · ' + d.sessions;
-    tags = `<span class="tag ${d.visible?'tag-green':'tag-red'}">${d.visible?'Visible':'Masqué'}</span><span class="tag tag-gray">${d.badge||''}</span>`;
+    name = esc(d.titre);
+    meta = esc(d.prix) + ' · ' + esc(d.sessions);
+    tags = `<span class="tag ${d.visible?'tag-green':'tag-red'}">${d.visible?'Visible':'Masqué'}</span><span class="tag tag-gray">${esc(d.badge||'')}</span>`;
   } else if (type==='articles') {
     ico = `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>`;
-    name = d.titre;
-    meta = d.date + ' · ' + d.lecture;
-    tags = `<span class="tag ${d.publie?'tag-green':'tag-amber'}">${d.publie?'Publié':'Brouillon'}</span><span class="tag tag-gray">${d.badge||''}</span>`;
+    name = esc(d.titre);
+    meta = esc(d.date) + ' · ' + esc(d.lecture);
+    tags = `<span class="tag ${d.publie?'tag-green':'tag-amber'}">${d.publie?'Publié':'Brouillon'}</span><span class="tag tag-gray">${esc(d.badge||'')}</span>`;
   }
-  const singType = type.replace(/s$/,'');
   return `<div class="item">
     <div class="item-ico${type==='ebooks'?' cover':''}">${ico}</div>
     <div class="item-body">
@@ -665,9 +700,9 @@ function itemCard(type, d) {
       <div class="item-tags">${tags}</div>
     </div>
     <div class="item-actions">
-      ${type==='articles' && d.fichier ? `<a href="../${d.fichier}" target="_blank" class="btn btn-ghost btn-sm">Voir</a>` : ''}
-      <button class="btn btn-ghost btn-sm" onclick="openForm('${singType}','${d.id}')">Modifier</button>
-      <button class="btn btn-del btn-sm" onclick="delItem('${type}','${d.id}')">Supprimer</button>
+      ${type==='articles' && d.fichier ? `<a href="../${esc(d.fichier)}" target="_blank" class="btn btn-ghost btn-sm">Voir</a>` : ''}
+      <button class="btn btn-ghost btn-sm" onclick="openForm('${singType}','${safeId}')">Modifier</button>
+      <button class="btn btn-del btn-sm" onclick="delItem('${type}','${safeId}')">Supprimer</button>
     </div>
   </div>`;
 }
@@ -679,21 +714,21 @@ function renderParams() {
     <div class="params-section-title">Réservation</div>
     <div class="fgroup">
       <label class="flabel">Lien Calendly</label>
-      <input class="fcontrol" id="pp_calendly" value="${p.calendly||''}" placeholder="https://calendly.com/orrent/diagnostic">
+      <input class="fcontrol" id="pp_calendly" value="${esc(p.calendly||'')}" placeholder="https://calendly.com/orrent/diagnostic">
       <p class="fhint">Lien de réservation pour le diagnostic gratuit. Laissez vide pour désactiver.</p>
     </div>
     <div class="params-section-title">Contact</div>
     <div class="grid2">
-      <div class="fgroup"><label class="flabel">WhatsApp</label><input class="fcontrol" id="pp_wa" value="${p.whatsapp||''}"></div>
-      <div class="fgroup"><label class="flabel">Email</label><input class="fcontrol" id="pp_email" value="${p.email||''}"></div>
+      <div class="fgroup"><label class="flabel">WhatsApp</label><input class="fcontrol" id="pp_wa" value="${esc(p.whatsapp||'')}"></div>
+      <div class="fgroup"><label class="flabel">Email</label><input class="fcontrol" id="pp_email" value="${esc(p.email||'')}"></div>
     </div>
     <div class="params-section-title">Réseaux sociaux</div>
-    <div class="fgroup"><label class="flabel">Groupe WhatsApp</label><input class="fcontrol" id="pp_wagroupe" value="${p.whatsapp_groupe||''}"></div>
+    <div class="fgroup"><label class="flabel">Groupe WhatsApp</label><input class="fcontrol" id="pp_wagroupe" value="${esc(p.whatsapp_groupe||'')}"></div>
     <div class="grid2">
-      <div class="fgroup"><label class="flabel">TikTok</label><input class="fcontrol" id="pp_tiktok" value="${p.tiktok||''}"></div>
-      <div class="fgroup"><label class="flabel">Instagram</label><input class="fcontrol" id="pp_insta" value="${p.instagram||''}"></div>
+      <div class="fgroup"><label class="flabel">TikTok</label><input class="fcontrol" id="pp_tiktok" value="${esc(p.tiktok||'')}"></div>
+      <div class="fgroup"><label class="flabel">Instagram</label><input class="fcontrol" id="pp_insta" value="${esc(p.instagram||'')}"></div>
     </div>
-    <div class="fgroup"><label class="flabel">Facebook</label><input class="fcontrol" id="pp_fb" value="${p.facebook||''}"></div>
+    <div class="fgroup"><label class="flabel">Facebook</label><input class="fcontrol" id="pp_fb" value="${esc(p.facebook||'')}"></div>
     <div style="margin-top:6px">
       <button class="btn btn-green" onclick="saveParams()">Enregistrer</button>
     </div>`;
@@ -719,12 +754,12 @@ async function saveParams() {
 // ─── SELECT + AUTRE ───────────────────────────────────
 function selOther(id, opts, current) {
   const isOther = current && !opts.includes(current);
-  return `<select class="fcontrol" id="${id}" onchange="toggleOther(this,'${id}_o')">
+  return `<select class="fcontrol" id="${esc(id)}" onchange="toggleOther(this,'${esc(id)}_o')">
     <option value="">— Choisir —</option>
-    ${opts.map(o=>`<option value="${o}"${current===o?' selected':''}>${o}</option>`).join('')}
+    ${opts.map(o=>`<option value="${esc(o)}"${current===o?' selected':''}>${esc(o)}</option>`).join('')}
     <option value="__autre__"${isOther?' selected':''}>Autre…</option>
   </select>
-  <input type="text" id="${id}_o" class="fcontrol" style="display:${isOther?'block':'none'};margin-top:8px" placeholder="Précisez…" value="${isOther?current:''}">`;
+  <input type="text" id="${esc(id)}_o" class="fcontrol" style="display:${isOther?'block':'none'};margin-top:8px" placeholder="Précisez…" value="${isOther?esc(current):''}">`;
 }
 function toggleOther(sel, othId) {
   const el = document.getElementById(othId);
@@ -760,13 +795,13 @@ function buildForm(type, id) {
     const d = id ? S.temoignages.d.find(x=>x.id===id) : {};
     return `
       <div class="grid2">
-        <div class="fgroup"><label class="flabel">Nom <span>*</span></label><input class="fcontrol" id="f_nom" value="${d.nom||''}" placeholder="Nom du client"></div>
-        <div class="fgroup"><label class="flabel">Activité <span>*</span></label><input class="fcontrol" id="f_activite" value="${d.activite||''}" placeholder="Vente de vêtements"></div>
+        <div class="fgroup"><label class="flabel">Nom <span>*</span></label><input class="fcontrol" id="f_nom" value="${esc(d.nom||'')}" placeholder="Nom du client"></div>
+        <div class="fgroup"><label class="flabel">Activité <span>*</span></label><input class="fcontrol" id="f_activite" value="${esc(d.activite||'')}" placeholder="Vente de vêtements"></div>
       </div>
-      <div class="fgroup"><label class="flabel">Témoignage <span>*</span></label><textarea class="fcontrol" id="f_texte" rows="4" placeholder="Ce que dit le client sur votre accompagnement…">${d.texte||''}</textarea></div>
+      <div class="fgroup"><label class="flabel">Témoignage <span>*</span></label><textarea class="fcontrol" id="f_texte" rows="4" placeholder="Ce que dit le client sur votre accompagnement…">${esc(d.texte||'')}</textarea></div>
       <div class="fgroup">
         <label class="flabel">Photo du client</label>
-        <input type="hidden" id="f_photo" value="${d.photo||''}">
+        <input type="hidden" id="f_photo" value="${esc(d.photo||'')}">
         ${d.photo ? `<div class="upload-result" id="uploadPhotoResult">
           <img src="${d.photo}" class="photo-prev" style="width:44px;height:44px">
           <span class="upload-result-name">Photo enregistrée</span>
@@ -791,11 +826,11 @@ function buildForm(type, id) {
   if (type==='ebook') {
     const d = id ? S.ebooks.d.find(x=>x.id===id) : {};
     return `
-      <div class="fgroup"><label class="flabel">Titre <span>*</span></label><input class="fcontrol" id="f_titre" value="${d.titre||''}" placeholder="Titre du guide"></div>
-      <div class="fgroup"><label class="flabel">Description <span>*</span></label><textarea class="fcontrol" id="f_desc" rows="3">${d.description||''}</textarea></div>
+      <div class="fgroup"><label class="flabel">Titre <span>*</span></label><input class="fcontrol" id="f_titre" value="${esc(d.titre||'')}" placeholder="Titre du guide"></div>
+      <div class="fgroup"><label class="flabel">Description <span>*</span></label><textarea class="fcontrol" id="f_desc" rows="3">${esc(d.description||'')}</textarea></div>
       <div class="fgroup">
         <label class="flabel">Couverture <span style="font-weight:400;text-transform:none;letter-spacing:0;color:var(--muted-2)">(image depuis votre PC)</span></label>
-        <input type="hidden" id="f_couv" value="${d.couverture||''}">
+        <input type="hidden" id="f_couv" value="${esc(d.couverture||'')}">
         ${d.couverture ? `<div class="upload-result" id="uploadCouvrResult">
           <img src="${d.couverture}" class="cover-prev" style="width:38px;height:50px">
           <span class="upload-result-name">Couverture enregistrée</span>
@@ -823,7 +858,7 @@ function buildForm(type, id) {
         <div class="fgroup"><label class="flabel">Nombre de pages</label>
           ${selOther('f_pages',['12 pages','16 pages','20 pages','24 pages','28 pages','32 pages','40 pages'],d.pages||'')}
         </div>
-        <div class="fgroup"><label class="flabel">Lien commande WhatsApp</label><input class="fcontrol" id="f_lien_achat" value="${d.lien_achat||''}" placeholder="https://wa.me/21654200528?text=…"></div>
+        <div class="fgroup"><label class="flabel">Lien commande WhatsApp</label><input class="fcontrol" id="f_lien_achat" value="${esc(d.lien_achat||'')}" placeholder="https://wa.me/21654200528?text=…"></div>
       </div>
       <div class="fgroup"><label class="flabel">Visibilité</label>
         <div class="toggle-row"><label class="toggle"><input type="checkbox" id="f_visible" ${d.visible!==false?'checked':''}><div class="toggle-track"></div></label><span class="toggle-lbl">Publié sur le site</span></div>
@@ -832,11 +867,11 @@ function buildForm(type, id) {
   if (type==='evenement') {
     const d = id ? S.evenements.d.find(x=>x.id===id) : {};
     return `
-      <div class="fgroup"><label class="flabel">Titre <span>*</span></label><input class="fcontrol" id="f_titre" value="${d.titre||''}" placeholder="Samedi Digital"></div>
-      <div class="fgroup"><label class="flabel">Description</label><textarea class="fcontrol" id="f_desc" rows="3">${d.description||''}</textarea></div>
+      <div class="fgroup"><label class="flabel">Titre <span>*</span></label><input class="fcontrol" id="f_titre" value="${esc(d.titre||'')}" placeholder="Samedi Digital"></div>
+      <div class="fgroup"><label class="flabel">Description</label><textarea class="fcontrol" id="f_desc" rows="3">${esc(d.description||'')}</textarea></div>
       <div class="grid2">
-        <div class="fgroup"><label class="flabel">Date / Fréquence</label><input class="fcontrol" id="f_date" value="${d.date||''}" placeholder="Chaque samedi"></div>
-        <div class="fgroup"><label class="flabel">Heure</label><input class="fcontrol" id="f_heure" value="${d.heure||''}" placeholder="10h00 (Comores)"></div>
+        <div class="fgroup"><label class="flabel">Date / Fréquence</label><input class="fcontrol" id="f_date" value="${esc(d.date||'')}" placeholder="Chaque samedi"></div>
+        <div class="fgroup"><label class="flabel">Heure</label><input class="fcontrol" id="f_heure" value="${esc(d.heure||'')}" placeholder="10h00 (Comores)"></div>
       </div>
       <div class="grid2">
         <div class="fgroup"><label class="flabel">Plateforme</label>
@@ -846,7 +881,7 @@ function buildForm(type, id) {
           ${selOther('f_badge',['Hebdomadaire','Mensuel','Ponctuel','Annuel'],d.badge||'')}
         </div>
       </div>
-      <div class="fgroup"><label class="flabel">Lien d'inscription</label><input class="fcontrol" id="f_lien" value="${d.lien||''}" placeholder="https://chat.whatsapp.com/..."></div>
+      <div class="fgroup"><label class="flabel">Lien d'inscription</label><input class="fcontrol" id="f_lien" value="${esc(d.lien||'')}" placeholder="https://chat.whatsapp.com/..."></div>
       <div class="fgroup"><label class="flabel">Visibilité</label>
         <div class="toggle-row"><label class="toggle"><input type="checkbox" id="f_visible" ${d.visible!==false?'checked':''}><div class="toggle-track"></div></label><span class="toggle-lbl">Visible sur le site</span></div>
       </div>`;
@@ -854,8 +889,8 @@ function buildForm(type, id) {
   if (type==='formation') {
     const d = id ? S.formations.d.find(x=>x.id===id) : {};
     return `
-      <div class="fgroup"><label class="flabel">Titre <span>*</span></label><input class="fcontrol" id="f_titre" value="${d.titre||''}" placeholder="Samedi Digital"></div>
-      <div class="fgroup"><label class="flabel">Description</label><textarea class="fcontrol" id="f_desc" rows="3">${d.description||''}</textarea></div>
+      <div class="fgroup"><label class="flabel">Titre <span>*</span></label><input class="fcontrol" id="f_titre" value="${esc(d.titre||'')}" placeholder="Samedi Digital"></div>
+      <div class="fgroup"><label class="flabel">Description</label><textarea class="fcontrol" id="f_desc" rows="3">${esc(d.description||'')}</textarea></div>
       <div class="grid2">
         <div class="fgroup"><label class="flabel">Fréquence</label>
           ${selOther('f_frequence',['Hebdomadaire — chaque samedi','Hebdomadaire — chaque dimanche','Bimensuelle','Mensuelle','Intensive (plusieurs jours)'],d.frequence||'')}
@@ -876,7 +911,7 @@ function buildForm(type, id) {
         <div class="fgroup"><label class="flabel">Statut</label>
           ${selOther('f_badge',['En cours','À venir','Complet','Terminé'],d.badge||'')}
         </div>
-        <div class="fgroup"><label class="flabel">Lien d'inscription</label><input class="fcontrol" id="f_lien" value="${d.lien_inscription||''}" placeholder="https://chat.whatsapp.com/..."></div>
+        <div class="fgroup"><label class="flabel">Lien d'inscription</label><input class="fcontrol" id="f_lien" value="${esc(d.lien_inscription||'')}" placeholder="https://chat.whatsapp.com/..."></div>
       </div>
       <div class="fgroup"><label class="flabel">Visibilité</label>
         <div class="toggle-row"><label class="toggle"><input type="checkbox" id="f_visible" ${d.visible!==false?'checked':''}><div class="toggle-track"></div></label><span class="toggle-lbl">Visible sur le site</span></div>
@@ -885,11 +920,11 @@ function buildForm(type, id) {
   if (type==='article') {
     const d = id ? S.articles.d.find(x=>x.id===id) : {};
     return `
-      <div class="fgroup"><label class="flabel">Titre <span>*</span></label><input class="fcontrol" id="f_titre" value="${d.titre||''}" placeholder="Titre de l'article"></div>
-      <div class="fgroup"><label class="flabel">Description courte</label><textarea class="fcontrol" id="f_desc" rows="2">${d.description||''}</textarea></div>
+      <div class="fgroup"><label class="flabel">Titre <span>*</span></label><input class="fcontrol" id="f_titre" value="${esc(d.titre||'')}" placeholder="Titre de l'article"></div>
+      <div class="fgroup"><label class="flabel">Description courte</label><textarea class="fcontrol" id="f_desc" rows="2">${esc(d.description||'')}</textarea></div>
       <div class="grid2">
-        <div class="fgroup"><label class="flabel">Date</label><input class="fcontrol" id="f_date" value="${d.date||''}" placeholder="Mai 2026"></div>
-        <div class="fgroup"><label class="flabel">Temps de lecture</label><input class="fcontrol" id="f_lecture" value="${d.lecture||''}" placeholder="5 min"></div>
+        <div class="fgroup"><label class="flabel">Date</label><input class="fcontrol" id="f_date" value="${esc(d.date||'')}" placeholder="Mai 2026"></div>
+        <div class="fgroup"><label class="flabel">Temps de lecture</label><input class="fcontrol" id="f_lecture" value="${esc(d.lecture||'')}" placeholder="5 min"></div>
       </div>
       <div class="grid2">
         <div class="fgroup"><label class="flabel">Catégorie</label>
@@ -995,11 +1030,44 @@ async function delItem(type, id) {
   } catch(e) { showAlert(e.message, 'err'); }
 }
 
+// ─── VALIDATION IMAGE (magic bytes) ──────────────────
+const ALLOWED_EXT = ['jpg', 'jpeg', 'png', 'webp'];
+async function validateImageBytes(file) {
+  return new Promise((resolve) => {
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      const a = new Uint8Array(e.target.result);
+      // JPEG : FF D8 FF
+      if (a[0]===0xFF && a[1]===0xD8 && a[2]===0xFF) { resolve(true); return; }
+      // PNG : 89 50 4E 47
+      if (a[0]===0x89 && a[1]===0x50 && a[2]===0x4E && a[3]===0x47) { resolve(true); return; }
+      // WebP : 52 49 46 46 ... 57 45 42 50
+      if (a[0]===0x52 && a[1]===0x49 && a[2]===0x46 && a[3]===0x46 &&
+          a[8]===0x57 && a[9]===0x45 && a[10]===0x42 && a[11]===0x50) { resolve(true); return; }
+      resolve(false);
+    };
+    reader.readAsArrayBuffer(file.slice(0, 12));
+  });
+}
+
 // ─── FILE UPLOAD ──────────────────────────────────────
 async function uploadFile(input, fieldId, folder) {
   const file = input.files[0];
   if (!file) return;
   if (file.size > 2 * 1024 * 1024) { showAlert('Image trop lourde (max 2 Mo).', 'err'); return; }
+
+  // Vérification de l'extension
+  const ext = file.name.split('.').pop().toLowerCase();
+  if (!ALLOWED_EXT.includes(ext)) {
+    showAlert('Format non autorisé. Utilisez JPG, PNG ou WebP uniquement.', 'err');
+    return;
+  }
+  // Vérification du contenu réel du fichier (magic bytes)
+  const isValid = await validateImageBytes(file);
+  if (!isValid) {
+    showAlert('Fichier invalide : le contenu ne correspond pas à une image réelle.', 'err');
+    return;
+  }
 
   const zoneId    = fieldId === 'couv' ? 'uploadCouvrZone' : 'uploadPhotoZone';
   const progressId = fieldId === 'couv' ? 'couvProgress' : 'photoProgress';
@@ -1008,7 +1076,6 @@ async function uploadFile(input, fieldId, folder) {
   if (zone) zone.classList.add('uploading');
   if (prog) prog.textContent = 'Envoi en cours…';
 
-  const ext      = file.name.split('.').pop().toLowerCase();
   const filename = 'uploads/' + folder + '/' + Date.now() + '.' + ext;
   const reader   = new FileReader();
 
