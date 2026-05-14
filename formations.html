@@ -347,39 +347,8 @@
         <!-- Tab Témoignages -->
         <div id="tab-temoignages" class="tab-panel">
           <h2 style="margin-bottom:28px">Ce qu'ils disent</h2>
-          <div class="grid-2 reveal">
-            <div class="testimonial-card">
-              <div class="testimonial-stars">★★★★★</div>
-              <p class="testimonial-text">"Avant Samedi Digital, je publiais sans stratégie. Maintenant j'ai un système. En 2 mois, j'ai doublé mes commandes depuis Instagram."</p>
-              <div class="testimonial-author">
-                <div class="testimonial-avatar"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg></div>
-                <div><div class="testimonial-name">Fatouma A.</div><div class="testimonial-role">Vendeuse en ligne, Grande Comore</div></div>
-              </div>
-            </div>
-            <div class="testimonial-card">
-              <div class="testimonial-stars">★★★★★</div>
-              <p class="testimonial-text">"La session sur le copywriting a tout changé. Mes messages WhatsApp convertissent maintenant beaucoup mieux. Très pratique et direct."</p>
-              <div class="testimonial-author">
-                <div class="testimonial-avatar"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg></div>
-                <div><div class="testimonial-name">Said M.</div><div class="testimonial-role">Prestataire de services, Moroni</div></div>
-              </div>
-            </div>
-            <div class="testimonial-card">
-              <div class="testimonial-stars">★★★★★</div>
-              <p class="testimonial-text">"Ce que j'aime avec ORRENT, c'est que les exemples sont comoriens. Pas du copier-coller de méthodes françaises qui ne marchent pas ici."</p>
-              <div class="testimonial-author">
-                <div class="testimonial-avatar"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg></div>
-                <div><div class="testimonial-name">Rahma I.</div><div class="testimonial-role">Coach bien-être, Anjouan</div></div>
-              </div>
-            </div>
-            <div class="testimonial-card">
-              <div class="testimonial-stars">★★★★★</div>
-              <p class="testimonial-text">"J'ai lancé mon premier tunnel de vente après la session 8. Résultat : 3 nouveaux clients en une semaine. Je recommande à tous les entrepreneurs."</p>
-              <div class="testimonial-author">
-                <div class="testimonial-avatar"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg></div>
-                <div><div class="testimonial-name">Amir H.</div><div class="testimonial-role">Consultant, diaspora comorienne</div></div>
-              </div>
-            </div>
+          <div class="grid-2" id="temoignagesGrid">
+            <div style="text-align:center;padding:40px 20px;color:var(--muted);grid-column:1/-1">Chargement…</div>
           </div>
         </div>
 
@@ -572,6 +541,7 @@
 <script src="js/theme.js"></script>
 <script src="js/main.js"></script>
 <script src="js/animations.js"></script>
+<script src="js/data.js"></script>
 <script>
 function switchTab(name) {
   document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
@@ -583,6 +553,23 @@ function toggleFaq(btn) {
   const item = btn.parentElement;
   item.classList.toggle('open');
 }
+
+// Chargement des témoignages
+(async () => {
+  const grid = document.getElementById('temoignagesGrid');
+  const data = await orLoad('data/temoignages.json');
+
+  if (!data || !data.length) {
+    grid.innerHTML = `<div style="grid-column:1/-1;text-align:center;padding:40px 20px">
+      <p style="color:var(--muted);font-size:15px">Les premiers témoignages arrivent bientôt.<br>Rejoignez le Samedi Digital et partagez votre expérience !</p>
+      <a href="https://chat.whatsapp.com/FhNm9t68yUzE7WHAMKfsgk?mode=gi_t" target="_blank" rel="noopener" class="btn btn-primary" style="margin-top:16px">Rejoindre la formation</a>
+    </div>`;
+    return;
+  }
+
+  grid.innerHTML = data.map((t, i) => orTemoCard(t, i)).join('');
+  if (window.initReveal) window.initReveal();
+})();
 </script>
 </body>
 </html>

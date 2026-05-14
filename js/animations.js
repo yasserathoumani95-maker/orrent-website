@@ -46,3 +46,10 @@ const counterObserver = new IntersectionObserver((entries) => {
 }, { threshold: 0.5 });
 
 document.querySelectorAll('[data-target]').forEach(el => counterObserver.observe(el));
+
+// Ré-observer les éléments .reveal ajoutés dynamiquement (appel depuis data.js)
+window.initReveal = function () {
+  requestAnimationFrame(() => {
+    document.querySelectorAll('.reveal:not(.visible)').forEach(el => observer.observe(el));
+  });
+};
