@@ -16,7 +16,6 @@
   <meta name="description" content="ORRENT — Agence de marketing digital aux Comores. Stratégie de contenu, Inbound Marketing et accompagnement pour entrepreneurs comoriens.">
   <meta property="og:title" content="ORRENT — Propulsez votre business">
   <meta property="og:description" content="Agence de marketing digital basée aux Comores. Accompagnement stratégique pour entrepreneurs.">
-  <meta property="og:type" content="website">
   <title>ORRENT — Propulsez votre business</title>
   <link rel="preload" as="image" href="logo.webp" type="image/webp">
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -65,6 +64,7 @@
   </script>
 </head>
 <body>
+<a href="#hero" class="skip-link">Aller au contenu principal</a>
 
 <!-- HEADER -->
 <header id="header">
@@ -95,7 +95,7 @@
         <svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
       </button>
 
-      <button class="hamburger" id="hamburger" aria-label="Menu">
+      <button class="hamburger" id="hamburger" aria-label="Menu" aria-controls="mobileNav" aria-expanded="false">
         <span class="ham-line"></span>
         <span class="ham-line"></span>
         <span class="ham-line"></span>
@@ -105,7 +105,7 @@
 </header>
 
 <div class="mobile-overlay" id="mobileOverlay"></div>
-<nav class="mobile-nav" id="mobileNav">
+<nav class="mobile-nav" id="mobileNav" aria-hidden="true">
   <a href="#about"          class="mobile-link">À propos</a>
   <a href="services.html"   class="mobile-link">Services</a>
   <a href="ebooks.html"     class="mobile-link">eBooks</a>
@@ -368,7 +368,9 @@
     </div>
 
     <div class="grid-3" id="idxEbooksGrid">
-      <div style="text-align:center;padding:40px;color:var(--muted);grid-column:1/-1">Chargement…</div>
+      <div class="skeleton-card"><div class="skeleton skeleton-cover"></div><div class="skeleton-body"><div class="skeleton skeleton-line"></div><div class="skeleton skeleton-line w80"></div><div class="skeleton skeleton-line w60"></div></div></div>
+      <div class="skeleton-card"><div class="skeleton skeleton-cover"></div><div class="skeleton-body"><div class="skeleton skeleton-line"></div><div class="skeleton skeleton-line w80"></div><div class="skeleton skeleton-line w60"></div></div></div>
+      <div class="skeleton-card"><div class="skeleton skeleton-cover"></div><div class="skeleton-body"><div class="skeleton skeleton-line"></div><div class="skeleton skeleton-line w80"></div><div class="skeleton skeleton-line w60"></div></div></div>
     </div>
 
     <div class="text-center" style="margin-top:48px">
@@ -393,7 +395,7 @@
     </div>
 
     <div class="stack" id="idxFormationsStack">
-      <div style="text-align:center;padding:40px;color:var(--muted)">Chargement…</div>
+      <div class="skeleton-card"><div class="skeleton-body" style="gap:14px;padding:24px"><div class="skeleton skeleton-line w60"></div><div class="skeleton skeleton-line w80"></div><div class="skeleton skeleton-line w40"></div></div></div>
     </div>
 
     <div class="text-center" style="margin-top:36px">
@@ -414,7 +416,7 @@
     </div>
 
     <div id="idxEventsDiv">
-      <div style="text-align:center;padding:40px;color:rgba(255,255,255,0.5)">Chargement…</div>
+      <div class="skeleton-card" style="background:rgba(255,255,255,0.06);border-color:rgba(255,255,255,0.1)"><div class="skeleton-body" style="padding:24px;gap:12px"><div class="skeleton skeleton-line w60" style="opacity:.4"></div><div class="skeleton skeleton-line w80" style="opacity:.3"></div></div></div>
     </div>
   </div>
 </section>
@@ -430,7 +432,9 @@
     </div>
 
     <div class="grid-3" id="idxArticlesGrid">
-      <div style="text-align:center;padding:40px;color:var(--muted);grid-column:1/-1">Chargement…</div>
+      <div class="skeleton-card"><div class="skeleton skeleton-cover"></div><div class="skeleton-body"><div class="skeleton skeleton-line w40"></div><div class="skeleton skeleton-line"></div><div class="skeleton skeleton-line w80"></div></div></div>
+      <div class="skeleton-card"><div class="skeleton skeleton-cover"></div><div class="skeleton-body"><div class="skeleton skeleton-line w40"></div><div class="skeleton skeleton-line"></div><div class="skeleton skeleton-line w80"></div></div></div>
+      <div class="skeleton-card"><div class="skeleton skeleton-cover"></div><div class="skeleton-body"><div class="skeleton skeleton-line w40"></div><div class="skeleton skeleton-line"></div><div class="skeleton skeleton-line w80"></div></div></div>
     </div>
 
     <div class="text-center" style="margin-top:48px">
@@ -522,13 +526,17 @@
             <label class="form-label" for="message">Message</label>
             <textarea id="message" name="message" class="form-control" placeholder="Décrivez votre projet ou votre question..." required></textarea>
           </div>
+          <div class="visually-hidden" aria-hidden="true">
+            <label for="_gotcha">Ne pas remplir ce champ</label>
+            <input type="text" name="_gotcha" id="_gotcha" tabindex="-1" autocomplete="off">
+          </div>
           <button type="submit" id="contactSubmit" class="btn btn-primary btn-full">
             Envoyer ma demande
             <span class="btn-icon" id="contactBtnIcon">
               <svg viewBox="0 0 16 16" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 13L13 3M13 3H7M13 3v6"/></svg>
             </span>
           </button>
-          <div id="formFeedback" style="display:none;padding:14px 18px;border-radius:10px;font-size:14px;font-weight:500;text-align:center"></div>
+          <div id="formFeedback" aria-live="polite" aria-atomic="true" style="display:none;padding:14px 18px;border-radius:10px;font-size:14px;font-weight:500;text-align:center"></div>
         </form>
       </div>
 
@@ -653,11 +661,11 @@
   </a>
 </div>
 
-<script src="js/theme.js"></script>
-<script src="js/main.js"></script>
-<script src="js/animations.js"></script>
-<script src="js/form.js"></script>
-<script src="js/data.js"></script>
+<script src="js/theme.js" defer></script>
+<script src="js/main.js" defer></script>
+<script src="js/animations.js" defer></script>
+<script src="js/form.js" defer></script>
+<script src="js/data.js" defer></script>
 <script>
 (async () => {
   // Chargement parallèle de toutes les données

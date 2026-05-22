@@ -1,1 +1,23 @@
-[]
+[
+  {
+    "nom": "Farid Mzimba",
+    "role": "Vendeur de vêtements, Moroni",
+    "temoignage": "Avant ORRENT, je postais sur Facebook sans stratégie. En 6 semaines, j'ai reçu mes premières demandes directes via TikTok. Le diagnostic gratuit a tout changé.",
+    "note": 5,
+    "photo": ""
+  },
+  {
+    "nom": "Naïma Abdallah",
+    "role": "Restauratrice, Mitsamiouli",
+    "temoignage": "ORRENT m'a aidée à créer un calendrier de contenu adapté à mes clients. Mes abonnés Instagram ont doublé en 2 mois et mes commandes en ligne ont nettement augmenté.",
+    "note": 5,
+    "photo": ""
+  },
+  {
+    "nom": "Ibrahim Saïd",
+    "role": "Coach sportif, diaspora (Paris)",
+    "temoignage": "Je travaillais avec ORRENT depuis Paris pour atteindre ma clientèle aux Comores. Le plan stratégique m'a permis de lancer mes premières formations en ligne avec succès.",
+    "note": 5,
+    "photo": ""
+  }
+]

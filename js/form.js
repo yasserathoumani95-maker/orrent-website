@@ -38,8 +38,22 @@
     feedback.textContent       = msg;
   }
 
+  var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  var phoneRegex = /^[\+\d\s\-]{7,20}$/;
+
   form.addEventListener('submit', function (e) {
     e.preventDefault();
+
+    // Honeypot — rejet silencieux si rempli par un bot
+    var gotcha = document.getElementById('_gotcha');
+    if (gotcha && gotcha.value) { return; }
+
+    // Anti-spam temporel (60s entre 2 envois)
+    var lastSubmit = sessionStorage.getItem('orrent_last_submit');
+    if (lastSubmit && (Date.now() - parseInt(lastSubmit, 10)) < 60000) {
+      showFeedback(false, 'Vous avez déjà envoyé un message. Attendez un moment avant d\'en envoyer un autre.');
+      return;
+    }
 
     var nom      = document.getElementById('nom').value.trim();
     var contact  = document.getElementById('contactField').value.trim();
@@ -48,6 +62,26 @@
 
     if (!nom || !contact || !message) {
       showFeedback(false, 'Veuillez remplir tous les champs obligatoires.');
+      return;
+    }
+    if (nom.length < 2) {
+      showFeedback(false, 'Votre nom doit comporter au moins 2 caractères.');
+      return;
+    }
+    if (nom.length > 100) {
+      showFeedback(false, 'Votre nom est trop long (100 caractères max).');
+      return;
+    }
+    if (!emailRegex.test(contact) && !phoneRegex.test(contact)) {
+      showFeedback(false, 'Veuillez entrer une adresse email ou un numéro de téléphone valide.');
+      return;
+    }
+    if (message.length < 10) {
+      showFeedback(false, 'Votre message doit comporter au moins 10 caractères.');
+      return;
+    }
+    if (message.length > 2000) {
+      showFeedback(false, 'Votre message est trop long (2000 caractères max).');
       return;
     }
 
@@ -69,6 +103,7 @@
       setLoading(false);
       if (res.ok) {
         showFeedback(true, '✅ Message envoyé ! Nous vous répondrons dans les plus brefs délais.');
+        sessionStorage.setItem('orrent_last_submit', Date.now());
         form.reset();
       } else {
         return res.json().then(function (body) {

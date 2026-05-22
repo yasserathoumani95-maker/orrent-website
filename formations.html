@@ -154,6 +154,7 @@
   </style>
 </head>
 <body>
+<a href="#main-content" class="skip-link">Aller au contenu principal</a>
 
 <!-- HEADER -->
 <header id="header">
@@ -176,14 +177,14 @@
         <svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
       </button>
 
-      <button class="hamburger" id="hamburger" aria-label="Menu">
+      <button class="hamburger" id="hamburger" aria-label="Menu" aria-controls="mobileNav" aria-expanded="false">
         <span class="ham-line"></span><span class="ham-line"></span><span class="ham-line"></span>
       </button>
     </div>
   </div>
 </header>
 <div class="mobile-overlay" id="mobileOverlay"></div>
-<nav class="mobile-nav" id="mobileNav">
+<nav class="mobile-nav" id="mobileNav" aria-hidden="true">
   <a href="index.html"          class="mobile-link">Accueil</a>
   <a href="services.html"       class="mobile-link">Services</a>
   <a href="ebooks.html"         class="mobile-link">eBooks</a>
@@ -193,7 +194,7 @@
 </nav>
 
 <!-- PAGE HERO -->
-<div class="page-hero">
+<div class="page-hero" id="main-content">
   <div class="container">
     <div class="breadcrumb">
       <a href="index.html">Accueil</a><span class="breadcrumb-sep">/</span><span>Formations</span>
@@ -638,10 +639,10 @@
 }
 </script>
 
-<script src="js/theme.js"></script>
-<script src="js/main.js"></script>
-<script src="js/animations.js"></script>
-<script src="js/data.js"></script>
+<script src="js/theme.js" defer></script>
+<script src="js/main.js" defer></script>
+<script src="js/animations.js" defer></script>
+<script src="js/data.js" defer></script>
 <script>
 function switchTab(name) {
   document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));

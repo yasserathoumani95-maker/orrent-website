@@ -9,15 +9,21 @@ const hamburger = document.getElementById('hamburger');
 const mobileNav = document.getElementById('mobileNav');
 const mobileOverlay = document.getElementById('mobileOverlay');
 
+hamburger.setAttribute('aria-expanded', 'false');
+
 function openMenu() {
   hamburger.classList.add('open');
+  hamburger.setAttribute('aria-expanded', 'true');
   mobileNav.classList.add('open');
+  mobileNav.removeAttribute('aria-hidden');
   mobileOverlay.classList.add('open');
   document.body.style.overflow = 'hidden';
 }
 function closeMenu() {
   hamburger.classList.remove('open');
+  hamburger.setAttribute('aria-expanded', 'false');
   mobileNav.classList.remove('open');
+  mobileNav.setAttribute('aria-hidden', 'true');
   mobileOverlay.classList.remove('open');
   document.body.style.overflow = '';
 }
@@ -84,3 +90,19 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     }
   });
 });
+
+// Barre de progression de lecture (active uniquement sur les pages articles)
+(function () {
+  var bar = document.getElementById('readingProgress');
+  if (!bar) return;
+  var prose = document.querySelector('.article-prose') || document.querySelector('article') || document.querySelector('main');
+  if (!prose) return;
+  window.addEventListener('scroll', function () {
+    var rect = prose.getBoundingClientRect();
+    var total = prose.offsetHeight - window.innerHeight;
+    var scrolled = -rect.top;
+    var pct = total > 0 ? Math.min(100, Math.max(0, (scrolled / total) * 100)) : 0;
+    bar.style.width = pct + '%';
+    bar.setAttribute('aria-valuenow', Math.round(pct));
+  }, { passive: true });
+}());
