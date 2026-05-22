@@ -156,9 +156,16 @@
   document.body.appendChild(win);
 
   /* ── Logic ───────────────────────────────────────────────────────────── */
-  var msgs    = document.getElementById('or-cm');
-  var choices = document.getElementById('or-cc');
-  var isOpen  = false;
+  var msgs       = document.getElementById('or-cm');
+  var choices    = document.getElementById('or-cc');
+  var isOpen     = false;
+  var hasGreeted = false;
+
+  var RETURN_MSGS = [
+    'Choisissez une autre option ci-dessous 👇',
+    'Autre chose pour vous ? 😊',
+    'Posez-nous votre question !'
+  ];
 
   function open() {
     isOpen = true;
@@ -195,7 +202,11 @@
   function showFlow(key) {
     var flow = FLOWS[key];
     if (!flow) return;
-    addMsg(flow.msg, true);
+    var msg = (key === 'start' && hasGreeted)
+      ? RETURN_MSGS[Math.floor(Math.random() * RETURN_MSGS.length)]
+      : flow.msg;
+    if (key === 'start') hasGreeted = true;
+    addMsg(msg, true);
     choices.innerHTML = '';
     flow.choices.forEach(function (c) {
       var btn = document.createElement('button');
