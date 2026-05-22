@@ -271,12 +271,13 @@
 
       <div class="about-visual reveal reveal-delay-2">
         <div class="founder-card">
-          <div class="founder-avatar">
-            <svg viewBox="0 0 32 32"><circle cx="16" cy="11" r="6"/><path d="M4 28c0-6.6 5.4-12 12-12s12 5.4 12 12"/></svg>
-          </div>
+          <picture>
+            <source srcset="uploads/photos/fondateur.webp" type="image/webp">
+            <img src="uploads/photos/fondateur.jpg" alt="Yasser Athoumani — Fondateur ORRENT" class="founder-photo" onerror="this.closest('.founder-card').classList.add('founder-no-photo')">
+          </picture>
           <div class="founder-caption">
-            <strong>L'équipe ORRENT</strong>
-            <span>Comores &amp; diaspora</span>
+            <strong>Yasser Athoumani</strong>
+            <span>Fondateur, ORRENT</span>
           </div>
         </div>
       </div>
