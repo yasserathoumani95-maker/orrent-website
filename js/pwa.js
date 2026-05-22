@@ -5,11 +5,15 @@ if ('serviceWorker' in navigator) {
   });
 }
 
-// ── Splash screen (uniquement en mode app installée) ────────────────────────
+// ── Splash screen (uniquement en mode app installée, une seule fois par session) ──
 (function () {
   var isApp = window.navigator.standalone === true ||
               window.matchMedia('(display-mode: standalone)').matches;
   if (!isApp) return;
+
+  // Ne montrer le splash qu'au premier lancement, pas à chaque changement de page
+  if (sessionStorage.getItem('or_splashed')) return;
+  sessionStorage.setItem('or_splashed', '1');
 
   var s = document.createElement('style');
   s.textContent =
