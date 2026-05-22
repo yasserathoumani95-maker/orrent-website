@@ -204,7 +204,8 @@ h3 { font-size: 19px; font-weight: 700; }
   display: flex;
   align-items: stretch;
   overflow: hidden;
-  margin-bottom: 12px;
+  margin-bottom: 10px;
+  min-height: 86px;
   transition: transform 0.22s var(--ease-out), box-shadow 0.22s var(--ease-out);
 }
 .card-hover:hover {
@@ -213,28 +214,38 @@ h3 { font-size: 19px; font-weight: 700; }
   border-color: rgba(22,199,132,0.25);
 }
 .hcard-rich-left {
-  width: 72px;
+  width: 60px;
   flex-shrink: 0;
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 16px 0;
+  padding: 0;
+  position: relative;
+}
+.hcard-rich-left::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to right, transparent, rgba(0,0,0,0.08));
+  pointer-events: none;
 }
 .hcard-rich-body {
   flex: 1;
-  padding: 14px 16px;
+  padding: 12px 14px;
   display: flex;
   flex-direction: column;
-  gap: 7px;
+  justify-content: center;
+  gap: 5px;
 }
 .hcard-rich-title {
   font-family: var(--font-title);
-  font-size: 14px;
+  font-size: 13px;
   font-weight: 700;
   color: var(--body);
+  line-height: 1.2;
 }
 .hcard-rich-sub {
-  font-size: 11px;
+  font-size: 10px;
   color: var(--muted);
   line-height: 1.4;
 }
@@ -260,8 +271,8 @@ h3 { font-size: 19px; font-weight: 700; }
   display: flex;
   align-items: flex-end;
   gap: 3px;
-  height: 28px;
-  margin-top: 6px;
+  height: 20px;
+  margin-top: 4px;
 }
 .hsparkbar {
   flex: 1;
