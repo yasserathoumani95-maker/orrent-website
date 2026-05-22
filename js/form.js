@@ -104,6 +104,7 @@
       if (res.ok) {
         showFeedback(true, '✅ Message envoyé ! Nous vous répondrons dans les plus brefs délais.');
         sessionStorage.setItem('orrent_last_submit', Date.now());
+        if (typeof gtag === 'function') gtag('event', 'contact_form_submit', { event_category: 'contact' });
         form.reset();
       } else {
         return res.json().then(function (body) {

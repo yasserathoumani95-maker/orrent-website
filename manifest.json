@@ -1,0 +1,25 @@
+{
+  "name": "ORRENT — Marketing Digital Comores",
+  "short_name": "ORRENT",
+  "description": "Agence de marketing digital pour entrepreneurs comoriens. Formations, eBooks et accompagnement stratégique.",
+  "start_url": "/orrent-website/",
+  "scope": "/orrent-website/",
+  "display": "standalone",
+  "background_color": "#0A1628",
+  "theme_color": "#16C784",
+  "lang": "fr",
+  "icons": [
+    {
+      "src": "logo.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "logo.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}
