@@ -596,7 +596,9 @@ h3 { font-size: 19px; font-weight: 700; }
 
 @media (max-width: 480px) {
   .container { padding: 0 18px; }
-  .hero-ctas { flex-direction: column; }
+  .hero-ctas { flex-direction: column; align-items: flex-start; gap: 10px; }
+  .hero-ctas .btn { flex: none; }
+  .hero-ctas .btn-lg { padding: 11px 20px; font-size: 13px; }
   .stats-grid { grid-template-columns: 1fr; }
   .grid-4 { grid-template-columns: 1fr; }
   .footer-grid { grid-template-columns: 1fr; }
