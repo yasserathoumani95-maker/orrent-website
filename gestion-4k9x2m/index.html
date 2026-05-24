@@ -618,10 +618,10 @@ function renderAll() {
 // ─── DASHBOARD ────────────────────────────────────────
 function renderDash() {
   const counts = [
-    { label:'Témoignages', val: S.temoignages.d.filter(x=>x.visible).length, page:'temoignages' },
-    { label:'eBooks', val: S.ebooks.d.filter(x=>x.visible).length, page:'ebooks' },
-    { label:'Événements', val: S.evenements.d.filter(x=>x.visible).length, page:'evenements' },
-    { label:'Formations', val: S.formations.d.filter(x=>x.visible).length, page:'formations' },
+    { label:'Témoignages', val: S.temoignages.d.filter(x=>x.visible!==false).length, page:'temoignages' },
+    { label:'eBooks', val: S.ebooks.d.filter(x=>x.visible!==false).length, page:'ebooks' },
+    { label:'Événements', val: S.evenements.d.filter(x=>x.visible!==false).length, page:'evenements' },
+    { label:'Formations', val: S.formations.d.filter(x=>x.visible!==false).length, page:'formations' },
     { label:'Articles publiés', val: S.articles.d.filter(x=>x.publie).length, page:'articles' },
   ];
   const icons = [
