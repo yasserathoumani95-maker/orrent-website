@@ -411,14 +411,14 @@
       <!-- Card latérale inscription -->
       <div>
         <div class="formation-hero-card reveal">
-          <div class="tag tag-green tag-dot" style="margin-bottom:16px">Samedi Digital</div>
-          <div class="fhc-price">Gratuit</div>
-          <div class="fhc-price-note">Jusqu'en juillet 2026</div>
+          <div id="fhc-tag" class="tag tag-green tag-dot" style="margin-bottom:16px">Samedi Digital</div>
+          <div id="fhc-price" class="fhc-price">Gratuit</div>
+          <div id="fhc-price-note" class="fhc-price-note">Jusqu'en juillet 2026</div>
 
           <div style="border-top:1px solid var(--border);border-bottom:1px solid var(--border);padding:16px 0;margin:20px 0;display:flex;flex-direction:column;gap:8px">
             <div class="include-item">
               <div class="include-icon"><svg viewBox="0 0 12 12"><path d="M2 6l3 3 5-5"/></svg></div>
-              17 sessions en direct
+              <span id="fhc-sessions">17 sessions en direct</span>
             </div>
             <div class="include-item">
               <div class="include-icon"><svg viewBox="0 0 12 12"><path d="M2 6l3 3 5-5"/></svg></div>
@@ -444,16 +444,16 @@
 
           <div style="display:flex;flex-direction:column;gap:12px">
             <div style="display:flex;justify-content:space-between;font-size:13px;color:var(--muted)">
-              <span>Prochain samedi</span>
-              <span style="font-weight:600;color:var(--body)">10h00 — 11h30</span>
-            </div>
-            <div style="display:flex;justify-content:space-between;font-size:13px;color:var(--muted)">
-              <span>Plateforme</span>
-              <span style="font-weight:600;color:var(--body)">WhatsApp + Zoom</span>
+              <span>Fréquence</span>
+              <span id="fhc-frequence" style="font-weight:600;color:var(--body)">Chaque samedi</span>
             </div>
             <div style="display:flex;justify-content:space-between;font-size:13px;color:var(--muted)">
               <span>Durée</span>
-              <span style="font-weight:600;color:var(--body)">90 min / session</span>
+              <span id="fhc-duree" style="font-weight:600;color:var(--body)">2h / session</span>
+            </div>
+            <div style="display:flex;justify-content:space-between;font-size:13px;color:var(--muted)">
+              <span>Sessions</span>
+              <span id="fhc-nb-sessions" style="font-weight:600;color:var(--body)">17 sessions</span>
             </div>
             <div style="display:flex;justify-content:space-between;font-size:13px;color:var(--muted)">
               <span>Niveau</span>
@@ -461,7 +461,7 @@
             </div>
           </div>
 
-          <a href="https://chat.whatsapp.com/FhNm9t68yUzE7WHAMKfsgk?mode=gi_t" target="_blank" rel="noopener" class="btn btn-primary btn-full" style="margin-top:24px">
+          <a id="fhc-link" href="https://chat.whatsapp.com/FhNm9t68yUzE7WHAMKfsgk?mode=gi_t" target="_blank" rel="noopener" class="btn btn-primary btn-full" style="margin-top:24px">
             S'inscrire maintenant
             <span class="btn-icon"><svg viewBox="0 0 16 16" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 13L13 3M13 3H7M13 3v6"/></svg></span>
           </a>
@@ -647,6 +647,7 @@
 <script src="js/chatbot.js"></script>
 <script src="js/pwa.js"></script>
 <script src="js/analytics.js"></script>
+<script src="js/parametres.js"></script>
 <script src="js/theme.js"></script>
 <script src="js/main.js"></script>
 <script src="js/animations.js"></script>
@@ -663,7 +664,54 @@ function toggleFaq(btn) {
   item.classList.toggle('open');
 }
 
-// Chargement des témoignages
+// ── Carte héro formation — chargement dynamique depuis data/formations.json ──
+(async () => {
+  const data = await orLoad('data/formations.json');
+  if (!data || !data.length) return;
+  const f = data.find(x => x.visible !== false && (x.badge === 'En cours' || x.badge === 'À venir')) || data[0];
+  if (!f) return;
+
+  // Titre
+  const tagEl = document.getElementById('fhc-tag');
+  if (tagEl && f.titre) tagEl.textContent = f.titre;
+
+  // Prix (supporte "Gratuit jusqu'en juillet 2026" ou "5 000 FC" etc.)
+  const priceEl = document.getElementById('fhc-price');
+  const priceNoteEl = document.getElementById('fhc-price-note');
+  if (priceEl && f.prix) {
+    const px = f.prix;
+    if (px.toLowerCase().startsWith('gratuit')) {
+      priceEl.textContent = 'Gratuit';
+      const note = px.replace(/^gratuit\s*/i, '').trim();
+      if (priceNoteEl) { priceNoteEl.textContent = note; priceNoteEl.style.display = note ? '' : 'none'; }
+    } else {
+      priceEl.textContent = px;
+      if (priceNoteEl) priceNoteEl.style.display = 'none';
+    }
+  }
+
+  // Sessions dans la liste d'inclus
+  const sessEl = document.getElementById('fhc-sessions');
+  if (sessEl && f.sessions) sessEl.textContent = f.sessions + ' en direct';
+
+  // Méta : fréquence
+  const freqEl = document.getElementById('fhc-frequence');
+  if (freqEl && f.frequence) freqEl.textContent = f.frequence;
+
+  // Méta : durée
+  const dureeEl = document.getElementById('fhc-duree');
+  if (dureeEl && f.duree) dureeEl.textContent = f.duree;
+
+  // Méta : nombre sessions
+  const nbEl = document.getElementById('fhc-nb-sessions');
+  if (nbEl && f.sessions) nbEl.textContent = f.sessions;
+
+  // Lien inscription
+  const linkEl = document.getElementById('fhc-link');
+  if (linkEl && f.lien_inscription) linkEl.href = f.lien_inscription;
+})();
+
+// ── Chargement des témoignages ──
 (async () => {
   const grid = document.getElementById('temoignagesGrid');
   const data = await orLoad('data/temoignages.json');

@@ -784,7 +784,8 @@
       <div class="tag tag-dark tag-dot reveal">Témoignages</div>
       <h2 class="reveal reveal-delay-1">Ce qu'ils disent</h2>
     </div>
-    <div class="testimonial-strip">
+    <div id="servicesTemsGrid" class="testimonial-strip">
+      <!-- Contenu chargé dynamiquement depuis data/temoignages.json -->
       <div class="tstrip-card reveal">
         <div class="tstrip-stars">★★★★★</div>
         <p class="tstrip-text">"Le diagnostic m'a ouvert les yeux. En 45 minutes, j'ai compris pourquoi mes posts n'attiraient pas de clients. Le plan d'action était concret et immédiatement applicable."</p>
@@ -905,6 +906,38 @@
 <script src="js/chatbot.js"></script>
 <script src="js/pwa.js"></script>
 <script src="js/analytics.js"></script>
+<script src="js/data.js"></script>
+<script>
+// ── Témoignages dynamiques ──
+(async () => {
+  const grid = document.getElementById('servicesTemsGrid');
+  const data = await orLoad('data/temoignages.json');
+  if (!data || !data.length) return;
+  const vis = data.filter(t => t.visible !== false).slice(0, 3);
+  if (!vis.length) return;
+  // Génère les cartes au format .tstrip-card
+  grid.innerHTML = vis.map((t, i) => {
+    const stars = '★'.repeat(Math.min(t.note || 5, 5));
+    const delay = i === 1 ? ' reveal-delay-1' : i === 2 ? ' reveal-delay-2' : '';
+    const avatar = t.photo
+      ? `<img src="${orEsc(t.photo)}" alt="${orEsc(t.nom)}" style="width:36px;height:36px;border-radius:50%;object-fit:cover;flex-shrink:0">`
+      : `<div class="tstrip-avatar"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg></div>`;
+    return `<div class="tstrip-card reveal${delay}">
+      <div class="tstrip-stars">${stars}</div>
+      <p class="tstrip-text">"${orEsc(t.temoignage)}"</p>
+      <div class="tstrip-author">
+        ${avatar}
+        <div>
+          <div class="tstrip-name">${orEsc(t.nom)}</div>
+          <div class="tstrip-role">${orEsc(t.role || '')}</div>
+        </div>
+      </div>
+    </div>`;
+  }).join('');
+  if (window.initReveal) window.initReveal();
+})();
+</script>
+<script src="js/parametres.js"></script>
 <script src="js/theme.js"></script>
 <script src="js/main.js"></script>
 <script src="js/animations.js"></script>
