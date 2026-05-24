@@ -689,25 +689,25 @@ function itemCard(type, d) {
     const safePhoto = esc(d.photo||'');
     ico = d.photo ? `<img src="${safePhoto}" onerror="this.style.display='none'">` : `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>`;
     name = esc(d.nom);
-    meta = esc(d.activite);
+    meta = esc(d.role||d.activite||'');
     const stars = '★'.repeat(d.note||5) + '☆'.repeat(5-(d.note||5));
-    tags = `<span class="tag ${d.visible?'tag-green':'tag-red'}">${d.visible?'Visible':'Masqué'}</span><span style="font-size:12px;color:var(--amber)">${stars}</span>`;
+    tags = `<span class="tag ${d.visible!==false?'tag-green':'tag-red'}">${d.visible!==false?'Visible':'Masqué'}</span><span style="font-size:12px;color:var(--amber)">${stars}</span>`;
   } else if (type==='ebooks') {
     const safeCouv = esc(d.couverture||'');
     ico = d.couverture ? `<img src="${safeCouv}" style="width:42px;height:54px;object-fit:cover;border-radius:5px" onerror="this.style.display='none'">` : `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round"><path d="M4 19.5A2.5 2.5 0 016.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/></svg>`;
     name = esc(d.titre);
     meta = esc(d.prix || '—');
-    tags = `<span class="tag ${d.visible?'tag-green':'tag-red'}">${d.visible?'Publié':'Masqué'}</span><span class="tag tag-gray">${esc(d.badge||'—')}</span>${d.pdf?'<span class="tag tag-blue">PDF lié</span>':''}`;
+    tags = `<span class="tag ${d.visible!==false?'tag-green':'tag-red'}">${d.visible!==false?'Publié':'Masqué'}</span><span class="tag tag-gray">${esc(d.badge||'—')}</span>${d.pdf?'<span class="tag tag-blue">PDF lié</span>':''}`;
   } else if (type==='evenements') {
     ico = `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="3" y1="10" x2="21" y2="10"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/></svg>`;
     name = esc(d.titre);
     meta = esc(d.date) + (d.heure ? ' · ' + esc(d.heure) : '');
-    tags = `<span class="tag ${d.visible?'tag-green':'tag-red'}">${d.visible?'Actif':'Masqué'}</span><span class="tag tag-gray">${esc(d.plateforme||'')}</span>`;
+    tags = `<span class="tag ${d.visible!==false?'tag-green':'tag-red'}">${d.visible!==false?'Actif':'Masqué'}</span><span class="tag tag-gray">${esc(d.plateforme||'')}</span>`;
   } else if (type==='formations') {
     ico = `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>`;
     name = esc(d.titre);
     meta = esc(d.prix) + ' · ' + esc(d.sessions);
-    tags = `<span class="tag ${d.visible?'tag-green':'tag-red'}">${d.visible?'Visible':'Masqué'}</span><span class="tag tag-gray">${esc(d.badge||'')}</span>`;
+    tags = `<span class="tag ${d.visible!==false?'tag-green':'tag-red'}">${d.visible!==false?'Visible':'Masqué'}</span><span class="tag tag-gray">${esc(d.badge||'')}</span>`;
   } else if (type==='articles') {
     ico = `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>`;
     name = esc(d.titre);
@@ -818,9 +818,9 @@ function buildForm(type, id) {
     return `
       <div class="grid2">
         <div class="fgroup"><label class="flabel">Nom <span>*</span></label><input class="fcontrol" id="f_nom" value="${esc(d.nom||'')}" placeholder="Nom du client"></div>
-        <div class="fgroup"><label class="flabel">Activité <span>*</span></label><input class="fcontrol" id="f_activite" value="${esc(d.activite||'')}" placeholder="Vente de vêtements"></div>
+        <div class="fgroup"><label class="flabel">Rôle / Activité <span>*</span></label><input class="fcontrol" id="f_activite" value="${esc(d.role||d.activite||'')}" placeholder="Vente de vêtements"></div>
       </div>
-      <div class="fgroup"><label class="flabel">Témoignage <span>*</span></label><textarea class="fcontrol" id="f_texte" rows="4" placeholder="Ce que dit le client sur votre accompagnement…">${esc(d.texte||'')}</textarea></div>
+      <div class="fgroup"><label class="flabel">Témoignage <span>*</span></label><textarea class="fcontrol" id="f_texte" rows="4" placeholder="Ce que dit le client sur votre accompagnement…">${esc(d.temoignage||d.texte||'')}</textarea></div>
       <div class="fgroup">
         <label class="flabel">Photo du client</label>
         <input type="hidden" id="f_photo" value="${esc(d.photo||'')}">
@@ -994,8 +994,8 @@ const nid = () => Date.now().toString();
 function upsert(arr, item) { const i=arr.findIndex(x=>x.id===item.id); if(i>=0) arr[i]=item; else arr.push(item); }
 
 async function saveTem() {
-  const it = { id:mId||nid(), nom:v('f_nom'), activite:v('f_activite'), texte:v('f_texte'), photo:v('f_photo'), note:parseInt(v('f_note'))||5, visible:chk('f_visible') };
-  if (!it.nom||!it.texte) throw new Error('Nom et témoignage obligatoires.');
+  const it = { id:mId||nid(), nom:v('f_nom'), role:v('f_activite'), temoignage:v('f_texte'), photo:v('f_photo'), note:parseInt(v('f_note'))||5, visible:chk('f_visible') };
+  if (!it.nom||!it.temoignage) throw new Error('Nom et témoignage obligatoires.');
   upsert(S.temoignages.d, it);
   S.temoignages.s = await ghWrite('data/temoignages.json', S.temoignages.d, S.temoignages.s, 'Admin: témoignage '+it.nom);
   renderList('temoignages');
