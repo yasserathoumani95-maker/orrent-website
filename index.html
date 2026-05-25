@@ -755,8 +755,11 @@
   const temoSection = document.getElementById('temoignages');
   const temoGrid    = document.getElementById('idxTemoGrid');
   if (temos && temos.length) {
-    temoSection.style.display = '';
-    temoGrid.innerHTML = temos.slice(0, 3).map((t, i) => orTemoCard(t, i)).join('');
+    const temosVis = temos.filter(t => t.visible !== false).slice(0, 3);
+    if (temosVis.length) {
+      temoSection.style.display = '';
+      temoGrid.innerHTML = temosVis.map((t, i) => orTemoCard(t, i)).join('');
+    }
   }
 
   // Relancer animations

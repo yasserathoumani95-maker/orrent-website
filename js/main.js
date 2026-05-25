@@ -34,7 +34,7 @@ hamburger.addEventListener('click', () => {
 mobileOverlay.addEventListener('click', closeMenu);
 
 // Close menu on nav link click
-document.querySelectorAll('.mobile-nav .nav-link').forEach(link => {
+document.querySelectorAll('.mobile-nav .mobile-link').forEach(link => {
   link.addEventListener('click', closeMenu);
 });
 
