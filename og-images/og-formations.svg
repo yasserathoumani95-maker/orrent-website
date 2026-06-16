@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <rect width="1200" height="630" fill="#0A1628"/>
+  <text x="640" y="520" font-family="Arial Black" font-weight="900" font-size="400" fill="#16C784" opacity="0.035">17</text>
+  <text x="80" y="155" font-family="Arial Black" font-weight="900" font-size="22" fill="#16C784" letter-spacing="8">ORRENT</text>
+  <rect x="80" y="175" width="50" height="5" rx="2.5" fill="#16C784"/>
+  <rect x="80" y="200" width="215" height="36" rx="18" fill="#16C784" opacity="0.15"/>
+  <text x="187" y="222" font-family="Arial" font-size="14" fill="#16C784" text-anchor="middle" font-weight="600">Formation Gratuite</text>
+  <text x="80" y="325" font-family="Arial Black" font-weight="900" font-size="68" fill="#FFFFFF">Samedi Digital</text>
+  <text x="80" y="390" font-family="Arial" font-size="24" fill="#16C784" font-weight="600">17 sessions · Chaque samedi · 100% gratuit</text>
+  <text x="80" y="440" font-family="Arial" font-size="19" fill="#94A3B8">Strategie, TikTok, Psychologie client, Tunnel de vente</text>
+  <rect x="80" y="490" width="290" height="48" rx="10" fill="#FFFFFF" opacity="0.05"/>
+  <text x="225" y="519" font-family="Arial" font-size="17" fill="#FFFFFF" text-anchor="middle">+100 entrepreneurs formes</text>
+</svg>

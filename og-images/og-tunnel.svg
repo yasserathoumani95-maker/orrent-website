@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <rect width="1200" height="630" fill="#0A1628"/>
+  <polygon points="820,110 1150,110 1070,490 900,490" fill="#16C784" opacity="0.04"/>
+  <polygon points="865,155 1105,155 1040,440 925,440" fill="#16C784" opacity="0.04"/>
+  <polygon points="910,200 1060,200 1015,390 950,390" fill="#16C784" opacity="0.05"/>
+  
+  <text x="80" y="105" font-family="Arial Black" font-weight="900" font-size="20" fill="#16C784" letter-spacing="8" opacity="0.7">ORRENT</text>
+  <rect x="80" y="130" width="110" height="32" rx="16" fill="#16C784" opacity="0.15"/>
+  <text x="135" y="151" font-family="Arial" font-size="13" fill="#16C784" text-anchor="middle" font-weight="600">Article</text>
+  <rect x="80" y="175" width="50" height="4" rx="2" fill="#16C784"/>
+  <text x="80" y="264" font-family="Arial Black" font-weight="900" font-size="52" fill="#16C784">Tunnel de vente</text>
+  <text x="80" y="330" font-family="Arial Black" font-weight="900" font-size="52" fill="#FFFFFF">en 7 jours</text>
+  <text x="80" y="390" font-family="Arial" font-size="21" fill="#94A3B8">Guide pratique · Outils gratuits · Comores</text>
+  <text x="80" y="430" font-family="Arial" font-size="17" fill="#16C784" opacity="0.7">Du client ideal au premier funnel operationnel</text>
+  <circle cx="88" cy="490" r="19" fill="#16C784" opacity="0.9"/>
+  <text x="88" y="496" font-family="Arial Black" font-size="12" fill="#0A1628" text-anchor="middle">J1</text>
+  <circle cx="140" cy="490" r="19" fill="#16C784" opacity="0.55"/>
+  <text x="140" y="496" font-family="Arial" font-size="12" fill="#FFFFFF" text-anchor="middle">J2</text>
+  <circle cx="192" cy="490" r="19" fill="#16C784" opacity="0.32"/>
+  <text x="192" y="496" font-family="Arial" font-size="12" fill="#FFFFFF" text-anchor="middle">J3</text>
+  <circle cx="244" cy="490" r="19" fill="#16C784" opacity="0.18"/>
+  <text x="244" y="496" font-family="Arial" font-size="12" fill="#FFFFFF" text-anchor="middle">J4</text>
+  <circle cx="296" cy="490" r="19" fill="#16C784" opacity="0.1"/>
+  <text x="296" y="496" font-family="Arial" font-size="12" fill="#FFFFFF" text-anchor="middle">J5</text>
+  <circle cx="348" cy="490" r="19" fill="#16C784" opacity="0.07"/>
+  <text x="348" y="496" font-family="Arial" font-size="12" fill="#FFFFFF" text-anchor="middle">J6</text>
+  <circle cx="400" cy="490" r="19" fill="#16C784" opacity="0.05"/>
+  <text x="400" y="496" font-family="Arial" font-size="12" fill="#FFFFFF" text-anchor="middle">J7</text>
+</svg>

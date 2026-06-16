@@ -1,7 +1,4 @@
-﻿/* Google Fonts chargées via <link> dans le HTML — pas d'@import ici */
-@import 'variables.css';
-@import 'components.css';
-@import 'animations.css';
+﻿/* Variables, composants et animations chargés via <link> séparés dans le HTML */
 
 /* ── RESET ───────────────────────────────── */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }

@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <rect width="1200" height="630" fill="#0A1628"/>
+  <circle cx="1000" cy="315" r="200" fill="none" stroke="#16C784" stroke-width="70" opacity="0.03"/>
+  <circle cx="1000" cy="315" r="80" fill="#16C784" opacity="0.04"/>
+  <text x="80" y="155" font-family="Arial Black" font-weight="900" font-size="22" fill="#16C784" letter-spacing="8">ORRENT</text>
+  <rect x="80" y="175" width="50" height="5" rx="2.5" fill="#16C784"/>
+  <text x="80" y="272" font-family="Arial Black" font-weight="900" font-size="70" fill="#FFFFFF">Blog</text>
+  <text x="80" y="355" font-family="Arial Black" font-weight="900" font-size="70" fill="#16C784">Marketing</text>
+  <text x="80" y="416" font-family="Arial" font-size="22" fill="#94A3B8">Conseils pratiques pour entrepreneurs comoriens</text>
+  <rect x="80" y="452" width="130" height="34" rx="17" fill="#FFFFFF" opacity="0.06"/>
+  <text x="145" y="474" font-family="Arial" font-size="13" fill="#FFFFFF" text-anchor="middle" opacity="0.7">TikTok</text>
+  <rect x="225" y="452" width="160" height="34" rx="17" fill="#FFFFFF" opacity="0.06"/>
+  <text x="305" y="474" font-family="Arial" font-size="13" fill="#FFFFFF" text-anchor="middle" opacity="0.7">Psychologie</text>
+  <rect x="400" y="452" width="175" height="34" rx="17" fill="#FFFFFF" opacity="0.06"/>
+  <text x="487" y="474" font-family="Arial" font-size="13" fill="#FFFFFF" text-anchor="middle" opacity="0.7">Tunnel de vente</text>
+</svg>
