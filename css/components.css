@@ -326,6 +326,23 @@ textarea.form-control { resize: vertical; min-height: 110px; }
   padding: 4px 0;
 }
 .nav-link:hover { color: var(--green-dark); }
+.nav-link.nav-active { color: var(--green-dark); position: relative; }
+.nav-link.nav-active::after { content: ''; position: absolute; bottom: -2px; left: 0; right: 0; height: 2px; background: var(--green); border-radius: 2px; }
+
+/* ── SERVICE CARD NUMBERED ─────────────── */
+.service-card .card-num {
+  position: absolute;
+  top: 18px; right: 18px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  color: var(--muted);
+  font-variant-numeric: tabular-nums;
+  opacity: 0.5;
+}
+.service-card.featured .card-num { opacity: 0.7; color: var(--green-dark); }
+.service-card:hover { box-shadow: 0 8px 32px rgba(22,199,132,0.14), 0 0 0 1px rgba(22,199,132,0.12); border-color: rgba(22,199,132,0.2); transition: box-shadow 0.35s var(--ease-out), border-color 0.35s var(--ease-out); }
+.service-card.featured:hover { box-shadow: 0 12px 40px rgba(22,199,132,0.22), 0 0 0 1px var(--green); }
 
 /* ── FOOTER ─────────────────────────────── */
 .footer-col h4 { font-size: 13px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: rgba(255,255,255,0.5); margin-bottom: 18px; }

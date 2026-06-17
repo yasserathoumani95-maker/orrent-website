@@ -47,13 +47,20 @@
 .mobile-nav.open .mobile-link:nth-child(7) { transition-delay: 0.35s; }
 .mobile-nav.open .mobile-link:nth-child(8) { transition-delay: 0.40s; }
 
+/* Grid stagger reveals */
+.grid-3 .reveal:nth-child(2),
+.grid-4 .reveal:nth-child(2) { transition-delay: 0.08s; }
+.grid-3 .reveal:nth-child(3),
+.grid-4 .reveal:nth-child(3) { transition-delay: 0.16s; }
+.grid-4 .reveal:nth-child(4) { transition-delay: 0.24s; }
+
 /* Card hover */
 .card-hover {
-  transition: transform 0.4s var(--ease-out), box-shadow 0.4s var(--ease-out);
+  transition: transform 0.4s var(--ease-out), box-shadow 0.4s var(--ease-out), border-color 0.4s var(--ease-out);
 }
 .card-hover:hover {
-  transform: translateY(-4px);
-  box-shadow: var(--shadow-hover);
+  transform: translateY(-5px);
+  box-shadow: 0 16px 48px rgba(22,199,132,0.14), 0 0 0 1px rgba(22,199,132,0.12);
 }
 
 /* Button press */
