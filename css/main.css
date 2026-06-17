@@ -375,6 +375,28 @@ h3 { font-size: 19px; font-weight: 700; }
 .hero-metric-label { font-size: 12px; color: rgba(255,255,255,0.55); margin-top: 2px; }
 .hero-metric-chart { flex-shrink: 0; }
 
+/* ── HERO TRUST LINE ─────────────────────── */
+.hero-trust {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+.hero-trust-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 13px;
+  color: var(--muted);
+}
+.hero-trust-dot {
+  width: 3px;
+  height: 3px;
+  border-radius: 50%;
+  background: var(--border);
+  flex-shrink: 0;
+}
+
 .scroll-down {
   display: inline-flex;
   align-items: center;
