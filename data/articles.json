@@ -31,5 +31,49 @@
     "badge_color": "dark",
     "fichier": "article-tunnel.html",
     "publie": true
+  },
+  {
+    "id": "4",
+    "titre": "Comment vendre sur WhatsApp sans paraître insistant",
+    "description": "La méthode ORRENT pour transformer vos conversations WhatsApp en ventes, sans forcer.",
+    "date": "Mai 2026",
+    "lecture": "6 min",
+    "badge": "Vente",
+    "badge_color": "green",
+    "fichier": "article-whatsapp.html",
+    "publie": true
+  },
+  {
+    "id": "5",
+    "titre": "Instagram vs TikTok aux Comores : laquelle choisir pour votre business ?",
+    "description": "Comparatif complet pour choisir la bonne plateforme selon votre activité et votre audience comorienne.",
+    "date": "Mai 2026",
+    "lecture": "7 min",
+    "badge": "Réseaux sociaux",
+    "badge_color": "outline",
+    "fichier": "article-instagram-vs-tiktok.html",
+    "publie": true
+  },
+  {
+    "id": "6",
+    "titre": "Comment fixer le prix de vos services quand vous débutez aux Comores",
+    "description": "5 étapes pour définir un tarif juste et rentable sans brader votre travail.",
+    "date": "Juin 2026",
+    "lecture": "8 min",
+    "badge": "Business",
+    "badge_color": "dark",
+    "fichier": "article-prix.html",
+    "publie": true
+  },
+  {
+    "id": "7",
+    "titre": "5 erreurs que font les entrepreneurs comoriens sur les réseaux sociaux",
+    "description": "Les erreurs les plus fréquentes sur TikTok, Instagram et Facebook, et comment les corriger.",
+    "date": "Juin 2026",
+    "lecture": "6 min",
+    "badge": "Stratégie",
+    "badge_color": "green",
+    "fichier": "article-erreurs-reseaux.html",
+    "publie": true
   }
 ]
