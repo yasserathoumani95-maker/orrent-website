@@ -796,6 +796,7 @@ h3 { font-size: 19px; font-weight: 700; }
   font-size: clamp(19px, 2.4vw, 26px);
   color: var(--body);
   letter-spacing: -0.015em;
+  scroll-margin-top: 100px;
 }
 .prose h3 {
   margin-top: 32px;
