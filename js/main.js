@@ -78,17 +78,18 @@ document.querySelectorAll('.mobile-nav .mobile-link').forEach(link => {
   window.addEventListener('scroll', show, { passive: true });
 }());
 
-// Smooth scroll
-document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-  anchor.addEventListener('click', function(e) {
-    const target = document.querySelector(this.getAttribute('href'));
-    if (target) {
-      e.preventDefault();
-      const offset = 80;
-      const top = target.getBoundingClientRect().top + window.scrollY - offset;
-      window.scrollTo({ top, behavior: 'smooth' });
-    }
-  });
+// Smooth scroll — délégation sur document pour capturer les liens dynamiques (TOC, etc.)
+document.addEventListener('click', function (e) {
+  var link = e.target.closest('a[href^="#"]');
+  if (!link) return;
+  var href = link.getAttribute('href');
+  if (!href || href === '#') return;
+  var target = document.querySelector(href);
+  if (!target) return;
+  e.preventDefault();
+  var offset = 96;
+  var top = target.getBoundingClientRect().top + window.scrollY - offset;
+  window.scrollTo({ top: top, behavior: 'smooth' });
 });
 
 // Table des matières auto-générée sur les pages articles
