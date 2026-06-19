@@ -776,6 +776,7 @@ h3 { font-size: 19px; font-weight: 700; }
 }
 .article-card { transition: opacity .3s ease, transform .3s var(--ease-out); }
 .article-card.hidden { display: none; }
+.article-featured.hidden { display: none; }
 
 [data-theme="dark"] .filter-btn.active,
 [data-theme="dark"] .filter-btn:hover {
