@@ -536,9 +536,21 @@ h3 { font-size: 19px; font-weight: 700; }
 .footer-bottom a:hover { color: var(--green); }
 
 /* ── WHATSAPP FLOAT ─────────────────────── */
+/* ── REMONTÉE BOUTONS FLOTTANTS quand sticky CTA visible ── */
+body:has(.sticky-cta.visible) .wa-float {
+  bottom: calc(24px + 62px);
+}
+body:has(.sticky-cta.visible) .scroll-nav-wrap {
+  bottom: calc(30px + 62px);
+}
+body:has(.sticky-cta.visible) #or-ct {
+  bottom: calc(24px + 62px) !important;
+}
+
 .wa-float {
   position: fixed;
   bottom: 24px; right: 24px;
+  transition: bottom 0.45s var(--ease-out), transform 0.3s var(--ease-out);
   width: 54px; height: 54px;
   background: #25D366;
   border-radius: 50%;
