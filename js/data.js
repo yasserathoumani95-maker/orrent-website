@@ -37,6 +37,22 @@ const OR_ART_META = {
     grad: 'linear-gradient(135deg,#0f172a 0%,#16C784 100%)',
     icon: `<svg width="48" height="48" viewBox="0 0 48 48" fill="none" stroke="rgba(255,255,255,0.7)" stroke-width="1.5" stroke-linecap="round"><path d="M6 10h36M10 20h28M14 30h20M18 40h12"/></svg>`
   },
+  vente: {
+    grad: 'linear-gradient(135deg,#0A1628 0%,#0EA05E 100%)',
+    icon: `<svg width="48" height="48" viewBox="0 0 48 48" fill="none" stroke="rgba(255,255,255,0.7)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 8h6l6 24h20l4-16H14"/><circle cx="20" cy="38" r="3"/><circle cx="36" cy="38" r="3"/></svg>`
+  },
+  reseaux: {
+    grad: 'linear-gradient(135deg,#833ab4 0%,#16C784 100%)',
+    icon: `<svg width="48" height="48" viewBox="0 0 48 48" fill="none" stroke="rgba(255,255,255,0.7)" stroke-width="1.5" stroke-linecap="round"><rect x="10" y="10" width="28" height="28" rx="7"/><circle cx="24" cy="24" r="7"/><circle cx="33" cy="15" r="2" fill="rgba(255,255,255,0.7)" stroke="none"/></svg>`
+  },
+  business: {
+    grad: 'linear-gradient(135deg,#1e2d47 0%,#F59E0B 100%)',
+    icon: `<svg width="48" height="48" viewBox="0 0 48 48" fill="none" stroke="rgba(255,255,255,0.7)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="20" width="36" height="22" rx="3"/><path d="M16 20V14a8 8 0 0116 0v6"/><path d="M24 30v4"/></svg>`
+  },
+  strategie: {
+    grad: 'linear-gradient(135deg,#0f172a 0%,#16C784 100%)',
+    icon: `<svg width="48" height="48" viewBox="0 0 48 48" fill="none" stroke="rgba(255,255,255,0.7)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="24" cy="24" r="18"/><circle cx="24" cy="24" r="8"/><path d="M24 6v4M24 38v4M6 24h4M38 24h4"/></svg>`
+  },
   _default: {
     grad: 'linear-gradient(135deg,#0A1628 0%,#16C784 100%)',
     icon: `<svg width="48" height="48" viewBox="0 0 48 48" fill="none" stroke="rgba(255,255,255,0.7)" stroke-width="1.5" stroke-linecap="round"><rect x="8" y="4" width="32" height="40" rx="3"/><path d="M16 16h16M16 24h16M16 32h10"/></svg>`
@@ -98,6 +114,10 @@ function orArtCat(badge) {
   if (b.includes('marketing'))   return 'marketing';
   if (b.includes('psycho'))      return 'psychologie';
   if (b.includes('tunnel'))      return 'tunnel';
+  if (b.includes('vente'))       return 'vente';
+  if (b.includes('réseau') || b.includes('reseau') || b.includes('tiktok') || b.includes('instagram')) return 'reseaux';
+  if (b.includes('business'))    return 'business';
+  if (b.includes('stratég') || b.includes('strateg')) return 'strategie';
   return 'all';
 }
 
@@ -141,6 +161,30 @@ function orEbookPreview(eb, idx) {
       <p>${orEsc(eb.description)}</p>
       <div class="ebook-price">${orEsc(eb.prix || '')}</div>
       <span class="btn btn-primary btn-sm" style="margin-top:8px">Acheter<span class="btn-icon"><svg viewBox="0 0 16 16" width="11" height="11" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 13L13 3M13 3H7M13 3v6"/></svg></span></span>
+    </div>
+  </a>`;
+}
+
+/** Carte article en vedette (premier article du blog) */
+function orArticleFeatured(art) {
+  const cat  = orArtCat(art.badge);
+  const meta = OR_ART_META[cat] || OR_ART_META._default;
+  const safeFichier = orEsc(art.fichier || '#');
+  return `<a href="${safeFichier}" class="article-featured reveal" data-category="${orEsc(cat)}">
+    <div class="article-featured-thumb article-thumb-bg" style="background:${meta.grad};display:flex;align-items:center;justify-content:center;">
+      ${meta.icon.replace('width="48"','width="64"').replace('height="48"','height="64"')}
+    </div>
+    <div class="article-featured-body">
+      <div class="article-featured-eyebrow">
+        <span class="article-featured-new">Récent</span>
+        ${orArtBadge(art.badge, art.badge_color)}
+      </div>
+      <h2>${orEsc(art.titre)}</h2>
+      <p>${orEsc(art.description)}</p>
+      <div class="article-featured-footer">
+        <span class="article-featured-meta">${orEsc(art.date || '')} · ${orEsc(art.lecture || '')}</span>
+        <span class="article-read" style="font-size:13px;font-weight:600;color:var(--green-dark);display:flex;align-items:center;gap:5px">Lire l'article <svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 10L10 2M10 2H5M10 2v5"/></svg></span>
+      </div>
     </div>
   </a>`;
 }

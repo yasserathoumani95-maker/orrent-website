@@ -91,6 +91,34 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
   });
 });
 
+// Table des matières auto-générée sur les pages articles
+(function () {
+  var prose = document.querySelector('.prose');
+  if (!prose) return;
+  var headings = Array.from(prose.querySelectorAll('h2'));
+  if (headings.length < 3) return;
+
+  headings.forEach(function (h, i) {
+    if (!h.id) h.id = 'section-' + (i + 1);
+  });
+
+  var toc = document.createElement('div');
+  toc.className = 'prose-toc';
+  toc.innerHTML = '<div class="prose-toc-label">Dans cet article</div><ol>' +
+    headings.map(function (h, i) {
+      var num = (i + 1) < 10 ? '0' + (i + 1) : '' + (i + 1);
+      return '<li><a href="#' + h.id + '"><span class="prose-toc-num">' + num + '</span>' + h.textContent + '</a></li>';
+    }).join('') +
+    '</ol>';
+
+  var firstChild = prose.firstElementChild;
+  if (firstChild && firstChild.style && firstChild.style.background) {
+    firstChild.after(toc);
+  } else {
+    prose.insertBefore(toc, prose.firstChild);
+  }
+}());
+
 // Barre de progression de lecture (active uniquement sur les pages articles)
 (function () {
   var bar = document.getElementById('readingProgress');

@@ -93,14 +93,20 @@
     <div class="filter-bar" id="filterBar">
       <button class="filter-btn active" data-filter="all">Tous</button>
       <button class="filter-btn" data-filter="marketing">Marketing</button>
+      <button class="filter-btn" data-filter="vente">Vente</button>
+      <button class="filter-btn" data-filter="reseaux">Réseaux sociaux</button>
+      <button class="filter-btn" data-filter="business">Business</button>
       <button class="filter-btn" data-filter="psychologie">Psychologie</button>
-      <button class="filter-btn" data-filter="tunnel">Tunnel de vente</button>
+      <button class="filter-btn" data-filter="tunnel">Tunnel</button>
     </div>
 
-    <div class="grid-3" id="articlesGrid">
-      <div class="skeleton-card"><div class="skeleton skeleton-cover"></div><div class="skeleton-body"><div class="skeleton skeleton-line w40"></div><div class="skeleton skeleton-line"></div><div class="skeleton skeleton-line w80"></div></div></div>
-      <div class="skeleton-card"><div class="skeleton skeleton-cover"></div><div class="skeleton-body"><div class="skeleton skeleton-line w40"></div><div class="skeleton skeleton-line"></div><div class="skeleton skeleton-line w80"></div></div></div>
-      <div class="skeleton-card"><div class="skeleton skeleton-cover"></div><div class="skeleton-body"><div class="skeleton skeleton-line w40"></div><div class="skeleton skeleton-line"></div><div class="skeleton skeleton-line w80"></div></div></div>
+    <div id="articlesGrid">
+      <div class="skeleton-card" style="margin-bottom:32px"><div class="skeleton skeleton-cover" style="height:220px"></div><div class="skeleton-body"><div class="skeleton skeleton-line w40"></div><div class="skeleton skeleton-line"></div><div class="skeleton skeleton-line w80"></div></div></div>
+      <div class="grid-3">
+        <div class="skeleton-card"><div class="skeleton skeleton-cover"></div><div class="skeleton-body"><div class="skeleton skeleton-line w40"></div><div class="skeleton skeleton-line"></div><div class="skeleton skeleton-line w80"></div></div></div>
+        <div class="skeleton-card"><div class="skeleton skeleton-cover"></div><div class="skeleton-body"><div class="skeleton skeleton-line w40"></div><div class="skeleton skeleton-line"></div><div class="skeleton skeleton-line w80"></div></div></div>
+        <div class="skeleton-card"><div class="skeleton skeleton-cover"></div><div class="skeleton-body"><div class="skeleton skeleton-line w40"></div><div class="skeleton skeleton-line"></div><div class="skeleton skeleton-line w80"></div></div></div>
+      </div>
     </div>
 
     <!-- CTA newsletter -->
@@ -156,12 +162,23 @@
     return;
   }
 
-  grid.innerHTML = publie.map((a, i) => orArticleCard(a, i)).join('');
+  const featured = publie[0];
+  const rest = publie.slice(1);
+
+  grid.innerHTML =
+    orArticleFeatured(featured) +
+    '<div class="grid-3" id="articlesSubGrid">' +
+      rest.map((a, i) => orArticleCard(a, i + 1)).join('') +
+    '</div>';
+
   if (window.initReveal) window.initReveal();
 
   // Filtres dynamiques
-  const btns  = document.querySelectorAll('#filterBar .filter-btn');
-  const cards = () => document.querySelectorAll('#articlesGrid .article-card');
+  const btns = document.querySelectorAll('#filterBar .filter-btn');
+
+  function allCards() {
+    return document.querySelectorAll('#articlesGrid .article-card, #articlesGrid .article-featured');
+  }
 
   btns.forEach(function (btn) {
     btn.addEventListener('click', function () {
@@ -169,9 +186,9 @@
       btns.forEach(function (b) { b.classList.remove('active'); });
       btn.classList.add('active');
 
-      // Show / hide cards
-      cards().forEach(function (card) {
-        if (filter === 'all' || card.getAttribute('data-category') === filter) {
+      allCards().forEach(function (card) {
+        const cat = card.getAttribute('data-category') || 'all';
+        if (filter === 'all' || cat === filter) {
           card.classList.remove('hidden');
         } else {
           card.classList.add('hidden');
