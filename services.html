@@ -8,6 +8,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="icon" type="image/png" href="logo.png">
   <link rel="canonical" href="https://yasserathoumani95-maker.github.io/orrent-website/services.html">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Accueil","item":"https://yasserathoumani95-maker.github.io/orrent-website/"},{"@type":"ListItem","position":2,"name":"Services","item":"https://yasserathoumani95-maker.github.io/orrent-website/services.html"}]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Je débute complètement, les services sont-ils adaptés pour moi ?","acceptedAnswer":{"@type":"Answer","text":"Absolument. Nos services ont été conçus pour accompagner les entrepreneurs à tous les niveaux - des débutants complets aux business déjà établis qui veulent accélérer. Le diagnostic gratuit est précisément là pour identifier votre point de départ et vous orienter vers le service le plus adapté à votre situation."}},{"@type":"Question","name":"Je suis dans la diaspora, pouvez-vous travailler avec moi à distance ?","acceptedAnswer":{"@type":"Answer","text":"Oui, tous nos services sont 100 % disponibles à distance. Nous travaillons avec des entrepreneurs comoriens aux Comores, en France, en Suisse, en Belgique et partout dans le monde. Toutes les sessions se font via Zoom ou WhatsApp, et les livrables sont envoyés en PDF."}},{"@type":"Question","name":"Quel est le délai pour commencer ?","acceptedAnswer":{"@type":"Answer","text":"Après votre premier message WhatsApp, nous répondons sous 24 heures et planifions le diagnostic dans les 48 à 72 heures suivantes. Pour la gestion de présence digitale, le démarrage effectif se fait dans les 7 jours après validation de la proposition."}},{"@type":"Question","name":"Comment se passe le paiement ?","acceptedAnswer":{"@type":"Answer","text":"Les modalités de paiement sont discutées lors du diagnostic et adaptées selon votre localisation (Comores, France, diaspora). Nous acceptons les virements bancaires, les transferts Mobile Money et d'autres moyens selon votre pays. Aucun paiement n'est demandé avant que vous ayez validé la proposition et signé un accord."}},{"@type":"Question","name":"Puis-je combiner plusieurs services ?","acceptedAnswer":{"@type":"Answer","text":"Oui, et c'est souvent la combinaison la plus efficace. Par exemple : commencer par le diagnostic, construire un plan stratégique, puis nous confier la gestion de la présence digitale pour l'exécution. Nous proposons des forfaits combinés avec des tarifs préférentiels."}},{"@type":"Question","name":"Quels résultats puis-je espérer et en combien de temps ?","acceptedAnswer":{"@type":"Answer","text":"Les premiers résultats visibles apparaissent généralement en 4 à 6 semaines. Des résultats significatifs en termes de ventes se constatent en moyenne après 2 à 3 mois d'exécution régulière."}}]}</script>
   <meta property="og:url" content="https://yasserathoumani95-maker.github.io/orrent-website/services.html">
   <meta property="og:image" content="https://yasserathoumani95-maker.github.io/orrent-website/og-images/og-services.png">
   <meta property="og:image:width" content="1200">
@@ -267,15 +269,19 @@
     }
     .faq-icon svg { width: 12px; height: 12px; stroke: var(--body); fill: none; stroke-width: 2; stroke-linecap: round; transition: stroke .2s; }
     .faq-answer {
-      max-height: 0;
+      display: grid;
+      grid-template-rows: 0fr;
+      transition: grid-template-rows .38s cubic-bezier(0.4,0,0.2,1), padding-bottom .38s cubic-bezier(0.4,0,0.2,1);
+      padding-bottom: 0;
+    }
+    .faq-answer-inner {
       overflow: hidden;
       font-size: 14px;
       color: var(--muted);
-      line-height: 1.7;
-      transition: max-height .35s var(--ease-out), padding .35s;
-      padding-bottom: 0;
+      line-height: 1.75;
+      min-height: 0;
     }
-    .faq-item.open .faq-answer { max-height: 300px; padding-bottom: 20px; }
+    .faq-item.open .faq-answer { grid-template-rows: 1fr; padding-bottom: 20px; }
     .faq-item.open .faq-icon { background: var(--dark-2); transform: rotate(45deg); }
     .faq-item.open .faq-icon svg { stroke: var(--white); }
 
@@ -847,42 +853,42 @@
           Je débute complètement, les services sont-ils adaptés pour moi ?
           <div class="faq-icon"><svg viewBox="0 0 12 12"><path d="M6 2v8M2 6h8"/></svg></div>
         </button>
-        <div class="faq-answer">Absolument. Nos services ont été conçus pour accompagner les entrepreneurs à tous les niveaux - des débutants complets aux business déjà établis qui veulent accélérer. Le diagnostic gratuit est précisément là pour identifier votre point de départ et vous orienter vers le service le plus adapté à votre situation.</div>
+        <div class="faq-answer"><div class="faq-answer-inner">Absolument. Nos services ont été conçus pour accompagner les entrepreneurs à tous les niveaux - des débutants complets aux business déjà établis qui veulent accélérer. Le diagnostic gratuit est précisément là pour identifier votre point de départ et vous orienter vers le service le plus adapté à votre situation.</div></div>
       </div>
       <div class="faq-item">
         <button class="faq-question" onclick="toggleFaq(this)" aria-expanded="false">
           Je suis dans la diaspora, pouvez-vous travailler avec moi à distance ?
           <div class="faq-icon"><svg viewBox="0 0 12 12"><path d="M6 2v8M2 6h8"/></svg></div>
         </button>
-        <div class="faq-answer">Oui, tous nos services sont 100 % disponibles à distance. Nous travaillons avec des entrepreneurs comoriens aux Comores, en France, en Suisse, en Belgique et partout dans le monde. Toutes les sessions se font via Zoom ou WhatsApp, et les livrables sont envoyés en PDF.</div>
+        <div class="faq-answer"><div class="faq-answer-inner">Oui, tous nos services sont 100 % disponibles à distance. Nous travaillons avec des entrepreneurs comoriens aux Comores, en France, en Suisse, en Belgique et partout dans le monde. Toutes les sessions se font via Zoom ou WhatsApp, et les livrables sont envoyés en PDF.</div></div>
       </div>
       <div class="faq-item">
         <button class="faq-question" onclick="toggleFaq(this)" aria-expanded="false">
           Quel est le délai pour commencer ?
           <div class="faq-icon"><svg viewBox="0 0 12 12"><path d="M6 2v8M2 6h8"/></svg></div>
         </button>
-        <div class="faq-answer">Après votre premier message WhatsApp, nous répondons sous 24 heures et planifions le diagnostic dans les 48 à 72 heures suivantes. Pour la gestion de présence digitale, le démarrage effectif se fait dans les 7 jours après validation de la proposition.</div>
+        <div class="faq-answer"><div class="faq-answer-inner">Après votre premier message WhatsApp, nous répondons sous 24 heures et planifions le diagnostic dans les 48 à 72 heures suivantes. Pour la gestion de présence digitale, le démarrage effectif se fait dans les 7 jours après validation de la proposition.</div></div>
       </div>
       <div class="faq-item">
         <button class="faq-question" onclick="toggleFaq(this)" aria-expanded="false">
           Comment se passe le paiement ?
           <div class="faq-icon"><svg viewBox="0 0 12 12"><path d="M6 2v8M2 6h8"/></svg></div>
         </button>
-        <div class="faq-answer">Les modalités de paiement sont discutées lors du diagnostic et adaptées selon votre localisation (Comores, France, diaspora). Nous acceptons les virements bancaires, les transferts Mobile Money et d'autres moyens selon votre pays. Aucun paiement n'est demandé avant que vous ayez validé la proposition et signé un accord.</div>
+        <div class="faq-answer"><div class="faq-answer-inner">Les modalités de paiement sont discutées lors du diagnostic et adaptées selon votre localisation (Comores, France, diaspora). Nous acceptons les virements bancaires, les transferts Mobile Money et d'autres moyens selon votre pays. Aucun paiement n'est demandé avant que vous ayez validé la proposition et signé un accord.</div></div>
       </div>
       <div class="faq-item">
         <button class="faq-question" onclick="toggleFaq(this)" aria-expanded="false">
           Puis-je combiner plusieurs services ?
           <div class="faq-icon"><svg viewBox="0 0 12 12"><path d="M6 2v8M2 6h8"/></svg></div>
         </button>
-        <div class="faq-answer">Oui, et c'est souvent la combinaison la plus efficace. Par exemple : commencer par le diagnostic, construire un plan stratégique, puis nous confier la gestion de la présence digitale pour l'exécution. Nous proposons des forfaits combinés avec des tarifs préférentiels - mentionnez-le lors du diagnostic.</div>
+        <div class="faq-answer"><div class="faq-answer-inner">Oui, et c'est souvent la combinaison la plus efficace. Par exemple : commencer par le diagnostic, construire un plan stratégique, puis nous confier la gestion de la présence digitale pour l'exécution. Nous proposons des forfaits combinés avec des tarifs préférentiels - mentionnez-le lors du diagnostic.</div></div>
       </div>
       <div class="faq-item">
         <button class="faq-question" onclick="toggleFaq(this)" aria-expanded="false">
           Quels résultats puis-je espérer et en combien de temps ?
           <div class="faq-icon"><svg viewBox="0 0 12 12"><path d="M6 2v8M2 6h8"/></svg></div>
         </button>
-        <div class="faq-answer">Les premiers résultats visibles (augmentation de la portée, premiers contacts entrants) apparaissent généralement en 4 à 6 semaines. Des résultats significatifs en termes de ventes se constatent en moyenne après 2 à 3 mois d'exécution régulière. Nous ne promettons pas de miracles - nous promettons un travail sérieux et une stratégie adaptée à votre marché.</div>
+        <div class="faq-answer"><div class="faq-answer-inner">Les premiers résultats visibles (augmentation de la portée, premiers contacts entrants) apparaissent généralement en 4 à 6 semaines. Des résultats significatifs en termes de ventes se constatent en moyenne après 2 à 3 mois d'exécution régulière. Nous ne promettons pas de miracles - nous promettons un travail sérieux et une stratégie adaptée à votre marché.</div></div>
       </div>
     </div>
   </div>
