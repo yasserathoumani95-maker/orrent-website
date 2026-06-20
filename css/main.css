@@ -213,7 +213,7 @@ h3 { font-size: 19px; font-weight: 700; }
   align-items: center;
 }
 .hero-content { display: flex; flex-direction: column; gap: 18px; }
-.hero-ctas { display: flex; gap: 12px; flex-wrap: wrap; }
+.hero-ctas { display: flex; gap: 10px; flex-wrap: nowrap; align-items: center; }
 .hero-subtitle { font-size: clamp(15px, 1.8vw, 18px); color: var(--muted); line-height: 1.75; max-width: 480px; }
 .hero-title .hl { color: var(--green); }
 
