@@ -678,9 +678,9 @@ body:has(.sticky-cta.visible) #or-ct {
 
 @media (max-width: 480px) {
   .container { padding: 0 18px; }
-  .hero-ctas { flex-direction: column; align-items: flex-start; gap: 10px; }
+  .hero-ctas { flex-direction: row; align-items: center; gap: 10px; flex-wrap: wrap; }
   .hero-ctas .btn { flex: none; }
-  .hero-ctas .btn-lg { padding: 11px 20px; font-size: 13px; }
+  .hero-ctas .btn-lg { padding: 11px 16px; font-size: 13px; }
   .stats-grid { grid-template-columns: 1fr; }
   .grid-4 { grid-template-columns: 1fr; }
   .footer-grid { grid-template-columns: 1fr; }
