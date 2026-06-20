@@ -470,45 +470,49 @@
   <div class="container section-pad">
     <div class="contact-wrap">
       <div class="contact-form-col">
-        <div>
-          <div class="tag tag-green tag-dot" style="margin-bottom:14px">Contact</div>
-          <h2>Prêt à propulser votre business ?</h2>
-          <p>Le premier diagnostic est gratuit : parlez-nous de votre projet.</p>
-          <div style="display:flex;align-items:center;gap:8px;margin-top:10px;padding:10px 14px;background:rgba(22,199,132,0.07);border-radius:10px;border:1px solid rgba(22,199,132,0.18)">
-            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="#16C784" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="7" cy="7" r="5"/><path d="M7 4v3l2 2"/></svg>
-            <span style="font-size:13px;color:var(--green-dark);font-weight:600">Réponse garantie sous 24h - places limitées ce mois</span>
+        <div class="tag tag-green tag-dot" style="margin-bottom:14px">Rendez-vous</div>
+        <h2>Parlons de votre projet</h2>
+        <p style="color:var(--muted);font-size:15px;line-height:1.7;margin-bottom:28px">Remplissez notre formulaire en 3 minutes. On étudie votre demande et on vous confirme le rendez-vous sous 24h.</p>
+
+        <div style="display:flex;flex-direction:column;gap:14px;margin-bottom:32px">
+          <div style="display:flex;align-items:flex-start;gap:14px">
+            <div style="width:36px;height:36px;border-radius:50%;background:var(--green-light);display:flex;align-items:center;justify-content:center;flex-shrink:0">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--green-dark)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 12l2 2 4-4"/><circle cx="12" cy="12" r="10"/></svg>
+            </div>
+            <div>
+              <div style="font-size:14px;font-weight:700;color:var(--body);margin-bottom:2px">Vous partagez votre projet</div>
+              <div style="font-size:13px;color:var(--muted);line-height:1.55">Vos coordonnées, votre activité, vos besoins et la date qui vous convient.</div>
+            </div>
+          </div>
+          <div style="display:flex;align-items:flex-start;gap:14px">
+            <div style="width:36px;height:36px;border-radius:50%;background:var(--green-light);display:flex;align-items:center;justify-content:center;flex-shrink:0">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--green-dark)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+            </div>
+            <div>
+              <div style="font-size:14px;font-weight:700;color:var(--body);margin-bottom:2px">On étudie votre demande</div>
+              <div style="font-size:13px;color:var(--muted);line-height:1.55">On analyse votre situation avant le rendez-vous pour arriver préparés.</div>
+            </div>
+          </div>
+          <div style="display:flex;align-items:flex-start;gap:14px">
+            <div style="width:36px;height:36px;border-radius:50%;background:var(--green-light);display:flex;align-items:center;justify-content:center;flex-shrink:0">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--green-dark)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81 19.79 19.79 0 01.12 1.18 2 2 0 012 0h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
+            </div>
+            <div>
+              <div style="font-size:14px;font-weight:700;color:var(--body);margin-bottom:2px">On se parle sur WhatsApp ou Google Meet</div>
+              <div style="font-size:13px;color:var(--muted);line-height:1.55">Un échange ciblé, concret et sans engagement pour voir comment on peut vous aider.</div>
+            </div>
           </div>
         </div>
 
-        <form id="contactForm" class="stack" style="gap:16px">
-          <div class="form-group">
-            <label class="form-label" for="nom">Nom complet</label>
-            <input type="text" id="nom" name="nom" class="form-control" placeholder="Votre nom" required>
-          </div>
-          <div class="form-group">
-            <label class="form-label" for="contactField">Email ou WhatsApp</label>
-            <input type="text" id="contactField" name="contact" class="form-control" placeholder="email@exemple.com ou +269..." required>
-          </div>
-          <div class="form-group">
-            <label class="form-label" for="activite">Votre activité</label>
-            <input type="text" id="activite" name="activite" class="form-control" placeholder="Vente, restauration, services...">
-          </div>
-          <div class="form-group">
-            <label class="form-label" for="message">Message</label>
-            <textarea id="message" name="message" class="form-control" placeholder="Décrivez votre projet ou votre question..." required></textarea>
-          </div>
-          <div class="visually-hidden" aria-hidden="true">
-            <label for="_gotcha">Ne pas remplir ce champ</label>
-            <input type="text" name="_gotcha" id="_gotcha" tabindex="-1" autocomplete="off">
-          </div>
-          <button type="submit" id="contactSubmit" class="btn btn-primary btn-full">
-            Envoyer ma demande
-            <span class="btn-icon" id="contactBtnIcon">
-              <svg viewBox="0 0 16 16" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 13L13 3M13 3H7M13 3v6"/></svg>
-            </span>
-          </button>
-          <div id="formFeedback" aria-live="polite" aria-atomic="true" style="display:none;padding:14px 18px;border-radius:10px;font-size:14px;font-weight:500;text-align:center"></div>
-        </form>
+        <a href="rendez-vous.html" class="btn btn-primary btn-lg" style="width:100%;justify-content:center">
+          Prendre rendez-vous
+          <span class="btn-icon"><svg viewBox="0 0 16 16" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 13L13 3M13 3H7M13 3v6"/></svg></span>
+        </a>
+
+        <div style="display:flex;align-items:center;gap:8px;margin-top:14px;padding:10px 14px;background:rgba(22,199,132,0.07);border-radius:10px;border:1px solid rgba(22,199,132,0.18)">
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="#16C784" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="7" cy="7" r="5"/><path d="M7 4v3l2 2"/></svg>
+          <span style="font-size:13px;color:var(--green-dark);font-weight:600">Réponse garantie sous 24h · Paiement après validation</span>
+        </div>
       </div>
 
       <div class="contact-info-col">
