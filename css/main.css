@@ -547,6 +547,17 @@ body:has(.sticky-cta.visible) .scroll-nav-wrap {
 body:has(.sticky-cta.visible) #or-ct {
   bottom: calc(24px + 62px) !important;
 }
+@media (max-width: 480px) {
+  body:has(.sticky-cta.visible) .wa-float {
+    bottom: calc(16px + 108px);
+  }
+  body:has(.sticky-cta.visible) .scroll-nav-wrap {
+    display: none;
+  }
+  body:has(.sticky-cta.visible) #or-ct {
+    bottom: calc(16px + 108px) !important;
+  }
+}
 
 .wa-float {
   position: fixed;
