@@ -552,7 +552,7 @@ body:has(.sticky-cta.visible) #or-ct {
     bottom: calc(16px + 108px);
   }
   body:has(.sticky-cta.visible) .scroll-nav-wrap {
-    display: none;
+    bottom: calc(16px + 108px);
   }
   body:has(.sticky-cta.visible) #or-ct {
     bottom: calc(16px + 108px) !important;
