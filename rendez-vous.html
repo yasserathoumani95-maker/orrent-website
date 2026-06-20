@@ -1,0 +1,683 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-CEM1KH57N2"></script>
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-CEM1KH57N2');</script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image/png" href="logo.png">
+  <meta name="robots" content="index, follow">
+  <meta name="description" content="Prenez rendez-vous avec ORRENT — Partagez votre projet, choisissez une date et discutons ensemble de votre stratégie digitale.">
+  <meta property="og:title" content="Prendre rendez-vous | ORRENT">
+  <meta property="og:description" content="Dites-nous tout sur votre projet. On vous contacte sous 24h pour confirmer le rendez-vous.">
+  <meta property="og:type" content="website">
+  <title>Prendre rendez-vous | ORRENT</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;800&family=DM+Sans:opsz,wght@9..40,400;9..40,600&display=swap">
+  <link rel="stylesheet" href="css/variables.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/animations.css">
+  <link rel="stylesheet" href="css/main.css?v=5">
+  <style>
+    /* Hero */
+    .rdv-hero { background: linear-gradient(135deg,#0A1628,#1a2e50); padding: calc(80px + 60px) 0 48px; }
+    .rdv-title { font-family:var(--font-title);font-size:clamp(36px,6vw,64px);font-weight:800;color:#fff;letter-spacing:-.03em;line-height:1.05;margin-bottom:12px; }
+    .rdv-sub { font-size:15px;color:rgba(255,255,255,0.65);max-width:480px;line-height:1.65; }
+
+    /* Progress bar */
+    .rdv-progress { display:flex;align-items:center;gap:0;margin:40px 0 0; }
+    .rdv-step-dot { display:flex;align-items:center;gap:10px;flex:1; }
+    .rdv-step-dot:last-child { flex:none; }
+    .rdv-dot { width:32px;height:32px;border-radius:50%;border:2px solid rgba(255,255,255,0.25);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:rgba(255,255,255,0.4);transition:all .3s;flex-shrink:0; }
+    .rdv-dot.active { border-color:var(--green);background:var(--green);color:var(--dark-2); }
+    .rdv-dot.done { border-color:var(--green);background:var(--green);color:var(--dark-2); }
+    .rdv-step-label { font-size:11px;font-weight:600;color:rgba(255,255,255,0.35);text-transform:uppercase;letter-spacing:.08em;transition:color .3s;white-space:nowrap; }
+    .rdv-step-label.active { color:rgba(255,255,255,0.85); }
+    .rdv-step-line { flex:1;height:1px;background:rgba(255,255,255,0.15);margin:0 12px; }
+    .rdv-step-line.done { background:var(--green); }
+
+    /* Form wrapper */
+    .rdv-section { padding:56px 0 80px;background:var(--white); }
+    .rdv-layout { display:grid;grid-template-columns:1fr 340px;gap:56px;align-items:start; }
+
+    /* Form card */
+    .rdv-form-card { background:var(--white);border:1px solid var(--border);border-radius:var(--r-xl);padding:36px; }
+    .rdv-step-content { display:none; }
+    .rdv-step-content.active { display:block; }
+    .rdv-step-title { font-size:19px;font-weight:700;color:var(--body);margin-bottom:6px; }
+    .rdv-step-desc { font-size:13px;color:var(--muted);margin-bottom:28px;line-height:1.6; }
+
+    /* Fields */
+    .rdv-grid-2 { display:grid;grid-template-columns:1fr 1fr;gap:16px; }
+    .rdv-field { margin-bottom:18px; }
+    .rdv-label { display:block;font-size:13px;font-weight:600;color:var(--body);margin-bottom:7px; }
+    .rdv-label span { color:var(--green-dark); }
+    .rdv-input, .rdv-select, .rdv-textarea {
+      width:100%;padding:12px 14px;border:1.5px solid var(--border);border-radius:var(--r-md);
+      font-family:var(--font-body);font-size:14px;color:var(--body);background:var(--white);
+      transition:border-color .2s,box-shadow .2s;outline:none;box-sizing:border-box;
+    }
+    .rdv-input:focus, .rdv-select:focus, .rdv-textarea:focus {
+      border-color:var(--green);box-shadow:0 0 0 3px rgba(5,150,105,.1);
+    }
+    .rdv-input.error, .rdv-select.error, .rdv-textarea.error { border-color:#EF4444; }
+    .rdv-error-msg { font-size:12px;color:#EF4444;margin-top:5px;display:none; }
+    .rdv-textarea { min-height:110px;resize:vertical;line-height:1.6; }
+    .rdv-select { appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%236B7280' d='M6 8L1 3h10z'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 14px center;cursor:pointer; }
+
+    /* Radio cards */
+    .rdv-radio-group { display:grid;grid-template-columns:1fr 1fr;gap:10px; }
+    .rdv-radio-card { position:relative; }
+    .rdv-radio-card input { position:absolute;opacity:0;width:0;height:0; }
+    .rdv-radio-label {
+      display:block;padding:13px 16px;border:1.5px solid var(--border);border-radius:var(--r-md);
+      font-size:13px;font-weight:600;color:var(--muted);cursor:pointer;transition:all .2s;
+      text-align:center;
+    }
+    .rdv-radio-card input:checked + .rdv-radio-label {
+      border-color:var(--green);background:var(--green-light);color:var(--green-dark);
+    }
+    .rdv-radio-label:hover { border-color:var(--green);color:var(--green-dark); }
+
+    /* Pack cards */
+    .rdv-pack-group { display:grid;grid-template-columns:repeat(3,1fr);gap:10px; }
+    .rdv-pack-card { position:relative; }
+    .rdv-pack-card input { position:absolute;opacity:0;width:0;height:0; }
+    .rdv-pack-label {
+      display:flex;flex-direction:column;align-items:center;gap:4px;
+      padding:14px 12px;border:1.5px solid var(--border);border-radius:var(--r-md);
+      cursor:pointer;transition:all .2s;text-align:center;
+    }
+    .rdv-pack-label .pack-name { font-size:13px;font-weight:700;color:var(--body); }
+    .rdv-pack-label .pack-price { font-size:12px;color:var(--muted); }
+    .rdv-pack-card input:checked + .rdv-pack-label { border-color:var(--green);background:var(--green-light); }
+    .rdv-pack-card input:checked + .rdv-pack-label .pack-name { color:var(--green-dark); }
+    .rdv-pack-card input:checked + .rdv-pack-label .pack-price { color:var(--green-dark); }
+
+    /* Datetime row */
+    .rdv-datetime-row { display:grid;grid-template-columns:1fr 1fr;gap:16px; }
+
+    /* Navigation buttons */
+    .rdv-nav { display:flex;justify-content:space-between;align-items:center;margin-top:28px;padding-top:24px;border-top:1px solid var(--border); }
+    .rdv-counter { font-size:12px;color:var(--muted); }
+
+    /* Success state */
+    .rdv-success { display:none;text-align:center;padding:40px 20px; }
+    .rdv-success-icon { width:64px;height:64px;border-radius:50%;background:var(--green-light);display:flex;align-items:center;justify-content:center;margin:0 auto 24px; }
+    .rdv-success-icon svg { width:28px;height:28px;stroke:var(--green-dark);fill:none;stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round; }
+    .rdv-success h3 { font-size:22px;font-weight:700;color:var(--body);margin-bottom:10px; }
+    .rdv-success p { font-size:14px;color:var(--muted);line-height:1.65;max-width:380px;margin:0 auto 24px; }
+
+    /* Sidebar info */
+    .rdv-sidebar { position:sticky;top:100px; }
+    .rdv-info-card { background:var(--surface);border-radius:var(--r-xl);padding:28px;margin-bottom:16px; }
+    .rdv-info-title { font-size:13px;font-weight:700;color:var(--body);margin-bottom:16px; }
+    .rdv-info-item { display:flex;align-items:flex-start;gap:12px;padding:10px 0;border-bottom:1px solid var(--border); }
+    .rdv-info-item:last-child { border-bottom:none; }
+    .rdv-info-icon { width:28px;height:28px;border-radius:var(--r-md);background:var(--green-light);display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px; }
+    .rdv-info-icon svg { width:13px;height:13px;stroke:var(--green-dark);fill:none;stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round; }
+    .rdv-info-text { font-size:13px;color:var(--muted);line-height:1.55; }
+    .rdv-info-text strong { color:var(--body);display:block;margin-bottom:2px; }
+
+    .rdv-trust { background:linear-gradient(135deg,#0A1628,#1a2e50);border-radius:var(--r-xl);padding:24px; }
+    .rdv-trust-title { font-size:13px;font-weight:700;color:rgba(255,255,255,0.9);margin-bottom:12px; }
+    .rdv-trust-item { font-size:13px;color:rgba(255,255,255,0.6);display:flex;gap:8px;align-items:flex-start;margin-bottom:8px;line-height:1.5; }
+    .rdv-trust-item:last-child { margin-bottom:0; }
+    .rdv-trust-check { color:var(--green);font-weight:700;flex-shrink:0; }
+
+    /* Spinner */
+    .rdv-spinner { display:inline-block;width:16px;height:16px;border:2px solid rgba(255,255,255,0.3);border-top-color:#fff;border-radius:50%;animation:spin .7s linear infinite;margin-right:8px;vertical-align:middle; }
+    @keyframes spin { to { transform:rotate(360deg); } }
+
+    @media(max-width:900px) {
+      .rdv-layout { grid-template-columns:1fr;gap:32px; }
+      .rdv-sidebar { position:static; }
+      .rdv-grid-2 { grid-template-columns:1fr; }
+      .rdv-pack-group { grid-template-columns:1fr 1fr; }
+      .rdv-datetime-row { grid-template-columns:1fr; }
+      .rdv-radio-group { grid-template-columns:1fr 1fr; }
+    }
+    @media(max-width:500px) {
+      .rdv-form-card { padding:24px 18px; }
+      .rdv-pack-group { grid-template-columns:1fr; }
+      .rdv-step-label { display:none; }
+    }
+  </style>
+</head>
+<body>
+<a href="#main-content" class="skip-link">Aller au contenu principal</a>
+
+<header id="header">
+  <div class="container">
+    <div class="header-inner">
+      <a href="index.html" class="logo">
+        <picture><source srcset="logo.webp" type="image/webp"><img src="logo.png" alt="ORRENT" class="logo-img"></picture>
+        <span class="logo-text">ORRENT</span>
+      </a>
+      <nav class="nav-desktop">
+        <a href="index.html#about" class="nav-link">À propos</a>
+        <a href="services.html" class="nav-link">Services</a>
+        <a href="ebooks.html" class="nav-link">eBooks</a>
+        <a href="formations.html" class="nav-link">Formations</a>
+        <a href="blog.html" class="nav-link">Articles</a>
+        <a href="rendez-vous.html" class="btn btn-primary btn-sm" style="background:var(--green)">Prendre rendez-vous<span class="btn-icon"><svg viewBox="0 0 16 16" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 13L13 3M13 3H7M13 3v6"/></svg></span></a>
+      </nav>
+      <button class="theme-toggle" id="themeToggle" aria-label="Passer au mode sombre"><svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg></button>
+      <button class="hamburger" id="hamburger" aria-label="Menu" aria-controls="mobileNav" aria-expanded="false"><span class="ham-line"></span><span class="ham-line"></span><span class="ham-line"></span></button>
+    </div>
+  </div>
+</header>
+<div class="mobile-overlay" id="mobileOverlay"></div>
+<nav class="mobile-nav" id="mobileNav" aria-hidden="true">
+  <a href="index.html" class="mobile-link">Accueil</a>
+  <a href="services.html" class="mobile-link">Services</a>
+  <a href="ebooks.html" class="mobile-link">eBooks</a>
+  <a href="formations.html" class="mobile-link">Formations</a>
+  <a href="blog.html" class="mobile-link">Articles</a>
+  <a href="rendez-vous.html" class="btn btn-primary btn-full" style="margin-top:20px">Prendre rendez-vous</a>
+</nav>
+
+<!-- HERO -->
+<div class="rdv-hero" id="main-content">
+  <div class="container">
+    <div class="breadcrumb" style="margin-bottom:20px">
+      <a href="index.html" style="color:rgba(255,255,255,0.5)">Accueil</a>
+      <span class="breadcrumb-sep" style="color:rgba(255,255,255,0.3)">/</span>
+      <span style="color:rgba(255,255,255,0.9)">Prendre rendez-vous</span>
+    </div>
+    <div class="pack-label" style="font-size:10px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,0.5);margin-bottom:10px">Conseil en stratégie digitale</div>
+    <h1 class="rdv-title">Parlons de votre projet</h1>
+    <p class="rdv-sub">Remplissez ce formulaire en 3 minutes. On étudie votre demande et on vous confirme le rendez-vous sous 24h.</p>
+
+    <!-- Barre de progression -->
+    <div class="rdv-progress" id="progressBar">
+      <div class="rdv-step-dot">
+        <div class="rdv-dot active" id="dot1">1</div>
+        <span class="rdv-step-label active" id="label1">Vos coordonnées</span>
+      </div>
+      <div class="rdv-step-line" id="line1"></div>
+      <div class="rdv-step-dot">
+        <div class="rdv-dot" id="dot2">2</div>
+        <span class="rdv-step-label" id="label2">Votre projet</span>
+      </div>
+      <div class="rdv-step-line" id="line2"></div>
+      <div class="rdv-step-dot">
+        <div class="rdv-dot" id="dot3">3</div>
+        <span class="rdv-step-label" id="label3">Le rendez-vous</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- FORMULAIRE -->
+<section class="rdv-section">
+  <div class="container">
+    <div class="rdv-layout">
+
+      <!-- Formulaire principal -->
+      <div>
+        <div class="rdv-form-card">
+
+          <!-- ÉTAPE 1 : Coordonnées -->
+          <div class="rdv-step-content active" id="step1">
+            <div class="rdv-step-title">Vos coordonnées</div>
+            <div class="rdv-step-desc">Ces informations nous permettront de vous contacter pour confirmer le rendez-vous.</div>
+
+            <div class="rdv-grid-2">
+              <div class="rdv-field">
+                <label class="rdv-label" for="prenom">Prénom <span>*</span></label>
+                <input class="rdv-input" type="text" id="prenom" placeholder="Votre prénom" autocomplete="given-name">
+                <div class="rdv-error-msg" id="err-prenom">Veuillez entrer votre prénom.</div>
+              </div>
+              <div class="rdv-field">
+                <label class="rdv-label" for="nom">Nom <span>*</span></label>
+                <input class="rdv-input" type="text" id="nom" placeholder="Votre nom" autocomplete="family-name">
+                <div class="rdv-error-msg" id="err-nom">Veuillez entrer votre nom.</div>
+              </div>
+            </div>
+
+            <div class="rdv-field">
+              <label class="rdv-label" for="email">Adresse email <span>*</span></label>
+              <input class="rdv-input" type="email" id="email" placeholder="votre@email.com" autocomplete="email">
+              <div class="rdv-error-msg" id="err-email">Veuillez entrer une adresse email valide.</div>
+            </div>
+
+            <div class="rdv-field">
+              <label class="rdv-label" for="whatsapp">Numéro WhatsApp <span>*</span></label>
+              <input class="rdv-input" type="tel" id="whatsapp" placeholder="+269 000 00 00" autocomplete="tel">
+              <div class="rdv-error-msg" id="err-whatsapp">Veuillez entrer votre numéro WhatsApp.</div>
+            </div>
+
+            <div class="rdv-field">
+              <label class="rdv-label" for="pays">Pays / Ville</label>
+              <input class="rdv-input" type="text" id="pays" placeholder="Ex : Moroni, Comores" autocomplete="country-name">
+            </div>
+
+            <div class="rdv-nav">
+              <span class="rdv-counter">Étape 1 sur 3</span>
+              <button class="btn btn-primary" onclick="nextStep(2)">
+                Continuer
+                <span class="btn-icon"><svg viewBox="0 0 16 16" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8h10M9 4l4 4-4 4"/></svg></span>
+              </button>
+            </div>
+          </div>
+
+          <!-- ÉTAPE 2 : Projet -->
+          <div class="rdv-step-content" id="step2">
+            <div class="rdv-step-title">Votre projet</div>
+            <div class="rdv-step-desc">Partagez le maximum d'informations — cela nous aide à préparer un rendez-vous utile et ciblé.</div>
+
+            <div class="rdv-field">
+              <label class="rdv-label" for="entreprise">Nom de votre entreprise / projet <span>*</span></label>
+              <input class="rdv-input" type="text" id="entreprise" placeholder="Ex : Boutique Salama, Restaurant Al Baraka...">
+              <div class="rdv-error-msg" id="err-entreprise">Veuillez entrer le nom de votre entreprise ou projet.</div>
+            </div>
+
+            <div class="rdv-field">
+              <label class="rdv-label" for="secteur">Secteur d'activité <span>*</span></label>
+              <select class="rdv-select" id="secteur">
+                <option value="">— Choisissez votre secteur —</option>
+                <option>Commerce / Boutique</option>
+                <option>Restauration / Alimentation</option>
+                <option>Mode / Beauté / Cosmétique</option>
+                <option>Artisanat / Décoration</option>
+                <option>Services aux particuliers</option>
+                <option>Services aux entreprises</option>
+                <option>Éducation / Formation</option>
+                <option>Santé / Bien-être</option>
+                <option>Transport / Logistique</option>
+                <option>Immobilier</option>
+                <option>Agriculture / Pêche</option>
+                <option>Tourisme / Hôtellerie</option>
+                <option>Technologie / Informatique</option>
+                <option>Autre</option>
+              </select>
+              <div class="rdv-error-msg" id="err-secteur">Veuillez choisir votre secteur d'activité.</div>
+            </div>
+
+            <div class="rdv-field">
+              <label class="rdv-label" for="besoin">Décrivez votre besoin <span>*</span></label>
+              <textarea class="rdv-textarea" id="besoin" placeholder="Expliquez votre situation actuelle, ce qui ne fonctionne pas, ce que vous souhaitez accomplir avec votre présence en ligne..."></textarea>
+              <div class="rdv-error-msg" id="err-besoin">Veuillez décrire votre besoin (au moins 20 caractères).</div>
+            </div>
+
+            <div class="rdv-field">
+              <label class="rdv-label">Pack qui vous intéresse</label>
+              <div class="rdv-pack-group">
+                <div class="rdv-pack-card">
+                  <input type="radio" name="pack" id="pack-starter" value="Pack Starter — 30€">
+                  <label class="rdv-pack-label" for="pack-starter">
+                    <span class="pack-name">Starter</span>
+                    <span class="pack-price">30 €</span>
+                  </label>
+                </div>
+                <div class="rdv-pack-card">
+                  <input type="radio" name="pack" id="pack-stratege" value="Pack Stratège — 60€">
+                  <label class="rdv-pack-label" for="pack-stratege">
+                    <span class="pack-name">Stratège</span>
+                    <span class="pack-price">60 €</span>
+                  </label>
+                </div>
+                <div class="rdv-pack-card">
+                  <input type="radio" name="pack" id="pack-autonomie" value="Pack Autonomie — 100€">
+                  <label class="rdv-pack-label" for="pack-autonomie">
+                    <span class="pack-name">Autonomie</span>
+                    <span class="pack-price">100 €</span>
+                  </label>
+                </div>
+                <div class="rdv-pack-card">
+                  <input type="radio" name="pack" id="pack-aucun" value="Pas encore décidé" checked>
+                  <label class="rdv-pack-label" for="pack-aucun" style="grid-column:span 3">
+                    <span class="pack-name">Pas encore décidé</span>
+                  </label>
+                </div>
+              </div>
+            </div>
+
+            <div class="rdv-nav">
+              <button class="btn btn-outline" onclick="prevStep(1)">← Retour</button>
+              <div style="display:flex;align-items:center;gap:12px">
+                <span class="rdv-counter">Étape 2 sur 3</span>
+                <button class="btn btn-primary" onclick="nextStep(3)">
+                  Continuer
+                  <span class="btn-icon"><svg viewBox="0 0 16 16" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8h10M9 4l4 4-4 4"/></svg></span>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- ÉTAPE 3 : Rendez-vous -->
+          <div class="rdv-step-content" id="step3">
+            <div class="rdv-step-title">Planifiez votre rendez-vous</div>
+            <div class="rdv-step-desc">Indiquez une date et une heure qui vous conviennent. On vous confirme le créneau sous 24h.</div>
+
+            <div class="rdv-datetime-row">
+              <div class="rdv-field">
+                <label class="rdv-label" for="date-rdv">Date souhaitée <span>*</span></label>
+                <input class="rdv-input" type="date" id="date-rdv">
+                <div class="rdv-error-msg" id="err-date">Veuillez choisir une date (au moins demain).</div>
+              </div>
+              <div class="rdv-field">
+                <label class="rdv-label" for="heure-rdv">Heure souhaitée <span>*</span></label>
+                <select class="rdv-select" id="heure-rdv">
+                  <option value="">— Choisissez —</option>
+                  <option>08:00</option><option>08:30</option>
+                  <option>09:00</option><option>09:30</option>
+                  <option>10:00</option><option>10:30</option>
+                  <option>11:00</option><option>11:30</option>
+                  <option>12:00</option><option>12:30</option>
+                  <option>14:00</option><option>14:30</option>
+                  <option>15:00</option><option>15:30</option>
+                  <option>16:00</option><option>16:30</option>
+                  <option>17:00</option><option>17:30</option>
+                  <option>18:00</option><option>18:30</option>
+                  <option>19:00</option><option>19:30</option>
+                  <option>20:00</option>
+                </select>
+                <div class="rdv-error-msg" id="err-heure">Veuillez choisir une heure.</div>
+              </div>
+            </div>
+
+            <div class="rdv-field">
+              <label class="rdv-label">Format du rendez-vous <span>*</span></label>
+              <div class="rdv-radio-group">
+                <div class="rdv-radio-card">
+                  <input type="radio" name="format" id="format-whatsapp" value="WhatsApp" checked>
+                  <label class="rdv-radio-label" for="format-whatsapp">
+                    📱 WhatsApp
+                  </label>
+                </div>
+                <div class="rdv-radio-card">
+                  <input type="radio" name="format" id="format-meet" value="Google Meet">
+                  <label class="rdv-radio-label" for="format-meet">
+                    🎥 Google Meet
+                  </label>
+                </div>
+              </div>
+            </div>
+
+            <div class="rdv-field">
+              <label class="rdv-label" for="message">Informations complémentaires</label>
+              <textarea class="rdv-textarea" id="message" style="min-height:80px" placeholder="Un détail à ajouter ? Un lien vers votre page ou votre site ? Une contrainte horaire particulière ?"></textarea>
+            </div>
+
+            <div class="rdv-nav">
+              <button class="btn btn-outline" onclick="prevStep(2)">← Retour</button>
+              <div style="display:flex;align-items:center;gap:12px">
+                <span class="rdv-counter">Étape 3 sur 3</span>
+                <button class="btn btn-primary" id="submitBtn" onclick="submitForm()">
+                  Envoyer la demande
+                  <span class="btn-icon"><svg viewBox="0 0 16 16" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 13L13 3M13 3H7M13 3v6"/></svg></span>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- SUCCÈS -->
+          <div class="rdv-success" id="successState">
+            <div class="rdv-success-icon">
+              <svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg>
+            </div>
+            <h3>Demande envoyée avec succès !</h3>
+            <p>On a bien reçu votre demande. Nous allons l'étudier et vous contacter sous <strong>24h</strong> sur WhatsApp ou par email pour confirmer le rendez-vous.</p>
+            <a href="index.html" class="btn btn-primary">Retour à l'accueil</a>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Sidebar -->
+      <div class="rdv-sidebar">
+        <div class="rdv-info-card">
+          <div class="rdv-info-title">Comment ça se passe ?</div>
+          <div class="rdv-info-item">
+            <div class="rdv-info-icon"><svg viewBox="0 0 24 24"><path d="M9 12l2 2 4-4"/><circle cx="12" cy="12" r="10"/></svg></div>
+            <div class="rdv-info-text"><strong>1. Vous remplissez ce formulaire</strong>3 minutes, sans engagement.</div>
+          </div>
+          <div class="rdv-info-item">
+            <div class="rdv-info-icon"><svg viewBox="0 0 24 24"><path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z"/><path d="M12 6v6l4 2"/></svg></div>
+            <div class="rdv-info-text"><strong>2. On étudie votre demande</strong>Sous 24h, on analyse votre situation.</div>
+          </div>
+          <div class="rdv-info-item">
+            <div class="rdv-info-icon"><svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81a19.79 19.79 0 01-3.07-8.72A2 2 0 012 0h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 14.92z"/></svg></div>
+            <div class="rdv-info-text"><strong>3. On vous contacte</strong>On confirme la date sur WhatsApp ou par email.</div>
+          </div>
+          <div class="rdv-info-item">
+            <div class="rdv-info-icon"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg></div>
+            <div class="rdv-info-text"><strong>4. Le rendez-vous</strong>On discute de votre projet en profondeur.</div>
+          </div>
+        </div>
+
+        <div class="rdv-trust">
+          <div class="rdv-trust-title">Pourquoi ORRENT ?</div>
+          <div class="rdv-trust-item"><span class="rdv-trust-check">✓</span>Spécialisés dans le marché comorien</div>
+          <div class="rdv-trust-item"><span class="rdv-trust-check">✓</span>Prix clairs, sans surprise</div>
+          <div class="rdv-trust-item"><span class="rdv-trust-check">✓</span>Paiement uniquement après validation</div>
+          <div class="rdv-trust-item"><span class="rdv-trust-check">✓</span>Réponse garantie sous 24h</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer id="footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-col">
+        <a href="index.html" class="logo"><picture><source srcset="logo.webp" type="image/webp"><img src="logo.png" alt="ORRENT" class="logo-img"></picture><span class="logo-text" style="color:var(--green)">ORRENT</span></a>
+        <p class="footer-tagline">"Propulsez votre business"<br>Comores / Tunisie</p>
+      </div>
+      <div class="footer-col"><h4>Services</h4><a href="services.html#strategie" class="footer-link">Nos packs</a><a href="pack-starter.html" class="footer-link">Pack Starter — 30€</a><a href="pack-stratege.html" class="footer-link">Pack Stratège — 60€</a><a href="pack-autonomie.html" class="footer-link">Pack Autonomie — 100€</a></div>
+      <div class="footer-col"><h4>Ressources</h4><a href="blog.html" class="footer-link">Articles</a><a href="formations.html" class="footer-link">Formations</a><a href="ebooks.html" class="footer-link">eBooks</a></div>
+      <div class="footer-col"><h4>Contact</h4><a href="mailto:orrentcomores@gmail.com" class="footer-link">orrentcomores@gmail.com</a><a href="https://wa.me/21654200528" target="_blank" class="footer-link">+216 54 200 528</a></div>
+    </div>
+    <div class="footer-bottom"><span>© 2026 ORRENT - Tous droits réservés</span><a href="politique-confidentialite.html" style="color:var(--muted);font-size:13px;margin-left:16px">Politique de confidentialité</a></div>
+  </div>
+</footer>
+
+<a href="https://wa.me/21654200528" target="_blank" rel="noopener" class="wa-float" aria-label="WhatsApp"><svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg></a>
+
+<script src="js/chatbot.js"></script>
+<script src="js/pwa.js"></script>
+<script src="js/parametres.js"></script>
+<script src="js/theme.js"></script>
+<script src="js/main.js"></script>
+<script src="js/animations.js"></script>
+
+<script>
+  /* ── CONFIG AIRTABLE ─────────────────────────────────────────────
+     Remplacez les 2 valeurs ci-dessous par vos vraies informations
+     (voir guide de configuration plus bas)
+  ──────────────────────────────────────────────────────────────── */
+  const AIRTABLE_TOKEN  = 'VOTRE_TOKEN_ICI';   // ex: patXXXXXXXX
+  const AIRTABLE_BASE   = 'VOTRE_BASE_ID_ICI'; // ex: appXXXXXXXX
+  const AIRTABLE_TABLE  = 'Demandes';
+
+  /* ── Date minimum = demain ───────────────────────────────────── */
+  (function() {
+    const tomorrow = new Date();
+    tomorrow.setDate(tomorrow.getDate() + 1);
+    document.getElementById('date-rdv').min = tomorrow.toISOString().split('T')[0];
+  })();
+
+  /* ── Navigation entre étapes ─────────────────────────────────── */
+  let currentStep = 1;
+
+  function showStep(n) {
+    document.querySelectorAll('.rdv-step-content').forEach(s => s.classList.remove('active'));
+    const target = document.getElementById('step' + n);
+    if (target) target.classList.add('active');
+    updateProgress(n);
+    currentStep = n;
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  function updateProgress(n) {
+    for (let i = 1; i <= 3; i++) {
+      const dot   = document.getElementById('dot'   + i);
+      const label = document.getElementById('label' + i);
+      dot.classList.remove('active','done');
+      label.classList.remove('active');
+      if (i < n)  { dot.classList.add('done');   dot.innerHTML = '✓'; }
+      if (i === n){ dot.classList.add('active');  dot.innerHTML = i; label.classList.add('active'); }
+      if (i > n)  { dot.innerHTML = i; }
+    }
+    for (let i = 1; i <= 2; i++) {
+      const line = document.getElementById('line' + i);
+      line.classList.toggle('done', i < n);
+    }
+  }
+
+  /* ── Validation étape 1 ──────────────────────────────────────── */
+  function validateStep1() {
+    let ok = true;
+    const fields = [
+      { id: 'prenom',   err: 'err-prenom',   check: v => v.trim().length > 0 },
+      { id: 'nom',      err: 'err-nom',      check: v => v.trim().length > 0 },
+      { id: 'email',    err: 'err-email',    check: v => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v) },
+      { id: 'whatsapp', err: 'err-whatsapp', check: v => v.trim().length >= 6 },
+    ];
+    fields.forEach(f => {
+      const el  = document.getElementById(f.id);
+      const err = document.getElementById(f.err);
+      if (!f.check(el.value)) {
+        el.classList.add('error'); err.style.display = 'block'; ok = false;
+      } else {
+        el.classList.remove('error'); err.style.display = 'none';
+      }
+    });
+    return ok;
+  }
+
+  /* ── Validation étape 2 ──────────────────────────────────────── */
+  function validateStep2() {
+    let ok = true;
+    const fields = [
+      { id: 'entreprise', err: 'err-entreprise', check: v => v.trim().length > 0 },
+      { id: 'secteur',    err: 'err-secteur',    check: v => v !== '' },
+      { id: 'besoin',     err: 'err-besoin',     check: v => v.trim().length >= 20 },
+    ];
+    fields.forEach(f => {
+      const el  = document.getElementById(f.id);
+      const err = document.getElementById(f.err);
+      if (!f.check(el.value)) {
+        el.classList.add('error'); err.style.display = 'block'; ok = false;
+      } else {
+        el.classList.remove('error'); err.style.display = 'none';
+      }
+    });
+    return ok;
+  }
+
+  /* ── Validation étape 3 ──────────────────────────────────────── */
+  function validateStep3() {
+    let ok = true;
+    const dateEl  = document.getElementById('date-rdv');
+    const heureEl = document.getElementById('heure-rdv');
+    const errDate  = document.getElementById('err-date');
+    const errHeure = document.getElementById('err-heure');
+
+    const today = new Date(); today.setHours(0,0,0,0);
+    const chosen = new Date(dateEl.value);
+
+    if (!dateEl.value || chosen <= today) {
+      dateEl.classList.add('error'); errDate.style.display = 'block'; ok = false;
+    } else {
+      dateEl.classList.remove('error'); errDate.style.display = 'none';
+    }
+    if (!heureEl.value) {
+      heureEl.classList.add('error'); errHeure.style.display = 'block'; ok = false;
+    } else {
+      heureEl.classList.remove('error'); errHeure.style.display = 'none';
+    }
+    return ok;
+  }
+
+  function nextStep(n) {
+    if (n === 2 && !validateStep1()) return;
+    if (n === 3 && !validateStep2()) return;
+    showStep(n);
+  }
+  function prevStep(n) { showStep(n); }
+
+  /* ── Soumission vers Airtable ────────────────────────────────── */
+  async function submitForm() {
+    if (!validateStep3()) return;
+
+    const btn = document.getElementById('submitBtn');
+    btn.disabled = true;
+    btn.innerHTML = '<span class="rdv-spinner"></span>Envoi en cours...';
+
+    const pack   = document.querySelector('input[name="pack"]:checked')?.value   || 'Non précisé';
+    const format = document.querySelector('input[name="format"]:checked')?.value || 'WhatsApp';
+
+    const data = {
+      fields: {
+        'Prénom':       document.getElementById('prenom').value.trim(),
+        'Nom':          document.getElementById('nom').value.trim(),
+        'Email':        document.getElementById('email').value.trim(),
+        'WhatsApp':     document.getElementById('whatsapp').value.trim(),
+        'Pays / Ville': document.getElementById('pays').value.trim(),
+        'Entreprise':   document.getElementById('entreprise').value.trim(),
+        'Secteur':      document.getElementById('secteur').value,
+        'Besoin':       document.getElementById('besoin').value.trim(),
+        'Pack':         pack,
+        'Date RDV':     document.getElementById('date-rdv').value,
+        'Heure RDV':    document.getElementById('heure-rdv').value,
+        'Format RDV':   format,
+        'Message':      document.getElementById('message').value.trim(),
+        'Statut':       'Nouveau',
+        'Date envoi':   new Date().toISOString(),
+      }
+    };
+
+    try {
+      const res = await fetch(
+        `https://api.airtable.com/v0/${AIRTABLE_BASE}/${encodeURIComponent(AIRTABLE_TABLE)}`,
+        {
+          method: 'POST',
+          headers: {
+            'Authorization': `Bearer ${AIRTABLE_TOKEN}`,
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(data),
+        }
+      );
+
+      if (res.ok) {
+        // Masquer toutes les étapes, afficher le succès
+        document.querySelectorAll('.rdv-step-content').forEach(s => s.style.display = 'none');
+        document.getElementById('successState').style.display = 'block';
+        // Mettre la progress bar en "terminée"
+        for (let i = 1; i <= 3; i++) {
+          const dot = document.getElementById('dot' + i);
+          dot.classList.remove('active'); dot.classList.add('done'); dot.innerHTML = '✓';
+        }
+        document.getElementById('line1').classList.add('done');
+        document.getElementById('line2').classList.add('done');
+      } else {
+        const errData = await res.json();
+        throw new Error(errData.error?.message || 'Erreur serveur');
+      }
+    } catch (err) {
+      btn.disabled = false;
+      btn.innerHTML = 'Envoyer la demande <span class="btn-icon"><svg viewBox="0 0 16 16" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 13L13 3M13 3H7M13 3v6"/></svg></span>';
+      alert('Une erreur est survenue. Vérifiez votre connexion ou contactez-nous directement sur WhatsApp.');
+      console.error('Airtable error:', err);
+    }
+  }
+
+  /* ── Supprimer erreur au focus ───────────────────────────────── */
+  document.querySelectorAll('.rdv-input, .rdv-select, .rdv-textarea').forEach(el => {
+    el.addEventListener('input', () => {
+      el.classList.remove('error');
+      const err = document.getElementById('err-' + el.id);
+      if (err) err.style.display = 'none';
+    });
+  });
+</script>
+</body>
+</html>
