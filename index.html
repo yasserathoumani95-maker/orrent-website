@@ -115,7 +115,6 @@
         <a href="services.html" class="nav-link">Services</a>
         <a href="ebooks.html" class="nav-link">eBooks</a>
         <a href="formations.html" class="nav-link">Formations</a>
-        <a href="#evenements" class="nav-link">Événements</a>
         <a href="blog.html"   class="nav-link">Articles</a>
         <a href="#gratuit"    class="nav-link">Gratuit</a>
         <a href="#contact"    class="btn btn-primary btn-sm">
@@ -145,7 +144,6 @@
   <a href="services.html"   class="mobile-link">Services</a>
   <a href="ebooks.html"     class="mobile-link">eBooks</a>
   <a href="formations.html" class="mobile-link">Formations</a>
-  <a href="#evenements"     class="mobile-link">Événements</a>
   <a href="blog.html"       class="mobile-link">Articles</a>
   <a href="#gratuit"        class="mobile-link">Gratuit</a>
   <a href="#contact" class="btn btn-primary btn-full" style="margin-top:20px">Nous contacter</a>
@@ -411,90 +409,6 @@
 </section>
 
 
-<!-- EBOOKS (aperçu) -->
-<section id="ebooks">
-  <div class="container section-pad">
-    <div class="section-head">
-      <div class="tag tag-green tag-dot reveal">Ressources numériques</div>
-      <h2 class="reveal reveal-delay-1">Nos eBooks Business</h2>
-      <p class="reveal reveal-delay-2">Des guides pratiques créés pour les entrepreneurs comoriens</p>
-    </div>
-
-    <div class="grid-3" id="idxEbooksGrid">
-      <div class="skeleton-card"><div class="skeleton skeleton-cover"></div><div class="skeleton-body"><div class="skeleton skeleton-line"></div><div class="skeleton skeleton-line w80"></div><div class="skeleton skeleton-line w60"></div></div></div>
-      <div class="skeleton-card"><div class="skeleton skeleton-cover"></div><div class="skeleton-body"><div class="skeleton skeleton-line"></div><div class="skeleton skeleton-line w80"></div><div class="skeleton skeleton-line w60"></div></div></div>
-      <div class="skeleton-card"><div class="skeleton skeleton-cover"></div><div class="skeleton-body"><div class="skeleton skeleton-line"></div><div class="skeleton skeleton-line w80"></div><div class="skeleton skeleton-line w60"></div></div></div>
-    </div>
-
-    <div class="text-center" style="margin-top:48px">
-      <a href="ebooks.html" class="btn btn-dark">
-        Voir tous les eBooks
-        <span class="btn-icon">
-          <svg viewBox="0 0 16 16" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 13L13 3M13 3H7M13 3v6"/></svg>
-        </span>
-      </a>
-    </div>
-  </div>
-</section>
-
-
-<!-- FORMATIONS (aperçu) -->
-<section id="formations">
-  <div class="container section-pad">
-    <div class="section-head">
-      <div class="tag tag-green tag-dot reveal">Apprendre & Progresser</div>
-      <h2 class="reveal reveal-delay-1">Nos Formations en Ligne</h2>
-      <p class="reveal reveal-delay-2">De la théorie à la pratique - des formations adaptées au marché comorien</p>
-    </div>
-
-    <div class="stack" id="idxFormationsStack">
-      <div class="skeleton-card"><div class="skeleton-body" style="gap:14px;padding:24px"><div class="skeleton skeleton-line w60"></div><div class="skeleton skeleton-line w80"></div><div class="skeleton skeleton-line w40"></div></div></div>
-    </div>
-
-    <div class="text-center" style="margin-top:36px">
-      <a href="formations.html" class="btn btn-outline">
-        Voir toutes les formations
-      </a>
-    </div>
-  </div>
-</section>
-
-
-<!-- ÉVÉNEMENTS -->
-<section id="evenements">
-  <div class="container section-pad">
-    <div class="section-head" style="margin-bottom:48px">
-      <div class="tag tag-white tag-dot reveal">Agenda</div>
-      <h2 class="text-white reveal reveal-delay-1">Prochains événements</h2>
-    </div>
-
-    <div id="idxEventsDiv">
-      <div class="skeleton-card" style="background:rgba(255,255,255,0.06);border-color:rgba(255,255,255,0.1)"><div class="skeleton-body" style="padding:24px;gap:12px"><div class="skeleton skeleton-line w60" style="opacity:.4"></div><div class="skeleton skeleton-line w80" style="opacity:.3"></div></div></div>
-    </div>
-  </div>
-</section>
-
-
-<!-- ARTICLES -->
-<section id="articles">
-  <div class="container section-pad">
-    <div class="section-head">
-      <div class="tag tag-green tag-dot reveal">Ressources gratuites</div>
-      <h2 class="reveal reveal-delay-1">Articles & Conseils</h2>
-      <p class="reveal reveal-delay-2">Des stratégies concrètes pour les entrepreneurs des Comores</p>
-    </div>
-
-    <div class="grid-3" id="idxArticlesGrid">
-      <div class="skeleton-card"><div class="skeleton skeleton-cover"></div><div class="skeleton-body"><div class="skeleton skeleton-line w40"></div><div class="skeleton skeleton-line"></div><div class="skeleton skeleton-line w80"></div></div></div>
-      <div class="skeleton-card"><div class="skeleton skeleton-cover"></div><div class="skeleton-body"><div class="skeleton skeleton-line w40"></div><div class="skeleton skeleton-line"></div><div class="skeleton skeleton-line w80"></div></div></div>
-      <div class="skeleton-card"><div class="skeleton skeleton-cover"></div><div class="skeleton-body"><div class="skeleton skeleton-line w40"></div><div class="skeleton skeleton-line"></div><div class="skeleton skeleton-line w80"></div></div></div>
-    </div>
-
-    <div class="text-center" style="margin-top:48px">
-      <a href="blog.html" class="btn btn-outline">Voir tous les articles</a>
-    </div>
-  </div>
-</section>
 
 
 <!-- TÉMOIGNAGES -->
@@ -764,52 +678,9 @@
 <script src="js/data.js"></script>
 <script>
 (async () => {
-  // Chargement parallèle de toutes les données
-  const [ebooks, formations, events, articles, temos] = await Promise.all([
-    orLoad('data/ebooks.json'),
-    orLoad('data/formations.json'),
-    orLoad('data/evenements.json'),
-    orLoad('data/articles.json'),
-    orLoad('data/temoignages.json'),
-  ]);
+  const temos = await orLoad('data/temoignages.json');
 
-  // - eBooks (3 premiers visibles)  - 
-  const ebGrid = document.getElementById('idxEbooksGrid');
-  if (ebooks) {
-    const vis = ebooks.filter(e => e.visible !== false).slice(0, 3);
-    ebGrid.innerHTML = vis.length
-      ? vis.map((e, i) => orEbookPreview(e, i)).join('')
-      : '';
-  } else { ebGrid.innerHTML = ''; }
-
-  // - Formations  - 
-  const fStack = document.getElementById('idxFormationsStack');
-  if (formations) {
-    const vis = formations.filter(f => f.visible !== false);
-    fStack.innerHTML = vis.length
-      ? vis.map(f => orFormationCard(f)).join('')
-      : '<p style="color:var(--muted);text-align:center;padding:20px">Aucune formation en cours.</p>';
-  } else { fStack.innerHTML = ''; }
-
-  // - Événements  - 
-  const evDiv = document.getElementById('idxEventsDiv');
-  if (events) {
-    const vis = events.filter(e => e.visible !== false);
-    evDiv.innerHTML = vis.length
-      ? vis.map((e, i) => orEventItem(e, i)).join('')
-      : '<p style="color:rgba(255,255,255,0.5);text-align:center;padding:20px">Aucun événement prévu.</p>';
-  } else { evDiv.innerHTML = ''; }
-
-  // - Articles (3 premiers publiés)  - 
-  const artGrid = document.getElementById('idxArticlesGrid');
-  if (articles) {
-    const pub = articles.filter(a => a.publie !== false).slice(0, 3);
-    artGrid.innerHTML = pub.length
-      ? pub.map((a, i) => orArticleCard(a, i)).join('')
-      : '';
-  } else { artGrid.innerHTML = ''; }
-
-  // - Témoignages (afficher section si données)  - 
+  // - Témoignages (afficher section si données)  -
   const temoSection = document.getElementById('temoignages');
   const temoGrid    = document.getElementById('idxTemoGrid');
   if (temos && temos.length) {
