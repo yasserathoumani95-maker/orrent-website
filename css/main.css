@@ -87,8 +87,9 @@ h3 { font-size: 19px; font-weight: 700; }
 }
 .sticky-cta-close:hover { background: rgba(255,255,255,0.08); color: var(--white-text); }
 @media (max-width: 480px) {
-  .sticky-cta-text { display: none; }
-  .sticky-cta-inner { justify-content: center; }
+  .sticky-cta-inner { flex-direction: column; align-items: center; gap: 8px; }
+  .sticky-cta-text { align-items: center; text-align: center; }
+  .sticky-cta-text span { display: none; }
 }
 
 /* ── HEADER ──────────────────────────────── */
