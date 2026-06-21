@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="fr">
 <head>
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-CEM1KH57N2"></script>
@@ -239,25 +239,25 @@
             <div class="rdv-grid-2">
               <div class="rdv-field">
                 <label class="rdv-label" for="prenom">Prénom <span>*</span></label>
-                <input class="rdv-input" type="text" id="prenom" placeholder="Votre prénom" autocomplete="given-name">
+                <input class="rdv-input" type="text" id="prenom" aria-describedby="err-prenom" aria-required="true" placeholder="Votre prénom" autocomplete="given-name">
                 <div class="rdv-error-msg" id="err-prenom">Veuillez entrer votre prénom.</div>
               </div>
               <div class="rdv-field">
                 <label class="rdv-label" for="nom">Nom <span>*</span></label>
-                <input class="rdv-input" type="text" id="nom" placeholder="Votre nom" autocomplete="family-name">
+                <input class="rdv-input" type="text" id="nom" aria-describedby="err-nom" aria-required="true" placeholder="Votre nom" autocomplete="family-name">
                 <div class="rdv-error-msg" id="err-nom">Veuillez entrer votre nom.</div>
               </div>
             </div>
 
             <div class="rdv-field">
               <label class="rdv-label" for="email">Adresse email <span>*</span></label>
-              <input class="rdv-input" type="email" id="email" placeholder="votre@email.com" autocomplete="email">
+              <input class="rdv-input" type="email" id="email" aria-describedby="err-email" aria-required="true" placeholder="votre@email.com" autocomplete="email">
               <div class="rdv-error-msg" id="err-email">Veuillez entrer une adresse email valide.</div>
             </div>
 
             <div class="rdv-field">
               <label class="rdv-label" for="whatsapp">Numéro WhatsApp <span>*</span></label>
-              <input class="rdv-input" type="tel" id="whatsapp" placeholder="+269 000 00 00" autocomplete="tel">
+              <input class="rdv-input" type="tel" id="whatsapp" aria-describedby="err-whatsapp" aria-required="true" placeholder="+269 000 00 00" autocomplete="tel">
               <div class="rdv-error-msg" id="err-whatsapp">Veuillez entrer votre numéro WhatsApp.</div>
             </div>
 
@@ -310,7 +310,7 @@
 
             <div class="rdv-field">
               <label class="rdv-label" for="besoin">Décrivez votre besoin <span>*</span></label>
-              <textarea class="rdv-textarea" id="besoin" placeholder="Expliquez votre situation actuelle, ce qui ne fonctionne pas, ce que vous souhaitez accomplir avec votre présence en ligne..."></textarea>
+              <textarea class="rdv-textarea" id="besoin" aria-describedby="err-besoin" aria-required="true" placeholder="Expliquez votre situation actuelle, ce qui ne fonctionne pas, ce que vous souhaitez accomplir avec votre présence en ligne..."></textarea>
               <div class="rdv-error-msg" id="err-besoin">Veuillez décrire votre besoin (au moins 20 caractères).</div>
             </div>
 
@@ -367,7 +367,7 @@
             <div class="rdv-datetime-row">
               <div class="rdv-field">
                 <label class="rdv-label" for="date-rdv">Date souhaitée <span>*</span></label>
-                <input class="rdv-input" type="date" id="date-rdv">
+                <input class="rdv-input" type="date" id="date-rdv" aria-describedby="err-date" aria-required="true">
                 <div class="rdv-error-msg" id="err-date">Veuillez choisir une date (au moins demain).</div>
               </div>
               <div class="rdv-field">

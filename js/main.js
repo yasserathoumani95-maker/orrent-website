@@ -135,3 +135,22 @@ document.addEventListener('click', function (e) {
     bar.setAttribute('aria-valuenow', Math.round(pct));
   }, { passive: true });
 }());
+
+// ── RGPD Cookie Banner ────────────────────────────────────────────────────
+(function () {
+  if (localStorage.getItem('cookie_consent')) return;
+  var banner = document.createElement('div');
+  banner.id = 'cookie-banner';
+  banner.setAttribute('role', 'region');
+  banner.setAttribute('aria-label', 'Consentement aux cookies');
+  banner.innerHTML = '<p>Ce site utilise Google Analytics (cookies analytiques) pour mesurer son audience. Aucune donnée personnelle n’est vendue. <a href="politique-confidentialite.html">En savoir plus</a>.</p><div class="cookie-actions"><button class="cookie-btn-refuse" id="cookieRefuse">Refuser</button><button class="cookie-btn-accept" id="cookieAccept">Accepter</button></div>';
+  document.body.appendChild(banner);
+  document.getElementById('cookieAccept').addEventListener('click', function () {
+    localStorage.setItem('cookie_consent', 'accepted');
+    banner.classList.add('hidden');
+  });
+  document.getElementById('cookieRefuse').addEventListener('click', function () {
+    localStorage.setItem('cookie_consent', 'refused');
+    banner.classList.add('hidden');
+  });
+}());
