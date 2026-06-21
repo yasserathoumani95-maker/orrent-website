@@ -642,8 +642,10 @@ async function ghRead(path) {
   const d = await r.json();
   return { data: JSON.parse(decodeURIComponent(escape(atob(d.content.replace(/\n/g,''))))), sha: d.sha };
 }
-async function ghWrite(path, data, sha, msg) {
-  const content = btoa(unescape(encodeURIComponent(JSON.stringify(data, null, 2))));
+async function ghWrite(path, data, sha, msg, rawHtml) {
+  const content = rawHtml
+    ? btoa(unescape(encodeURIComponent(rawHtml)))
+    : btoa(unescape(encodeURIComponent(JSON.stringify(data, null, 2))));
   const body = { message: msg, content, branch: BRANCH };
   if (sha) body.sha = sha;
   const r = await fetch(API+path, {
@@ -918,8 +920,15 @@ let mType = null, mId = null;
 
 function openForm(type, id) {
   mType = type; mId = id || null;
-  document.getElementById('mTitle').textContent = (id ? 'Modifier' : 'Ajouter') + ' — ' + { temoignage:'Témoignage', ebook:'eBook', evenement:'Événement', formation:'Formation', article:'Article' }[type];
-  document.getElementById('mBody').innerHTML = buildForm(type, id);
+  const titles = { temoignage:'Témoignage', ebook:'eBook', evenement:'Événement', formation:'Formation', article:'Article', rdv:'Rendez-vous' };
+  document.getElementById('mTitle').textContent = (id ? 'Modifier' : 'Ajouter') + ' — ' + (titles[type] || type);
+  try {
+    const html = buildForm(type, id);
+    document.getElementById('mBody').innerHTML = html;
+  } catch(e) {
+    document.getElementById('mBody').innerHTML = '<p style="color:var(--red);padding:12px">Erreur lors du chargement du formulaire : ' + e.message + '</p>';
+    console.error('buildForm error:', e);
+  }
   document.getElementById('overlay').classList.add('open');
 }
 function closeModal() { document.getElementById('overlay').classList.remove('open'); mType=mId=null; }
@@ -1057,14 +1066,37 @@ function buildForm(type, id) {
   }
   if (type==='article') {
     const d = id ? S.articles.d.find(x=>x.id===id) : {};
+    const colors = ['green','outline','dark'];
     return `
       <div class="fgroup"><label class="flabel">Titre <span>*</span></label><input class="fcontrol" id="f_titre" value="${esc(d.titre||'')}" placeholder="Titre de l'article"></div>
-      <div class="fgroup"><label class="flabel">Description courte</label><textarea class="fcontrol" id="f_desc" rows="2">${esc(d.description||'')}</textarea></div>
+      <div class="fgroup"><label class="flabel">Description courte <span>*</span></label><textarea class="fcontrol" id="f_desc" rows="2" placeholder="2-3 phrases qui résument l'article — affiché sur le blog">${esc(d.description||'')}</textarea></div>
+      <div class="fgroup">
+        <label class="flabel">Contenu de l'article <span>*</span></label>
+        <div style="font-size:11px;color:var(--muted);margin-bottom:6px;line-height:1.5">Écrivez le texte complet de l'article. Sautez une ligne entre chaque paragraphe. Titres de section : commencez la ligne par ## (ex: ## Pourquoi c'est important).</div>
+        <textarea class="fcontrol" id="f_contenu" rows="14" placeholder="Introduction de votre article...
+
+## Première section
+
+Votre contenu ici...
+
+## Deuxième section
+
+Suite de l'article..." style="font-family:monospace;font-size:13px;line-height:1.6">${esc(d.contenu||'')}</textarea>
+      </div>
       <div class="grid2">
-        <div class="fgroup"><label class="flabel">Date</label><input class="fcontrol" id="f_date" value="${esc(d.date||'')}" placeholder="Juin 2026"></div>
+        <div class="fgroup"><label class="flabel">Date de publication</label><input class="fcontrol" id="f_date" value="${esc(d.date||'')}" placeholder="Juin 2026"></div>
         <div class="fgroup"><label class="flabel">Temps de lecture</label>${selOther('f_lecture',['3 min','5 min','7 min','8 min','10 min','12 min','15 min'],d.lecture||'')}</div>
       </div>
-      <div class="fgroup"><label class="flabel">Catégorie</label>${selOther('f_badge',['Marketing','Psychologie','Tunnel de vente','Stratégie','Business','TikTok','Instagram','Facebook'],d.badge||'')}</div>
+      <div class="grid2">
+        <div class="fgroup"><label class="flabel">Catégorie</label>${selOther('f_badge',['Marketing','Psychologie','Tunnel de vente','Stratégie','Business','TikTok','Instagram','Facebook'],d.badge||'')}</div>
+        <div class="fgroup"><label class="flabel">Style du badge</label>
+          <select class="fcontrol" id="f_badge_color">
+            <option value="green"${(!d.badge_color||d.badge_color==='green')?' selected':''}>Vert (défaut)</option>
+            <option value="outline"${d.badge_color==='outline'?' selected':''}>Contour</option>
+            <option value="dark"${d.badge_color==='dark'?' selected':''}>Sombre</option>
+          </select>
+        </div>
+      </div>
       <input type="hidden" id="f_fichier" value="${d.fichier||''}">
       <div class="fgroup"><label class="flabel">Statut</label>
         <div class="toggle-row"><label class="toggle"><input type="checkbox" id="f_publie" ${d.publie!==false?'checked':''}><div class="toggle-track"></div></label><span class="toggle-lbl">Publié sur le blog</span></div>
@@ -1169,14 +1201,97 @@ async function saveFm() {
 }
 async function saveArt() {
   const existingFichier = v('f_fichier');
-  const it = { id:mId||nid(), titre:v('f_titre'), description:v('f_desc'), date:v('f_date'),
-    lecture:getSelOther('f_lecture'), badge:getSelOther('f_badge'),
-    fichier: existingFichier || ('article-' + slugify(v('f_titre')) + '.html'),
-    publie:chk('f_publie') };
+  const slug = existingFichier || ('article-' + slugify(v('f_titre')) + '.html');
+  const contenu = (document.getElementById('f_contenu')||{value:''}).value.trim();
+  const it = {
+    id: mId||nid(), titre:v('f_titre'), description:v('f_desc'), date:v('f_date'),
+    lecture: getSelOther('f_lecture'), badge: getSelOther('f_badge'),
+    badge_color: v('f_badge_color') || 'green',
+    fichier: slug, publie: chk('f_publie')
+  };
   if (!it.titre) throw new Error('Titre obligatoire.');
+  if (!it.description) throw new Error('La description courte est obligatoire.');
+  if (contenu) {
+    const htmlContent = genArticleHtml(it, contenu);
+    let existSha = null;
+    try {
+      const check = await fetch(API + slug, { headers: { Authorization:'token '+gh() } });
+      if (check.ok) { existSha = (await check.json()).sha; }
+    } catch(_){}
+    await ghWrite(slug, null, existSha, 'Admin: article '+it.titre, htmlContent);
+  }
   upsert(S.articles.d, it);
   S.articles.s = await ghWrite('data/articles.json', S.articles.d, S.articles.s, 'Admin: article '+it.titre);
   renderList('articles');
+}
+function genArticleHtml(art, contenu) {
+  const esc = s => String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+  const lines = contenu.split('\n');
+  let body = ''; let inUl = false;
+  for (const line of lines) {
+    const t = line.trim();
+    if (!t) { if(inUl){body+='</ul>';inUl=false;} body+='<br>'; continue; }
+    if (t.startsWith('## ')) { if(inUl){body+='</ul>';inUl=false;} body+='<h2>'+esc(t.slice(3))+'</h2>'; continue; }
+    if (t.startsWith('### ')){ if(inUl){body+='</ul>';inUl=false;} body+='<h3>'+esc(t.slice(4))+'</h3>'; continue; }
+    if (t.startsWith('- ')) { if(!inUl){body+='<ul>';inUl=true;} body+='<li>'+esc(t.slice(2))+'</li>'; continue; }
+    if(inUl){body+='</ul>';inUl=false;} body+='<p>'+esc(t)+'</p>';
+  }
+  if(inUl) body+='</ul>';
+  const badgeCls = art.badge_color==='outline'?'badge-outline':art.badge_color==='dark'?'badge badge-dark':'badge-green';
+  const base = 'https://yasserathoumani95-maker.github.io/orrent-website/';
+  return '<!DOCTYPE html>\n<html lang="fr">\n<head>\n'+
+    '<script async src="https://www.googletagmanager.com/gtag/js?id=G-CEM1KH57N2"><\/script>\n'+
+    '<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag("js",new Date());gtag("config","G-CEM1KH57N2");<\/script>\n'+
+    '<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">\n'+
+    '<link rel="icon" type="image/png" href="logo.png">\n'+
+    '<link rel="canonical" href="'+base+esc(art.fichier)+'">\n'+
+    '<meta name="robots" content="index, follow">\n'+
+    '<meta http-equiv="X-Content-Type-Options" content="nosniff">\n'+
+    '<meta http-equiv="X-Frame-Options" content="SAMEORIGIN">\n'+
+    '<title>'+esc(art.titre)+' | ORRENT</title>\n'+
+    '<meta name="description" content="'+esc(art.description)+'">\n'+
+    '<meta property="og:title" content="'+esc(art.titre)+' | ORRENT">\n'+
+    '<meta property="og:description" content="'+esc(art.description)+'">\n'+
+    '<meta property="og:type" content="article">\n'+
+    '<meta property="og:url" content="'+base+esc(art.fichier)+'">\n'+
+    '<meta property="og:image" content="'+base+'og-images/og-home.png">\n'+
+    '<script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"'+esc(art.titre)+'","description":"'+esc(art.description)+'","datePublished":"'+esc(art.date)+'","author":{"@type":"Person","name":"ORRENT"}}<\/script>\n'+
+    '<link rel="preconnect" href="https://fonts.googleapis.com">\n'+
+    '<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>\n'+
+    '<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;800&family=DM+Sans:opsz,wght@9..40,400;9..40,600&display=swap">\n'+
+    '<link rel="stylesheet" href="css/variables.css"><link rel="stylesheet" href="css/components.css">\n'+
+    '<link rel="stylesheet" href="css/animations.css"><link rel="stylesheet" href="css/main.css?v=5">\n'+
+    '<style>.article-hero{background:linear-gradient(135deg,#064E3B,#059669);padding:calc(80px + 70px) 0 60px}.article-prose{max-width:680px;margin:0 auto;padding:56px 28px 80px}.article-prose h2{font-size:clamp(18px,2.5vw,26px);margin:40px 0 16px;color:var(--body)}.article-prose p{font-size:15px;line-height:1.8;color:var(--body);margin-bottom:16px}.article-prose ul{padding-left:24px;margin-bottom:16px}.article-prose li{font-size:15px;line-height:1.8;color:var(--body);margin-bottom:8px;list-style:disc}.back-link{display:inline-flex;align-items:center;gap:6px;font-size:13px;color:rgba(255,255,255,.65);margin-bottom:20px;text-decoration:none}.back-link:hover{color:#fff}<\/style>\n'+
+    '</head>\n<body>\n'+
+    '<a href="#main-content" class="skip-link">Aller au contenu principal<\/a>\n'+
+    '<header id="header"><div class="container"><div class="header-inner">\n'+
+    '<a href="index.html" class="logo"><picture><source srcset="logo.webp" type="image/webp"><img src="logo.png" alt="ORRENT" class="logo-img"><\/picture><span class="logo-text">ORRENT<\/span><\/a>\n'+
+    '<nav class="nav-desktop"><a href="index.html#about" class="nav-link">À propos<\/a><a href="services.html" class="nav-link">Services<\/a><a href="ebooks.html" class="nav-link">eBooks<\/a><a href="formations.html" class="nav-link">Formations<\/a><a href="blog.html" class="nav-link nav-active">Articles<\/a><a href="rendez-vous.html" class="btn btn-primary btn-sm">Prendre rendez-vous<\/a><\/nav>\n'+
+    '<button class="theme-toggle" id="themeToggle" aria-label="Passer au mode sombre"><svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"\/><\/svg><\/button>\n'+
+    '<button class="hamburger" id="hamburger" aria-label="Menu" aria-controls="mobileNav" aria-expanded="false"><span class="ham-line"><\/span><span class="ham-line"><\/span><span class="ham-line"><\/span><\/button>\n'+
+    '<\/div><\/div><\/header>\n'+
+    '<div class="mobile-overlay" id="mobileOverlay"><\/div>\n'+
+    '<nav class="mobile-nav" id="mobileNav" aria-hidden="true"><a href="index.html" class="mobile-link">Accueil<\/a><a href="services.html" class="mobile-link">Services<\/a><a href="ebooks.html" class="mobile-link">eBooks<\/a><a href="formations.html" class="mobile-link">Formations<\/a><a href="blog.html" class="mobile-link">Articles<\/a><a href="rendez-vous.html" class="btn btn-primary btn-full" style="margin-top:20px">Prendre rendez-vous<\/a><\/nav>\n'+
+    '<main id="main-content">\n'+
+    '<section class="article-hero"><div class="container">\n'+
+    '<a href="blog.html" class="back-link"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="19" y1="12" x2="5" y2="12"\/><polyline points="12 19 5 12 12 5"\/><\/svg> Retour aux articles<\/a>\n'+
+    '<span class="badge '+badgeCls+'">'+esc(art.badge||'')+'<\/span>\n'+
+    '<h1 style="color:#fff;margin-top:16px;max-width:720px">'+esc(art.titre)+'<\/h1>\n'+
+    '<div style="margin-top:16px"><span style="font-size:13px;color:rgba(255,255,255,0.6)">'+esc(art.date||'')+' · '+esc(art.lecture||'')+' de lecture<\/span><\/div>\n'+
+    '<\/div><\/section>\n'+
+    '<article class="article-prose">'+body+'<\/article>\n'+
+    '<section style="background:var(--surface);padding:48px 0"><div class="container" style="max-width:680px;text-align:center">\n'+
+    '<h2 style="font-size:clamp(20px,3vw,28px);margin-bottom:12px">Envie d\'aller plus loin ?<\/h2>\n'+
+    '<p style="font-size:14px;color:var(--muted);line-height:1.7;margin-bottom:24px">Découvrez nos packs d\'accompagnement pour passer de la théorie à la pratique.<\/p>\n'+
+    '<div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap"><a href="services.html" class="btn btn-outline btn-sm">Voir nos packs<\/a><a href="rendez-vous.html" class="btn btn-primary btn-sm">Prendre rendez-vous<\/a><\/div>\n'+
+    '<\/div><\/section>\n<\/main>\n'+
+    '<footer id="footer"><div class="container"><div class="footer-bottom" style="border-top:1px solid rgba(255,255,255,0.06);padding:24px 0">\n'+
+    '<span>© 2026 ORRENT<\/span>\n'+
+    '<a href="politique-confidentialite.html" style="color:var(--muted);font-size:13px">Politique de confidentialité<\/a>\n'+
+    '<\/div><\/div><\/footer>\n'+
+    '<a href="https://wa.me/21654200528" target="_blank" rel="noopener" class="wa-float" aria-label="WhatsApp"><svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"\/><\/svg><\/a>\n'+
+    '<script src="js/main.js" defer><\/script><script src="js/theme.js" defer><\/script>\n'+
+    '<\/body>\n<\/html>';
 }
 
 ﻿async function saveRdv() {
