@@ -977,3 +977,7 @@ body:has(.sticky-cta.visible) #or-ct {
   stroke-linecap: round;
   stroke-linejoin: round;
 }
+
+/* ── NAV ACTIVE STATE ─────────────────────────── */
+.nav-link.nav-active { color: var(--green-dark) !important; font-weight: 600; }
+.mobile-link.nav-active { color: var(--green-dark) !important; font-weight: 600; }

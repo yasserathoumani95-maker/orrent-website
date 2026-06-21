@@ -26,7 +26,7 @@
   <title>Prendre rendez-vous | ORRENT</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;800&family=DM+Sans:opsz,wght@9..40,400;9..40,600&display=swap">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;800&family=DM+Sans:opsz,wght@9..40,400;9..40,600&display=swap&font-display=swap">
   <link rel="stylesheet" href="css/variables.css">
   <link rel="stylesheet" href="css/components.css">
   <link rel="stylesheet" href="css/animations.css">
@@ -508,6 +508,17 @@
   const AIRTABLE_BASE   = 'VOTRE_BASE_ID_ICI'; // ex: appXXXXXXXX
   const AIRTABLE_TABLE  = 'Demandes';
 
+  /* ── Présélection pack via URL (?pack=starter|stratege|autonomie) */
+  (function() {
+    const params = new URLSearchParams(window.location.search);
+    const pack = params.get('pack');
+    const map = { starter: 'pack-starter', stratege: 'pack-stratege', autonomie: 'pack-autonomie' };
+    if (pack && map[pack]) {
+      const radio = document.getElementById(map[pack]);
+      if (radio) radio.checked = true;
+    }
+  })();
+
   /* ── Date minimum = demain ───────────────────────────────────── */
   (function() {
     const tomorrow = new Date();
@@ -660,16 +671,8 @@
       );
 
       if (res.ok) {
-        // Masquer toutes les étapes, afficher le succès
-        document.querySelectorAll('.rdv-step-content').forEach(s => s.style.display = 'none');
-        document.getElementById('successState').style.display = 'block';
-        // Mettre la progress bar en "terminée"
-        for (let i = 1; i <= 3; i++) {
-          const dot = document.getElementById('dot' + i);
-          dot.classList.remove('active'); dot.classList.add('done'); dot.innerHTML = '✓';
-        }
-        document.getElementById('line1').classList.add('done');
-        document.getElementById('line2').classList.add('done');
+        gtag('event', 'rdv_submitted', { event_category: 'conversion', event_label: 'formulaire_rendez_vous' });
+        window.location.href = 'merci.html';
       } else {
         const errData = await res.json();
         throw new Error(errData.error?.message || 'Erreur serveur');
@@ -690,6 +693,15 @@
       if (err) err.style.display = 'none';
     });
   });
+</script>
+<script>
+(function(){
+  var page = window.location.pathname.split('/').pop() || 'index.html';
+  document.querySelectorAll('.nav-link, .mobile-link').forEach(function(a){
+    var href = (a.getAttribute('href')||'').split('?')[0].split('#')[0].split('/').pop();
+    if(href && href === page) a.classList.add('nav-active');
+  });
+})();
 </script>
 </body>
 </html>
