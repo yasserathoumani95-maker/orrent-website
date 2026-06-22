@@ -930,6 +930,44 @@ function openForm(type, id) {
     console.error('buildForm error:', e);
   }
   document.getElementById('overlay').classList.add('open');
+  // Auto-charger le contenu de l'article depuis GitHub si on modifie et si contenu absent
+  if (type === 'article' && id) {
+    const art = S.articles.d.find(x => x.id === id);
+    const ta = document.getElementById('f_contenu');
+    if (art && art.fichier && ta && !ta.value) {
+      ta.value = 'Chargement du contenu...';
+      ta.disabled = true;
+      loadArticleContent(art.fichier, ta);
+    }
+  }
+}
+async function loadArticleContent(fichier, ta) {
+  try {
+    const r = await fetch(API + fichier, { headers: { Authorization: 'token ' + gh() } });
+    if (!r.ok) throw new Error('Fichier introuvable');
+    const d = await r.json();
+    const raw = decodeURIComponent(escape(atob(d.content.replace(/\n/g, ''))));
+    // Extraire le contenu de <article class="article-prose">
+    const m = raw.match(/<article[^>]*>([\s\S]*?)<\/article>/i);
+    if (!m) { ta.value = ''; ta.disabled = false; return; }
+    const inner = m[1];
+    // Convertir HTML -> texte avec formatage simple
+    const txt = inner
+      .replace(/<h2[^>]*>([\s\S]*?)<\/h2>/gi, (_, t) => '\n## ' + t.replace(/<[^>]+>/g,'').trim() + '\n')
+      .replace(/<h3[^>]*>([\s\S]*?)<\/h3>/gi, (_, t) => '\n### ' + t.replace(/<[^>]+>/g,'').trim() + '\n')
+      .replace(/<li[^>]*>([\s\S]*?)<\/li>/gi, (_, t) => '- ' + t.replace(/<[^>]+>/g,'').trim() + '\n')
+      .replace(/<ul[^>]*>/gi, '\n').replace(/<\/ul>/gi, '')
+      .replace(/<p[^>]*>([\s\S]*?)<\/p>/gi, (_, t) => t.replace(/<[^>]+>/g,'').trim() + '\n\n')
+      .replace(/<br\s*\/?>/gi, '\n')
+      .replace(/<[^>]+>/g, '')
+      .replace(/&amp;/g,'&').replace(/&lt;/g,'<').replace(/&gt;/g,'>').replace(/&quot;/g,'"').replace(/&#039;/g,"'")
+      .replace(/\n{3,}/g, '\n\n').trim();
+    ta.value = txt;
+  } catch(e) {
+    ta.value = '';
+    showAlert('Impossible de charger le contenu : ' + e.message, 'err');
+  }
+  ta.disabled = false;
 }
 function closeModal() { document.getElementById('overlay').classList.remove('open'); mType=mId=null; }
 function closeOverlay(e) { if (e.target===document.getElementById('overlay')) closeModal(); }
