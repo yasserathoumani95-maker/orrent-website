@@ -285,6 +285,74 @@
     .qa-card-sub { font-size: 12px; color: var(--muted); }
     .qa-ico { width: 36px; height: 36px; background: rgba(22,199,132,.08); border-radius: 10px; display: flex; align-items: center; justify-content: center; color: var(--green); }
 
+    /* ─── THEME TOGGLE ─── */
+    .theme-btn {
+      width: 100%; padding: 9px 12px; background: rgba(255,255,255,.04); color: var(--body);
+      border: 1px solid rgba(255,255,255,.08); border-radius: 10px; font-size: 12.5px;
+      font-weight: 600; cursor: pointer; font-family: inherit; transition: all .2s cubic-bezier(.32,.72,0,1);
+      display: flex; align-items: center; justify-content: center; gap: 7px; margin-bottom: 8px;
+    }
+    .theme-btn:hover { border-color: rgba(22,199,132,.3); color: var(--green); background: rgba(22,199,132,.05); }
+
+    /* ─── MODE CLAIR ─── */
+    body.light {
+      --bg: #F1F5F9; --card: rgba(0,0,0,0.03);
+      --body: #1E293B; --muted: #64748B; --muted-2: #94A3B8;
+      --border: rgba(0,0,0,0.08); --border-2: rgba(0,0,0,0.04);
+      --red-bg: rgba(220,38,38,0.07);
+    }
+    body.light { background: #F1F5F9; color: #1E293B; }
+    body.light .sidebar { background: #FFFFFF; border-right-color: rgba(0,0,0,.08); }
+    body.light .sb-head { border-bottom-color: rgba(0,0,0,.07); }
+    body.light .sb-section { color: rgba(0,0,0,.3); }
+    body.light .sb-item { color: rgba(0,0,0,.45); }
+    body.light .sb-item:hover { background: rgba(0,0,0,.04); color: rgba(0,0,0,.8); }
+    body.light .sb-item.active { background: rgba(22,199,132,.1); color: var(--green); }
+    body.light .sb-foot { border-top-color: rgba(0,0,0,.07); }
+    body.light .sb-site-link { color: rgba(0,0,0,.35); }
+    body.light .sb-site-link:hover { color: rgba(0,0,0,.7); }
+    body.light .btn-out { background: rgba(220,38,38,.06); color: #DC2626; border-color: rgba(220,38,38,.18); }
+    body.light .stat { background: #FFFFFF; border-color: rgba(0,0,0,.08); }
+    body.light .item { background: #FFFFFF; border-color: rgba(0,0,0,.08); }
+    body.light .item:hover { background: rgba(22,199,132,.04); border-color: rgba(22,199,132,.25); }
+    body.light .item-name { color: #0F172A; }
+    body.light .topbar-left h1 { color: #0F172A; }
+    body.light .tag-gray { background: rgba(0,0,0,.05); color: #64748B; border-color: rgba(0,0,0,.08); }
+    body.light .modal { background: #FFFFFF; border-color: rgba(0,0,0,.1); }
+    body.light .modal-head { border-bottom-color: rgba(0,0,0,.07); }
+    body.light .modal-title { color: #0F172A; }
+    body.light .modal-foot { border-top-color: rgba(0,0,0,.07); }
+    body.light .modal-close { background: rgba(0,0,0,.04); border-color: rgba(0,0,0,.08); }
+    body.light .modal-close:hover { background: rgba(0,0,0,.08); color: #0F172A; }
+    body.light .fcontrol { background: #F8FAFC; border-color: rgba(0,0,0,.12); color: #0F172A; }
+    body.light .fcontrol:focus { background: rgba(22,199,132,.04); }
+    body.light .btn-ghost { background: rgba(0,0,0,.04); border-color: rgba(0,0,0,.1); color: #1E293B; }
+    body.light .btn-ghost:hover { border-color: rgba(22,199,132,.4); color: var(--green); }
+    body.light .empty { background: rgba(0,0,0,.02); border-color: rgba(0,0,0,.08); }
+    body.light .empty h3 { color: #0F172A; }
+    body.light .empty-ico { background: rgba(0,0,0,.04); }
+    body.light .params-card { background: #FFFFFF; border-color: rgba(0,0,0,.08); }
+    body.light .params-section-title { border-top-color: rgba(0,0,0,.07); }
+    body.light .qa-card { background: #FFFFFF; border-color: rgba(0,0,0,.08); }
+    body.light .qa-card-title { color: #0F172A; }
+    body.light .upload-zone { background: #F8FAFC; border-color: rgba(0,0,0,.12); }
+    body.light .upload-title { color: #1E293B; }
+    body.light #confirmBox { background: #FFFFFF; border-color: rgba(0,0,0,.1); }
+    body.light .confirm-title { color: #0F172A; }
+    body.light .toggle-track { background: rgba(0,0,0,.15); }
+    body.light .item-ico { background: linear-gradient(135deg, #E2E8F0 0%, var(--green-dark) 100%); }
+    body.light .mob-btn { background: rgba(0,0,0,.06); border-color: rgba(0,0,0,.1); }
+    body.light .mob-btn svg { stroke: #1E293B; }
+    body.light .theme-btn { background: rgba(0,0,0,.04); border-color: rgba(0,0,0,.1); }
+    body.light .admin-search { background: rgba(0,0,0,.03) !important; border-color: rgba(0,0,0,.1) !important; color: #1E293B !important; }
+    body.light .spin { border-color: rgba(0,0,0,.1); border-top-color: var(--green); }
+    body.light .toast-ok { background: #ECFDF5; color: #065F46; border-color: rgba(16,185,129,.25); }
+    body.light .toast-err { background: #FEF2F2; color: #991B1B; border-color: rgba(220,38,38,.25); }
+    body.light #loginScreen { background: #F1F5F9; }
+    body.light .login-card { background: #FFFFFF; border-color: rgba(0,0,0,.1); }
+    body.light .login-heading { color: #0F172A; }
+    body.light .inp { background: #F8FAFC; border-color: rgba(0,0,0,.15); color: #0F172A; }
+
     /* ─── MOBILE ─── */
     @media (max-width: 900px) {
       .sidebar { transform: translateX(-100%); transition: transform .3s cubic-bezier(.32,.72,0,1); }
@@ -382,6 +450,10 @@
 
       <div class="sb-foot">
         <a href="../index.html" target="_blank" class="sb-site-link">Voir le site public &rarr;</a>
+        <button class="theme-btn" id="themeToggleBtn" onclick="toggleAdminTheme()">
+          <svg id="themeIcon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+          <span id="themeLabel">Mode clair</span>
+        </button>
         <button class="btn-out" onclick="doLogout()">Déconnexion</button>
       </div>
     </aside>
@@ -595,6 +667,30 @@ async function doLogin() {
   boot();
 }
 function doLogout() { localStorage.removeItem('o_auth'); sessionStorage.removeItem('o_pat'); location.reload(); }
+
+function toggleAdminTheme() {
+  const isLight = document.body.classList.toggle('light');
+  localStorage.setItem('admin_theme', isLight ? 'light' : 'dark');
+  updateThemeBtn(isLight);
+}
+function updateThemeBtn(isLight) {
+  const icon = document.getElementById('themeIcon');
+  const label = document.getElementById('themeLabel');
+  if (!icon || !label) return;
+  if (isLight) {
+    icon.innerHTML = '<path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>';
+    label.textContent = 'Mode sombre';
+  } else {
+    icon.innerHTML = '<circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>';
+    label.textContent = 'Mode clair';
+  }
+}
+(function() {
+  if (localStorage.getItem('admin_theme') === 'light') {
+    document.body.classList.add('light');
+    document.addEventListener('DOMContentLoaded', () => updateThemeBtn(true));
+  }
+}());
 document.getElementById('iPwd').addEventListener('keydown', e => { if (e.key==='Enter') doLogin(); });
 
 function boot() {
