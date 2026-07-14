@@ -500,13 +500,11 @@
 <script src="js/animations.js"></script>
 
 <script>
-  /* ── CONFIG AIRTABLE ─────────────────────────────────────────────
-     Remplacez les 2 valeurs ci-dessous par vos vraies informations
-     (voir guide de configuration plus bas)
+  /* ── CONFIG WEB3FORMS ────────────────────────────────────────────
+     Les demandes sont envoyées par email à orrentcomores@gmail.com
+     via Web3Forms (clé publique, conçue pour être visible)
   ──────────────────────────────────────────────────────────────── */
-  const AIRTABLE_TOKEN  = 'VOTRE_TOKEN_ICI';   // ex: patXXXXXXXX
-  const AIRTABLE_BASE   = 'VOTRE_BASE_ID_ICI'; // ex: appXXXXXXXX
-  const AIRTABLE_TABLE  = 'Demandes';
+  const WEB3FORMS_KEY = '77b55659-7e1b-4bae-b074-a12c94668fb2';
 
   /* ── Présélection pack via URL (?pack=starter|stratege|autonomie) */
   (function() {
@@ -626,7 +624,7 @@
   }
   function prevStep(n) { showStep(n); }
 
-  /* ── Soumission vers Airtable ────────────────────────────────── */
+  /* ── Soumission vers Web3Forms (email) ───────────────────────── */
   async function submitForm() {
     if (!validateStep3()) return;
 
@@ -636,52 +634,50 @@
 
     const pack   = document.querySelector('input[name="pack"]:checked')?.value   || 'Non précisé';
     const format = document.querySelector('input[name="format"]:checked')?.value || 'WhatsApp';
+    const prenom = document.getElementById('prenom').value.trim();
+    const nom    = document.getElementById('nom').value.trim();
 
     const data = {
-      fields: {
-        'Prénom':       document.getElementById('prenom').value.trim(),
-        'Nom':          document.getElementById('nom').value.trim(),
-        'Email':        document.getElementById('email').value.trim(),
-        'WhatsApp':     document.getElementById('whatsapp').value.trim(),
-        'Pays / Ville': document.getElementById('pays').value.trim(),
-        'Entreprise':   document.getElementById('entreprise').value.trim(),
-        'Secteur':      document.getElementById('secteur').value,
-        'Besoin':       document.getElementById('besoin').value.trim(),
-        'Pack':         pack,
-        'Date RDV':     document.getElementById('date-rdv').value,
-        'Heure RDV':    document.getElementById('heure-rdv').value,
-        'Format RDV':   format,
-        'Message':      document.getElementById('message').value.trim(),
-        'Statut':       'Nouveau',
-        'Date envoi':   new Date().toISOString(),
-      }
+      access_key: WEB3FORMS_KEY,
+      subject:    `Nouvelle demande de RDV — ${prenom} ${nom} (${pack})`,
+      from_name:  'Site ORRENT — Formulaire rendez-vous',
+      'Prénom':       prenom,
+      'Nom':          nom,
+      'Email':        document.getElementById('email').value.trim(),
+      'WhatsApp':     document.getElementById('whatsapp').value.trim(),
+      'Pays / Ville': document.getElementById('pays').value.trim(),
+      'Entreprise':   document.getElementById('entreprise').value.trim(),
+      'Secteur':      document.getElementById('secteur').value,
+      'Besoin':       document.getElementById('besoin').value.trim(),
+      'Pack':         pack,
+      'Date RDV':     document.getElementById('date-rdv').value,
+      'Heure RDV':    document.getElementById('heure-rdv').value,
+      'Format RDV':   format,
+      'Message':      document.getElementById('message').value.trim(),
     };
 
     try {
-      const res = await fetch(
-        `https://api.airtable.com/v0/${AIRTABLE_BASE}/${encodeURIComponent(AIRTABLE_TABLE)}`,
-        {
-          method: 'POST',
-          headers: {
-            'Authorization': `Bearer ${AIRTABLE_TOKEN}`,
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(data),
-        }
-      );
+      const res = await fetch('https://api.web3forms.com/submit', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+        },
+        body: JSON.stringify(data),
+      });
+      const result = await res.json();
 
-      if (res.ok) {
+      if (res.ok && result.success) {
         gtag('event', 'rdv_submitted', { event_category: 'conversion', event_label: 'formulaire_rendez_vous' });
         window.location.href = 'merci.html';
       } else {
-        const errData = await res.json();
-        throw new Error(errData.error?.message || 'Erreur serveur');
+        throw new Error(result.message || 'Erreur serveur');
       }
     } catch (err) {
       btn.disabled = false;
       btn.innerHTML = 'Envoyer la demande <span class="btn-icon"><svg viewBox="0 0 16 16" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 13L13 3M13 3H7M13 3v6"/></svg></span>';
       alert('Une erreur est survenue. Vérifiez votre connexion ou contactez-nous directement sur WhatsApp.');
-      console.error('Airtable error:', err);
+      console.error('Web3Forms error:', err);
     }
   }
 
