@@ -83,6 +83,10 @@
       border: 1px solid rgba(22,199,132,0.15);
       position: relative;
     }
+    .founder-img-card picture {
+      width: 100%; height: 100%;
+      display: block;
+    }
     .founder-img-card img {
       width: 100%; height: 100%;
       object-fit: cover;
@@ -226,7 +230,10 @@
 
       <div class="founder-wrap reveal reveal-delay-1">
         <div class="founder-img-card">
-          <img src="profil.png" alt="Yasser Athoumani, fondateur d'ORRENT" loading="lazy">
+          <picture>
+            <source srcset="profil.webp" type="image/webp">
+            <img src="profil-small.png" alt="Yasser Athoumani, fondateur d'ORRENT" loading="lazy" width="800" height="800">
+          </picture>
           <div class="founder-img-overlay">
             <div class="founder-name">Yasser Athoumani</div>
             <div class="founder-role">Fondateur · Stratège Digital</div>
