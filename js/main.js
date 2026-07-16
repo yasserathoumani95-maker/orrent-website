@@ -148,6 +148,11 @@ document.addEventListener('click', function (e) {
   document.getElementById('cookieAccept').addEventListener('click', function () {
     localStorage.setItem('cookie_consent', 'accepted');
     banner.classList.add('hidden');
+    // Charger Google Analytics dès le consentement (les events en attente partent aussitôt)
+    var gaS = document.createElement('script');
+    gaS.async = true;
+    gaS.src = 'https://www.googletagmanager.com/gtag/js?id=G-CEM1KH57N2';
+    document.head.appendChild(gaS);
   });
   document.getElementById('cookieRefuse').addEventListener('click', function () {
     localStorage.setItem('cookie_consent', 'refused');

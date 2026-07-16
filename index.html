@@ -1,9 +1,8 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="fr">
 <head>
   <!-- Google tag (gtag.js) -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-CEM1KH57N2"></script>
-  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-CEM1KH57N2');</script>
+    <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-CEM1KH57N2');if(localStorage.getItem('cookie_consent')==='accepted'){var gaS=document.createElement('script');gaS.async=true;gaS.src='https://www.googletagmanager.com/gtag/js?id=G-CEM1KH57N2';document.head.appendChild(gaS);}</script>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="icon" type="image/png" href="logo.png">
@@ -114,7 +113,7 @@
       </a>
 
       <nav class="nav-desktop">
-        <a href="#about"      class="nav-link">À propos</a>
+        <a href="a-propos.html"      class="nav-link">À propos</a>
         <a href="services.html" class="nav-link">Services</a>
         <a href="ebooks.html" class="nav-link">eBooks</a>
         <a href="formations.html" class="nav-link">Formations</a>
@@ -143,7 +142,7 @@
 
 <div class="mobile-overlay" id="mobileOverlay"></div>
 <nav class="mobile-nav" id="mobileNav" aria-hidden="true">
-  <a href="#about"          class="mobile-link">À propos</a>
+  <a href="a-propos.html"          class="mobile-link">À propos</a>
   <a href="services.html"   class="mobile-link">Services</a>
   <a href="ebooks.html"     class="mobile-link">eBooks</a>
   <a href="formations.html" class="mobile-link">Formations</a>
@@ -427,6 +426,22 @@
 </section>
 
 
+<!-- EBOOKS APERÇU -->
+<section id="ebooks-apercu" style="display:none">
+  <div class="container section-pad">
+    <div class="section-head">
+      <div class="tag tag-green tag-dot reveal">eBooks</div>
+      <h2 class="reveal reveal-delay-1">Nos guides pratiques</h2>
+      <p class="reveal reveal-delay-2">Des ressources concrètes, pensées pour le marché comorien</p>
+    </div>
+    <div class="grid-3" id="idxEbookGrid"></div>
+    <div class="reveal" style="text-align:center;margin-top:36px">
+      <a href="ebooks.html" class="btn btn-outline btn-lg">Voir tous les eBooks<span class="btn-icon"><svg viewBox="0 0 16 16" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 13L13 3M13 3H7M13 3v6"/></svg></span></a>
+    </div>
+  </div>
+</section>
+
+
 <!-- GRATUIT -->
 <section id="gratuit">
   <div class="container section-pad">
@@ -463,6 +478,35 @@
         <p>Chaque dimanche : discussions business, stratégie, Q&amp;A en direct.</p>
         <a href="https://www.tiktok.com/@orrentcomores?_r=1&amp;_t=ZN-96GhIrLGqP8" target="_blank" rel="noopener" class="btn btn-dark">Suivre sur TikTok</a>
       </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ÉVÉNEMENTS -->
+<section id="evenements" style="display:none">
+  <div class="container section-pad">
+    <div class="events-panel reveal">
+      <div class="tag tag-green tag-dot" style="margin-bottom:12px">Chaque semaine</div>
+      <h2 class="text-white" style="margin-bottom:8px">Nos événements récurrents</h2>
+      <p style="color:rgba(255,255,255,0.55);font-size:15px;line-height:1.7;margin-bottom:12px">Formations et lives gratuits pour progresser ensemble, chaque semaine</p>
+      <div id="idxEventList"></div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ARTICLES APERÇU -->
+<section id="articles-apercu" style="display:none">
+  <div class="container section-pad">
+    <div class="section-head">
+      <div class="tag tag-green tag-dot reveal">Le blog</div>
+      <h2 class="reveal reveal-delay-1">Nos derniers articles</h2>
+      <p class="reveal reveal-delay-2">Des conseils marketing concrets pour entrepreneurs comoriens</p>
+    </div>
+    <div class="grid-3" id="idxArticleGrid"></div>
+    <div class="reveal" style="text-align:center;margin-top:36px">
+      <a href="blog.html" class="btn btn-outline btn-lg">Voir tous les articles<span class="btn-icon"><svg viewBox="0 0 16 16" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 13L13 3M13 3H7M13 3v6"/></svg></span></a>
     </div>
   </div>
 </section>
@@ -587,7 +631,7 @@
       <div class="footer-col">
         <h4>Navigation</h4>
         <a href="#hero"       class="footer-link">Accueil</a>
-        <a href="#about"      class="footer-link">À propos</a>
+        <a href="a-propos.html"      class="footer-link">À propos</a>
         <a href="services.html" class="footer-link">Services</a>
         <a href="#contact"    class="footer-link">Contact</a>
       </div>
@@ -681,11 +725,15 @@
 <script src="js/theme.js"></script>
 <script src="js/main.js"></script>
 <script src="js/animations.js"></script>
-<script src="js/form.js"></script>
 <script src="js/data.js"></script>
 <script>
 (async () => {
-  const temos = await orLoad('data/temoignages.json');
+  const [temos, ebooks, evts, arts] = await Promise.all([
+    orLoad('data/temoignages.json'),
+    orLoad('data/ebooks.json'),
+    orLoad('data/evenements.json'),
+    orLoad('data/articles.json'),
+  ]);
 
   // - Témoignages (afficher section si données)  -
   const temoSection = document.getElementById('temoignages');
@@ -695,6 +743,39 @@
     if (temosVis.length) {
       temoSection.style.display = '';
       temoGrid.innerHTML = temosVis.map((t, i) => orTemoCard(t, i)).join('');
+    }
+  }
+
+  // - eBooks (aperçu 3 premiers)  -
+  const ebSection = document.getElementById('ebooks-apercu');
+  const ebGrid    = document.getElementById('idxEbookGrid');
+  if (ebooks && ebooks.length) {
+    const ebVis = ebooks.filter(e => e.visible !== false).slice(0, 3);
+    if (ebVis.length) {
+      ebSection.style.display = '';
+      ebGrid.innerHTML = ebVis.map((e, i) => orEbookPreview(e, i)).join('');
+    }
+  }
+
+  // - Événements (gérés depuis l'admin)  -
+  const evSection = document.getElementById('evenements');
+  const evList    = document.getElementById('idxEventList');
+  if (evts && evts.length) {
+    const evVis = evts.filter(e => e.visible !== false);
+    if (evVis.length) {
+      evSection.style.display = '';
+      evList.innerHTML = evVis.map((e, i) => orEventItem(e, i)).join('');
+    }
+  }
+
+  // - Derniers articles (3 plus récents)  -
+  const artSection = document.getElementById('articles-apercu');
+  const artGrid    = document.getElementById('idxArticleGrid');
+  if (arts && arts.length) {
+    const artVis = arts.filter(a => a.publie !== false).slice(-3).reverse();
+    if (artVis.length) {
+      artSection.style.display = '';
+      artGrid.innerHTML = artVis.map((a, i) => orArticleCard(a, i)).join('');
     }
   }
 
