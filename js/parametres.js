@@ -43,5 +43,16 @@
     if (p.facebook)
       document.querySelectorAll('a[href*="facebook.com/Orrent"]').forEach(a => { a.href = p.facebook; });
 
+    /* Services masqués depuis l'admin (Paramètres → Visibilité des services)
+       Tout élément portant data-service="<id>" est caché si <id> figure
+       dans parametres.json → services_masques */
+    if (Array.isArray(p.services_masques)) {
+      p.services_masques.forEach(id => {
+        document.querySelectorAll('[data-service="' + id + '"]').forEach(el => {
+          el.style.display = 'none';
+        });
+      });
+    }
+
   } catch (_) { /* Silencieux — le site fonctionne avec les valeurs de secours */ }
 })();

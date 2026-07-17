@@ -944,9 +944,25 @@ function renderRdv(status) {
 }
 
 // ─── PARAMS ───────────────────────────────────────────
+const SERVICES_SITE = [
+  ['diagnostic', 'Diagnostic gratuit'],
+  ['strategie',  'Plan stratégique (packs)'],
+  ['presence',   'Présence digitale (création de contenu)'],
+  ['formation',  'Samedi Digital (formation)']
+];
+
 function renderParams() {
   const p = S.parametres.d;
+  const masques = Array.isArray(p.services_masques) ? p.services_masques : [];
+  const svcHtml = SERVICES_SITE.map(function(s) {
+    return '<label style="display:flex;align-items:center;gap:9px;font-size:13px;padding:9px 12px;border:1px solid var(--border);border-radius:8px;cursor:pointer;margin-bottom:8px">' +
+      '<input type="checkbox" id="pp_svc_' + s[0] + '"' + (masques.indexOf(s[0]) === -1 ? ' checked' : '') + '> ' +
+      '<span><strong>' + s[1] + '</strong></span></label>';
+  }).join('');
   document.getElementById('paramsForm').innerHTML = `
+    <div class="params-section-title">Visibilité des services</div>
+    <p class="fhint" style="margin-bottom:10px">Décochez un service pour le masquer partout sur le site (accueil + page Services). Recochez pour le réafficher.</p>
+    ${svcHtml}
     <div class="params-section-title">Réservation</div>
     <div class="fgroup">
       <label class="flabel">Lien Calendly</label>
@@ -978,7 +994,13 @@ async function saveParams() {
     whatsapp_groupe: document.getElementById('pp_wagroupe').value.trim(),
     tiktok:          document.getElementById('pp_tiktok').value.trim(),
     instagram:       document.getElementById('pp_insta').value.trim(),
-    facebook:        document.getElementById('pp_fb').value.trim()
+    facebook:        document.getElementById('pp_fb').value.trim(),
+    services_masques: SERVICES_SITE
+      .map(function(s) { return s[0]; })
+      .filter(function(id) {
+        const el = document.getElementById('pp_svc_' + id);
+        return el && !el.checked;
+      })
   };
   try {
     S.parametres.s = await ghWrite('data/parametres.json', data, S.parametres.s, 'Admin: paramètres mis à jour');
@@ -1174,10 +1196,10 @@ function buildForm(type, id) {
       <div class="fgroup"><label class="flabel">Description</label><textarea class="fcontrol" id="f_desc" rows="3">${esc(d.description||'')}</textarea></div>
       <div class="grid2">
         <div class="fgroup"><label class="flabel">Fréquence</label>
-          ${selOther('f_frequence',['Hebdomadaire — chaque samedi','Hebdomadaire — chaque dimanche','Bimensuelle','Mensuelle','Intensive (plusieurs jours)'],d.frequence||'')}
+          ${selOther('f_frequence',['Sessions de 4 samedis','Hebdomadaire — chaque samedi','Hebdomadaire — chaque dimanche','Bimensuelle','Mensuelle','Intensive (plusieurs jours)'],d.frequence||'')}
         </div>
         <div class="fgroup"><label class="flabel">Sessions</label>
-          ${selOther('f_sessions',['5 sessions','8 sessions','10 sessions','12 sessions','15 sessions','17 sessions','20 sessions'],d.sessions||'')}
+          ${selOther('f_sessions',['Session 1 — terminée','Session 2 — inscriptions ouvertes','Session 3 — bientôt','4 samedis par session','5 sessions','8 sessions','10 sessions','12 sessions','15 sessions','17 sessions','20 sessions'],d.sessions||'')}
         </div>
       </div>
       <div class="grid2">

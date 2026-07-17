@@ -1,13 +1,13 @@
 [
   {
     "id": "1",
-    "titre": "Samedi Digital",
-    "description": "Formation hebdomadaire marketing digital : stratégie, contenu, réseaux sociaux.",
-    "date": "Chaque samedi",
+    "titre": "Samedi Digital — Session 2",
+    "description": "Formation marketing digital en session de 4 samedis. Nouveau groupe, inscriptions ouvertes : stratégie, contenu, réseaux sociaux.",
+    "date": "Chaque samedi de la session",
     "heure": "10h00 (Comores)",
     "plateforme": "WhatsApp / Zoom",
     "lien": "https://chat.whatsapp.com/FhNm9t68yUzE7WHAMKfsgk?mode=gi_t",
-    "badge": "Hebdomadaire",
+    "badge": "S2",
     "visible": true
   },
   {
@@ -18,7 +18,7 @@
     "heure": "20h00 (Comores)",
     "plateforme": "TikTok Live / Facebook Live",
     "lien": "https://www.tiktok.com/@orrentcomores",
-    "badge": "Hebdomadaire",
+    "badge": "Hebdo",
     "visible": true
   }
 ]
